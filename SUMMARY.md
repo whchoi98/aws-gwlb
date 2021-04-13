@@ -1,4 +1,7 @@
 # Table of contents
 
-* [Initial page](README.md)
+* [GWLB](README.md)
+* [GWLB Design 1](gwlb-design1.md)
+* [GWLB Design 2](gwlb-design2.md)
+* [GWLB PaloAlto 연동](paloalto.md)
 
