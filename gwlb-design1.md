@@ -59,7 +59,7 @@ AWS 관리콘솔 - VPC - 가상 프라이빗 클라우드 - 엔드포인트 서�
 
 VPC01,02,03 3개의 VPC를 Cloudformation에서 앞서 과정과 동일하게 생성합니다. 다운로드 받은 Yaml 파일들 중에 VPC01.yml, VPC02,yml, VPC03.yml을 차례로 선택해서 생성합니다.
 
-![](.gitbook/assets/image%20%2813%29.png)
+![](.gitbook/assets/image%20%2814%29.png)
 
 스택 이름을 생성하고, GWLBVPC의 VPC Endpoint 서비스 이름을 "VPCEndpointServiceName" 에 입력합니다. 또한 나머지 파라미터들도 입력합니다. 대부분 기본값을 사용합니다.
 
@@ -74,13 +74,13 @@ VPC01,02,03 3개의 VPC를 Cloudformation에서 앞서 과정과 동일하게 �
 * InstanceTyep: t3.small
 * KeyPair : 사전에 만들어 둔 keyPair를 사용합니다. 
 
-![](.gitbook/assets/image%20%2829%29.png)
+![](.gitbook/assets/image%20%2830%29.png)
 
 아래와 같이 VPC가 모두 정상적으로 설정되었는지 확인해 봅니다.
 
 AWS 관리콘솔 - VPC
 
-![](.gitbook/assets/image%20%2816%29.png)
+![](.gitbook/assets/image%20%2817%29.png)
 
 ## GWLB 구성 확인
 
@@ -91,13 +91,13 @@ GWLBVPC 구성을 확인해 봅니다.
 3. VPC Endpoint 와 Service 확인
 4. Appliance 확인 
 
-![](.gitbook/assets/image%20%2815%29.png)
+![](.gitbook/assets/image%20%2816%29.png)
 
 ### 3.GWLB 구성 
 
 AWS 관리 콘솔 - EC2 - 로드밸런싱 - 로드밸런서 메뉴를 선택합니다. Gateway LoadBalancer 구성을 확인할 수 있습니다. ELB 유형이 "gateway"로 구성된 것을 확인 할 수 있습니다.
 
-![](.gitbook/assets/image%20%2817%29.png)
+![](.gitbook/assets/image%20%2818%29.png)
 
 ### 4.GWLB Target Group 구성 
 
@@ -112,7 +112,7 @@ AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹 - 상태검사 메뉴�
 
 ELB와 동일하게 대상그룹\(Target Group\)에 상태를 검사할 수 있습니다. 이 랩에서는 HTTP  Path / 를 통해서 Health Check를 하도록 구성했습니다.
 
-![](.gitbook/assets/image%20%2826%29.png)
+![](.gitbook/assets/image%20%2827%29.png)
 
 ### 5. VPC Endpoint Service 확인
 
@@ -126,7 +126,7 @@ AWS 관리 콘솔 - VPC - 엔드포인트 서비스를 선택합니다. 생성�
 
 2개 영역에 걸쳐서 GWLB에 대해 VPC Endpoint Service를 구성하고 있습니다.
 
-![](.gitbook/assets/image%20%2819%29.png)
+![](.gitbook/assets/image%20%2820%29.png)
 
 AWS 관리 콘솔 - VPC - 엔드포인트 서비스-엔드포인트 연결를 선택합니다.
 
@@ -138,13 +138,13 @@ Workload VPC \(VPC01,02,03\)의 각 가용영역들과 연결된 것을 확인 �
 
 AWS 관리 콘솔 - EC2 - 인스턴스 메뉴를 선택하고, "appliance" 키워드로 필터링 해 봅니다. 4개의 리눅스 기반의 appliance가 설치되어 있습니다.
 
-![](.gitbook/assets/image%20%2821%29.png)
+![](.gitbook/assets/image%20%2822%29.png)
 
 Appliance 구성 정보를 확인해 봅니다.
 
 AWS 관리콘솔 - Cloudformation - 스택을 선택하면, 앞서 배포했던 Cloudformation 스택들을 확인 할 수 있습니다. "GWLBVPC"를 선택합니다. 그리고 출력을 선택합니다. 값을 확인해 보면 공인 IP 주소를 확인 할 수 있습니다.
 
-![](.gitbook/assets/image%20%2818%29.png)
+![](.gitbook/assets/image%20%2819%29.png)
 
 앞서 사전 준비에서 생성한 Cloud9에서 Appliance로 직접 접속해 봅니다.
 
@@ -239,25 +239,44 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101  이며, Appliance IP와 터�
 2. Private Subnet Route Table 확인
 3. Ingress Routing Table 확인
 
-![](.gitbook/assets/image%20%2831%29.png)
+![](.gitbook/assets/image%20%2832%29.png)
 
 아래 흐름과 같이 트래픽이 처리됩니다.
 
+1. 외부 트래픽은 인터넷 게이트웨이로 접근
+2. Ingress Route Table에 의해 GWLB Endpoint로 트래픽 처리
+3. Public Subnet의 VPC Endpoint는 GWLB VPC Endpoint Service로 전달
+4. GWLB로 트래픽 전달
+5. AZ A,AZ B Target Group으로 LB 처리 - UDP 6081 GENEVE로 Encapsulation \(TLV Header - 5Tuple\)
+6. Appliance에서 트래픽 처리 후 다시 Return
+7. Decap 해서 다시 VPC Endpoint Service로 전달
+8. Public Subnet VPC Endpoint로 전달
+9. Private Subnet 인스턴스로 전달 
+10. Return되는 트래픽은 Private Subnet의 Route Table에 의해 VPC Endpoint로 다시 전
+
 ![](.gitbook/assets/image%20%289%29.png)
 
-7.VPC Endpoint 확인
+### 7.VPC Endpoint 확인
 
-![](.gitbook/assets/image%20%2830%29.png)
+AWS 관리 콘솔 - VPC - Endpoint를 선택하여 실제 구성된 VPC Endpoint를 확인해 봅니다. 3개의 VPC에 2개씩 구성된 AZ를 위해 총 6개의 Endpoint가 구성되어 있습니다. \(VPC Endpoint는 AZ Subnet당 연결됩니다.\)
 
-8. Private Subnet Route Table 확인
+![](.gitbook/assets/image%20%2831%29.png)
+
+### 8. Private Subnet Route Table 확인
+
+AWS 관리콘솔 - VPC - 라우팅 테이블을 선택하고 VPC01,02,03-Private-Subnet-A,B-RT 이름의 라우팅 테이블을 확인해 봅니다. Return되는 트래픽의 경로는 GWLB VPC Endpoint로 설정되어 있습니다.
+
+![](.gitbook/assets/image%20%2812%29.png)
+
+![](.gitbook/assets/image%20%2833%29.png)
+
+### 9. Ingress Routing Table 확인
+
+AWS 관리콘솔 - VPC - 라우팅 테이블을 선택하고 VPC01,02,03-IGW-Ingress-RT 이름의 라우팅 테이블을 확인해 봅니다.  Ingress Routing Table에 대한 구성을 확인 할 수 있습니다. VPC로 인입 되는 트래픽을 특정 경로로 보내는 역할을 합니다. 여기에서는 GWLB VPC Endpoint로 구성하도록 되어 있습니다.
+
+![](.gitbook/assets/image%20%2821%29.png)
 
 ![](.gitbook/assets/image%20%2811%29.png)
-
-![](.gitbook/assets/image%20%2832%29.png)
-
-9. Ingress Routing Table 확인
-
-![](.gitbook/assets/image%20%2820%29.png)
 
 
 

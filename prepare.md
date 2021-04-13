@@ -16,7 +16,7 @@ AWS 관리 콘솔 - Cloud9 - Create environment를 선택합니다.
 
 * name : gwlb-console 
 
-![](.gitbook/assets/image%20%2828%29.png)
+![](.gitbook/assets/image%20%2829%29.png)
 
 모든 설정을 기본값으로 사용하고, Cost-Saving Setting만 Never로 변경합니다. 절전모드로 변경되는 것을 방지하게 됩니다. 다음 진행 버튼을 계속 누르고 Cloud9을 생성합니다.
 
@@ -24,7 +24,7 @@ AWS 관리 콘솔 - Cloud9 - Create environment를 선택합니다.
 
 2~3분 후에 Cloud9 이 동작하는 것을 확인 할 수 있습니다. Cloud9 창에서 "+" 버튼을 누르고 New Terminal을 띄워서 터미널을 생성합니다. 추가로 "+"를 계속 생성하게 되면 Terminal을 다중으로 사용할 수 있습니다.
 
-![](.gitbook/assets/image%20%2825%29.png)
+![](.gitbook/assets/image%20%2826%29.png)
 
 Cloud9 IDE는 이미 AWS CLI가 설치되어 있습니다. 하지만 기본 1.x 버전이 설치되어 있습니다.
 
