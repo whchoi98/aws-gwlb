@@ -26,11 +26,11 @@ description: 'update : 2021-03-31'
 
 AWS 관리콘솔에서 Cloudformation을 선택합니다.
 
-![](.gitbook/assets/image%20%288%29.png)
+![](.gitbook/assets/image%20%289%29.png)
 
 앞서 다운로드 해둔 yaml 파일 중에서, 아래 그림과 같이 GWLBVPC.yml 파일을 선택합니다.
 
-![](.gitbook/assets/image%20%2812%29.png)
+![](.gitbook/assets/image%20%2813%29.png)
 
 스택 세부 정보 지정에서 , 스택이름과 VPC Parameters를 지정합니다. 대부분 기본값을 사용하면 됩니다.
 
@@ -43,11 +43,11 @@ AWS 관리콘솔에서 Cloudformation을 선택합니다.
 * InstanceTyep: t3.small
 * KeyPair : 사전에 만들어 둔 keyPair를 사용합니다.
 
-![](.gitbook/assets/image%20%2810%29.png)
+![](.gitbook/assets/image%20%2811%29.png)
 
 다음 단계를 계속 진행하고, 아래와 같이 "AWS CloudFormation에서 IAM 리소스를 생성할 수 있음을 승인합니다."를 선택하고, 스택을 생성합니다.
 
-![](.gitbook/assets/image%20%283%29.png)
+![](.gitbook/assets/image%20%284%29.png)
 
 3~4분 후에 GWLBVPC가 완성됩니다.
 
@@ -55,11 +55,11 @@ AWS 관리콘솔 - VPC - 가상 프라이빗 클라우드 - 엔드포인트 서�
 
 서비스 이름을 복사해 둡니다. 뒤에서 생성할 VPC들의 Cloudformation에서 사용할 것입니다.
 
-![](.gitbook/assets/image%20%287%29.png)
+![](.gitbook/assets/image%20%288%29.png)
 
 VPC01,02,03 3개의 VPC를 Cloudformation에서 앞서 과정과 동일하게 생성합니다. 다운로드 받은 Yaml 파일들 중에 VPC01.yml, VPC02,yml, VPC03.yml을 차례로 선택해서 생성합니다.
 
-![](.gitbook/assets/image%20%2816%29.png)
+![](.gitbook/assets/image%20%2817%29.png)
 
 스택 이름을 생성하고, GWLBVPC의 VPC Endpoint 서비스 이름을 "VPCEndpointServiceName" 에 입력합니다. 또한 나머지 파라미터들도 입력합니다. 대부분 기본값을 사용합니다.
 
@@ -74,13 +74,13 @@ VPC01,02,03 3개의 VPC를 Cloudformation에서 앞서 과정과 동일하게 �
 * InstanceTyep: t3.small
 * KeyPair : 사전에 만들어 둔 keyPair를 사용합니다. 
 
-![](.gitbook/assets/image%20%2832%29.png)
+![](.gitbook/assets/image%20%2833%29.png)
 
 아래와 같이 VPC가 모두 정상적으로 설정되었는지 확인해 봅니다.
 
 AWS 관리콘솔 - VPC
 
-![](.gitbook/assets/image%20%2819%29.png)
+![](.gitbook/assets/image%20%2820%29.png)
 
 ## GWLB 구성 확인
 
@@ -91,13 +91,13 @@ GWLBVPC 구성을 확인해 봅니다.
 3. VPC Endpoint 와 Service 확인
 4. Appliance 확인 
 
-![](.gitbook/assets/image%20%2818%29.png)
+![](.gitbook/assets/image%20%2819%29.png)
 
 ### 3.GWLB 구성 
 
 AWS 관리 콘솔 - EC2 - 로드밸런싱 - 로드밸런서 메뉴를 선택합니다. Gateway LoadBalancer 구성을 확인할 수 있습니다. ELB 유형이 "gateway"로 구성된 것을 확인 할 수 있습니다.
 
-![](.gitbook/assets/image%20%2820%29.png)
+![](.gitbook/assets/image%20%2821%29.png)
 
 ### 4.GWLB Target Group 구성 
 
@@ -106,13 +106,13 @@ AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹을 선택합니다. GW
 *  프로토콜 : GENEVE 6081 \(포트 6081의 GENGEVE 프로토콜을 사용하여 모든 IP 패킷을 수신하고 리스너 규칙에 지정된 대상 그룹에 트래픽을 전달합니다.\)
 * 등록된 대상 : GWLB가 로드밸런싱을 하고 있는 Target 장비를 확인합니다.
 
-![](.gitbook/assets/image%20%286%29.png)
+![](.gitbook/assets/image%20%287%29.png)
 
 AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹 - 상태검사 메뉴를 확인합니다.
 
 ELB와 동일하게 대상그룹\(Target Group\)에 상태를 검사할 수 있습니다. 이 랩에서는 HTTP  Path / 를 통해서 Health Check를 하도록 구성했습니다.
 
-![](.gitbook/assets/image%20%2829%29.png)
+![](.gitbook/assets/image%20%2830%29.png)
 
 ### 5. VPC Endpoint Service 확인
 
@@ -126,25 +126,25 @@ AWS 관리 콘솔 - VPC - 엔드포인트 서비스를 선택합니다. 생성�
 
 2개 영역에 걸쳐서 GWLB에 대해 VPC Endpoint Service를 구성하고 있습니다.
 
-![](.gitbook/assets/image%20%2822%29.png)
+![](.gitbook/assets/image%20%2823%29.png)
 
 AWS 관리 콘솔 - VPC - 엔드포인트 서비스-엔드포인트 연결를 선택합니다.
 
 Workload VPC \(VPC01,02,03\)의 각 가용영역들과 연결된 것을 확인 할 수 있습니다. 각 VPC별 2개의 가용영역을 구성하였기 때문에 VPC별 2개의 Endpoint가 연결됩니다.
 
-![](.gitbook/assets/image%20%289%29.png)
+![](.gitbook/assets/image%20%2810%29.png)
 
 ### 6. Appliance 확인 
 
 AWS 관리 콘솔 - EC2 - 인스턴스 메뉴를 선택하고, "appliance" 키워드로 필터링 해 봅니다. 4개의 리눅스 기반의 appliance가 설치되어 있습니다.
 
-![](.gitbook/assets/image%20%2824%29.png)
+![](.gitbook/assets/image%20%2825%29.png)
 
 Appliance 구성 정보를 확인해 봅니다.
 
 AWS 관리콘솔 - Cloudformation - 스택을 선택하면, 앞서 배포했던 Cloudformation 스택들을 확인 할 수 있습니다. "GWLBVPC"를 선택합니다. 그리고 출력을 선택합니다. 값을 확인해 보면 공인 IP 주소를 확인 할 수 있습니다.
 
-![](.gitbook/assets/image%20%2821%29.png)
+![](.gitbook/assets/image%20%2822%29.png)
 
 앞서 사전 준비에서 생성한 Cloud9에서 Appliance로 직접 접속해 봅니다.
 
@@ -239,7 +239,7 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101  이며, Appliance IP와 터�
 2. Private Subnet Route Table 확인
 3. Ingress Routing Table 확인
 
-![](.gitbook/assets/image%20%2834%29.png)
+![](.gitbook/assets/image%20%2835%29.png)
 
 아래 흐름과 같이 트래픽이 처리됩니다.
 
@@ -254,29 +254,29 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101  이며, Appliance IP와 터�
 9. Private Subnet 인스턴스로 전달 
 10. Return되는 트래픽은 Private Subnet의 Route Table에 의해 VPC Endpoint로 다시 전
 
-![](.gitbook/assets/image%20%2811%29.png)
+![](.gitbook/assets/image%20%2812%29.png)
 
 ### 7.VPC Endpoint 확인
 
 AWS 관리 콘솔 - VPC - Endpoint를 선택하여 실제 구성된 VPC Endpoint를 확인해 봅니다. 3개의 VPC에 2개씩 구성된 AZ를 위해 총 6개의 Endpoint가 구성되어 있습니다. \(VPC Endpoint는 AZ Subnet당 연결됩니다.\)
 
-![](.gitbook/assets/image%20%2833%29.png)
+![](.gitbook/assets/image%20%2834%29.png)
 
 ### 8. Private Subnet Route Table 확인
 
 AWS 관리콘솔 - VPC - 라우팅 테이블을 선택하고 VPC01,02,03-Private-Subnet-A,B-RT 이름의 라우팅 테이블을 확인해 봅니다. Return되는 트래픽의 경로는 GWLB VPC Endpoint로 설정되어 있습니다.
 
-![](.gitbook/assets/image%20%2814%29.png)
+![](.gitbook/assets/image%20%2815%29.png)
 
-![](.gitbook/assets/image%20%2835%29.png)
+![](.gitbook/assets/image%20%2836%29.png)
 
 ### 9. Ingress Routing Table 확인
 
 AWS 관리콘솔 - VPC - 라우팅 테이블을 선택하고 VPC01,02,03-IGW-Ingress-RT 이름의 라우팅 테이블을 확인해 봅니다.  Ingress Routing Table에 대한 구성을 확인 할 수 있습니다. VPC로 인입 되는 트래픽을 특정 경로로 보내는 역할을 합니다. 여기에서는 GWLB VPC Endpoint로 구성하도록 되어 있습니다.
 
-![](.gitbook/assets/image%20%2823%29.png)
+![](.gitbook/assets/image%20%2824%29.png)
 
-![](.gitbook/assets/image%20%2813%29.png)
+![](.gitbook/assets/image%20%2814%29.png)
 
 ## 트래픽 확인.
 
@@ -290,9 +290,9 @@ VPC01,02,03 을 Cloudformation을 통해 배포할 때 해당 인스턴스들에
 
 아래 그림에서 처럼 확인해 볼 수 있습니다.
 
-![](.gitbook/assets/image%20%284%29.png)
-
 ![](.gitbook/assets/image%20%285%29.png)
+
+![](.gitbook/assets/image%20%286%29.png)
 
 먼저 Cloud9에 Session Manager 기반 접속을 위해 아래와 같이 설치합니다.
 
@@ -411,17 +411,17 @@ tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 byt
     54.230.62.60 > 10.1.21.101: ICMP echo reply, id 1591, seq 370, length 64
 ```
 
-Source IP와  Destination IP가 모두 유지된 채로 통신하는 것을 확인 할 수 있습니다. 이제 다른 VPC와 다른 서브넷의 EC2에서도 트래픽이 정상적으로 처리되는지 확인해 봅니다.
+Source IP와  Destination IP가 모두 유지된 채로 통신하는 것을 확인 할 수 있습니다. 
 
+이제 다른 VPC와 다른 서브넷의 EC2에서도 트래픽이 정상적으로 처리되는지 확인해 봅니다.
 
-
-자원 삭제
+## 자원 삭제
 
 AWS 관리콘솔 - Cloudformation - 스택 을 선택하고 생성된 Stack을 , 생성된 역순으로 삭제합니다.
 
 VPC01,VPC02,VPC03-GWLBVPC 순으로 삭제합니다.\(Cloud9은 계속 사용하기 위해 삭제 하지 않습니다.\)  VPC01,02,03이 완전히 삭제된후, GWLBVPC를 삭제 합니다.
 
-
+![](.gitbook/assets/image%20%282%29.png)
 
 
 
