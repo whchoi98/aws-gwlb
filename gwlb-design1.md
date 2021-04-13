@@ -411,7 +411,17 @@ tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 byt
     54.230.62.60 > 10.1.21.101: ICMP echo reply, id 1591, seq 370, length 64
 ```
 
-Source IP와  Destination IP가 모두 유지된 채로 통신하는 것을 확인 할 수 있습니다.
+Source IP와  Destination IP가 모두 유지된 채로 통신하는 것을 확인 할 수 있습니다. 이제 다른 VPC와 다른 서브넷의 EC2에서도 트래픽이 정상적으로 처리되는지 확인해 봅니다.
+
+
+
+자원 삭제
+
+AWS 관리콘솔 - Cloudformation - 스택 을 선택하고 생성된 Stack을 , 생성된 역순으로 삭제합니다.
+
+VPC01,VPC02,VPC03-GWLBVPC 순으로 삭제합니다.\(Cloud9은 계속 사용하기 위해 삭제 하지 않습니다.\)  VPC01,02,03이 완전히 삭제된후, GWLBVPC를 삭제 합니다.
+
+
 
 
 
