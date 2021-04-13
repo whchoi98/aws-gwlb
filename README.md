@@ -12,5 +12,11 @@ description: 'update : 2021-03-31'
 
 ### GWLB Design 2
 
-### GWLB PaloAlto 연
+### GWLB PaloAlto 연동
+
+
+
+아래 Slack Channel에서 관련 Workshop에 대한 질의응답을 확인 할 수 있습니다.
+
+
 
