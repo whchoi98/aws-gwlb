@@ -74,7 +74,7 @@ VPC01,02,03 3개의 VPC를 Cloudformation에서 앞서 과정과 동일하게 �
 * InstanceTyep: t3.small
 * KeyPair : 사전에 만들어 둔 keyPair를 사용합니다. 
 
-![](.gitbook/assets/image%20%2823%29.png)
+![](.gitbook/assets/image%20%2825%29.png)
 
 아래와 같이 VPC가 모두 정상적으로 설정되었는지 확인해 봅니다.
 
@@ -89,7 +89,7 @@ GWLBVPC 구성을 확인해 봅니다.
 1. GWLB 구성
 2. GWLB Target Group 구성
 3. VPC Endpoint 와 Service 확인
-4. Appliance 확
+4. Appliance 확인 
 
 ![](.gitbook/assets/image%20%2812%29.png)
 
@@ -112,7 +112,7 @@ AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹 - 상태검사 메뉴�
 
 ELB와 동일하게 대상그룹\(Target Group\)에 상태를 검사할 수 있습니다. 이 랩에서는 HTTP  Path / 를 통해서 Health Check를 하도록 구성했습니다.
 
-![](.gitbook/assets/image%20%2820%29.png)
+![](.gitbook/assets/image%20%2822%29.png)
 
 ### 5. VPC Endpoint Service 확인
 
@@ -126,7 +126,7 @@ AWS 관리 콘솔 - VPC - 엔드포인트 서비스를 선택합니다. 생성�
 
 2개 영역에 걸쳐서 GWLB에 대해 VPC Endpoint Service를 구성하고 있습니다.
 
-![](.gitbook/assets/image%20%2815%29.png)
+![](.gitbook/assets/image%20%2816%29.png)
 
 AWS 관리 콘솔 - VPC - 엔드포인트 서비스-엔드포인트 연결를 선택합니다.
 
@@ -134,7 +134,104 @@ Workload VPC \(VPC01,02,03\)의 각 가용영역들과 연결된 것을 확인 �
 
 ![](.gitbook/assets/image%20%287%29.png)
 
-## Workload VPC 구성 확인
+### 6. Appliance 확인 
+
+AWS 관리 콘솔 - EC2 - 인스턴스 메뉴를 선택하고, "appliance" 키워드로 필터링 해 봅니다. 4개의 리눅스 기반의 appliance가 설치되어 있습니다.
+
+![](.gitbook/assets/image%20%2817%29.png)
+
+Appliance 구성 정보를 확인해 봅니다.
+
+AWS 관리콘솔 - Cloudformation - 스택을 선택하면, 앞서 배포했던 Cloudformation 스택들을 확인 할 수 있습니다. "GWLBVPC"를 선택합니다. 그리고 출력을 선택합니다. 값을 확인해 보면 공인 IP 주소를 확인 할 수 있습니다.
+
+![](.gitbook/assets/image%20%2815%29.png)
+
+앞서 사전 준비에서 생성한 Cloud9에서 Appliance로 직접 접속해 봅니다.
+
+```text
+export Appliance1={Appliance1ip address}
+export Appliance2={Appliance2ip address}
+export Appliance3={Appliance3ip address}
+export Appliance4={Appliance4ip address}
+```
+
+아래와 같이 구성합니다.
+
+```text
+export Appliance1=3.35.55.51
+export Appliance2=3.35.53.210
+export Appliance3=3.35.5.188
+export Appliance4=3.34.28.238
+echo "export Appliance1=$Appliance1" | tee -a ~/.bash_profile
+echo "export Appliance2=$Appliance2" | tee -a ~/.bash_profile
+echo "export Appliance3=$Appliance3" | tee -a ~/.bash_profile
+echo "export Appliance4=$Appliance4" | tee -a ~/.bash_profile
+source ~/.bash_profile
+
+```
+
+cloud9에서 아래와 같이 각 Appliance로 접속해 봅니다.
+
+```text
+ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance1
+ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance2
+ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance3
+ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance4
+
+```
+
+각 Appliance에서 아래 명령을 통해 , GWLB IP와 어떻게 매핑되었는지 확인합니다.
+
+```text
+sudo iptables -L -n -v -t nat
+
+```
+
+AZ A에 배포된 Appliance는 다음과 같이 출력됩니다.
+
+```text
+[ec2-user@ip-10-254-11-101 ~]$ sudo iptables -L -n -v -t nat
+Chain PREROUTING (policy ACCEPT 4987 packets, 298K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+  178 22464 DNAT       udp  --  eth0   *       10.254.11.60         10.254.11.101        to:10.254.11.60:6081
+
+Chain INPUT (policy ACCEPT 4987 packets, 298K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 1315 packets, 102K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain POSTROUTING (policy ACCEPT 1315 packets, 102K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+  178 22464 MASQUERADE  udp  --  *      eth0    10.254.11.60         10.254.11.60         udp dpt:6081
+```
+
+GENEVE 터널링의 GWLB IP주소는 10.254.11.60  이며, Appliance IP와 터널링 된 것을 확인 할 수 있습니다.
+
+AZ B에 배포된 Appliance는 다음과 같이 출력됩니다.
+
+```text
+[ec2-user@ip-10-254-12-101 ~]$ sudo iptables -L -n -v -t nat
+Chain PREROUTING (policy ACCEPT 5313 packets, 316K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+  192 23456 DNAT       udp  --  eth0   *       10.254.12.149        10.254.12.101        to:10.254.12.149:6081
+
+Chain INPUT (policy ACCEPT 5313 packets, 316K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 1626 packets, 123K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain POSTROUTING (policy ACCEPT 1626 packets, 123K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+  192 23456 MASQUERADE  udp  --  *      eth0    10.254.12.149        10.254.12.149        udp dpt:6081
+```
+
+GENEVE 터널링의 GWLB IP주소는 10.254.12.101  이며, Appliance IP와 터널링 된 것을 확인 할 수 있습니다.
+
+이렇게 GWLB 에서 생성된 IP주소와 각 Appliance의 IP간에 UDP 6081 포트로 터널링되어 , 외부의 IP 주소와 내부의 IP 주소를 그대로 유지할 수 있습니다. 또한 터널링으로 인입시 5Tuple \(출발지 IP, Port, 목적지 IP, Port, 프로토콜\)의 정보를 TLV로 Encapsulation하여 분산처리할 때 사용합니다.
+
+
 
 
 
