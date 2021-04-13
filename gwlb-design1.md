@@ -235,7 +235,11 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101  이며, Appliance IP와 터�
 
 이제 각 VPC에서 실제 구성과 트래픽을 확인해 봅니다.
 
+1. VPC Endpoint 확인
+2. Private Subnet Route Table 확인
+3. Ingress Routing Table 확인
 
+![](.gitbook/assets/image%20%2826%29.png)
 
 
 
