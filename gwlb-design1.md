@@ -26,11 +26,11 @@ description: 'update : 2021-03-31'
 
 AWS 관리콘솔에서 Cloudformation을 선택합니다.
 
-![](.gitbook/assets/image%20%286%29.png)
+![](.gitbook/assets/image%20%288%29.png)
 
 앞서 다운로드 해둔 yaml 파일 중에서, 아래 그림과 같이 GWLBVPC.yml 파일을 선택합니다.
 
-![](.gitbook/assets/image%20%2810%29.png)
+![](.gitbook/assets/image%20%2812%29.png)
 
 스택 세부 정보 지정에서 , 스택이름과 VPC Parameters를 지정합니다. 대부분 기본값을 사용하면 됩니다.
 
@@ -43,7 +43,7 @@ AWS 관리콘솔에서 Cloudformation을 선택합니다.
 * InstanceTyep: t3.small
 * KeyPair : 사전에 만들어 둔 keyPair를 사용합니다.
 
-![](.gitbook/assets/image%20%288%29.png)
+![](.gitbook/assets/image%20%2810%29.png)
 
 다음 단계를 계속 진행하고, 아래와 같이 "AWS CloudFormation에서 IAM 리소스를 생성할 수 있음을 승인합니다."를 선택하고, 스택을 생성합니다.
 
@@ -55,11 +55,11 @@ AWS 관리콘솔 - VPC - 가상 프라이빗 클라우드 - 엔드포인트 서�
 
 서비스 이름을 복사해 둡니다. 뒤에서 생성할 VPC들의 Cloudformation에서 사용할 것입니다.
 
-![](.gitbook/assets/image%20%285%29.png)
+![](.gitbook/assets/image%20%287%29.png)
 
 VPC01,02,03 3개의 VPC를 Cloudformation에서 앞서 과정과 동일하게 생성합니다. 다운로드 받은 Yaml 파일들 중에 VPC01.yml, VPC02,yml, VPC03.yml을 차례로 선택해서 생성합니다.
 
-![](.gitbook/assets/image%20%2814%29.png)
+![](.gitbook/assets/image%20%2816%29.png)
 
 스택 이름을 생성하고, GWLBVPC의 VPC Endpoint 서비스 이름을 "VPCEndpointServiceName" 에 입력합니다. 또한 나머지 파라미터들도 입력합니다. 대부분 기본값을 사용합니다.
 
@@ -74,13 +74,13 @@ VPC01,02,03 3개의 VPC를 Cloudformation에서 앞서 과정과 동일하게 �
 * InstanceTyep: t3.small
 * KeyPair : 사전에 만들어 둔 keyPair를 사용합니다. 
 
-![](.gitbook/assets/image%20%2830%29.png)
+![](.gitbook/assets/image%20%2832%29.png)
 
 아래와 같이 VPC가 모두 정상적으로 설정되었는지 확인해 봅니다.
 
 AWS 관리콘솔 - VPC
 
-![](.gitbook/assets/image%20%2817%29.png)
+![](.gitbook/assets/image%20%2819%29.png)
 
 ## GWLB 구성 확인
 
@@ -91,13 +91,13 @@ GWLBVPC 구성을 확인해 봅니다.
 3. VPC Endpoint 와 Service 확인
 4. Appliance 확인 
 
-![](.gitbook/assets/image%20%2816%29.png)
+![](.gitbook/assets/image%20%2818%29.png)
 
 ### 3.GWLB 구성 
 
 AWS 관리 콘솔 - EC2 - 로드밸런싱 - 로드밸런서 메뉴를 선택합니다. Gateway LoadBalancer 구성을 확인할 수 있습니다. ELB 유형이 "gateway"로 구성된 것을 확인 할 수 있습니다.
 
-![](.gitbook/assets/image%20%2818%29.png)
+![](.gitbook/assets/image%20%2820%29.png)
 
 ### 4.GWLB Target Group 구성 
 
@@ -106,13 +106,13 @@ AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹을 선택합니다. GW
 *  프로토콜 : GENEVE 6081 \(포트 6081의 GENGEVE 프로토콜을 사용하여 모든 IP 패킷을 수신하고 리스너 규칙에 지정된 대상 그룹에 트래픽을 전달합니다.\)
 * 등록된 대상 : GWLB가 로드밸런싱을 하고 있는 Target 장비를 확인합니다.
 
-![](.gitbook/assets/image%20%284%29.png)
+![](.gitbook/assets/image%20%286%29.png)
 
 AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹 - 상태검사 메뉴를 확인합니다.
 
 ELB와 동일하게 대상그룹\(Target Group\)에 상태를 검사할 수 있습니다. 이 랩에서는 HTTP  Path / 를 통해서 Health Check를 하도록 구성했습니다.
 
-![](.gitbook/assets/image%20%2827%29.png)
+![](.gitbook/assets/image%20%2829%29.png)
 
 ### 5. VPC Endpoint Service 확인
 
@@ -126,25 +126,25 @@ AWS 관리 콘솔 - VPC - 엔드포인트 서비스를 선택합니다. 생성�
 
 2개 영역에 걸쳐서 GWLB에 대해 VPC Endpoint Service를 구성하고 있습니다.
 
-![](.gitbook/assets/image%20%2820%29.png)
+![](.gitbook/assets/image%20%2822%29.png)
 
 AWS 관리 콘솔 - VPC - 엔드포인트 서비스-엔드포인트 연결를 선택합니다.
 
 Workload VPC \(VPC01,02,03\)의 각 가용영역들과 연결된 것을 확인 할 수 있습니다. 각 VPC별 2개의 가용영역을 구성하였기 때문에 VPC별 2개의 Endpoint가 연결됩니다.
 
-![](.gitbook/assets/image%20%287%29.png)
+![](.gitbook/assets/image%20%289%29.png)
 
 ### 6. Appliance 확인 
 
 AWS 관리 콘솔 - EC2 - 인스턴스 메뉴를 선택하고, "appliance" 키워드로 필터링 해 봅니다. 4개의 리눅스 기반의 appliance가 설치되어 있습니다.
 
-![](.gitbook/assets/image%20%2822%29.png)
+![](.gitbook/assets/image%20%2824%29.png)
 
 Appliance 구성 정보를 확인해 봅니다.
 
 AWS 관리콘솔 - Cloudformation - 스택을 선택하면, 앞서 배포했던 Cloudformation 스택들을 확인 할 수 있습니다. "GWLBVPC"를 선택합니다. 그리고 출력을 선택합니다. 값을 확인해 보면 공인 IP 주소를 확인 할 수 있습니다.
 
-![](.gitbook/assets/image%20%2819%29.png)
+![](.gitbook/assets/image%20%2821%29.png)
 
 앞서 사전 준비에서 생성한 Cloud9에서 Appliance로 직접 접속해 봅니다.
 
@@ -239,7 +239,7 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101  이며, Appliance IP와 터�
 2. Private Subnet Route Table 확인
 3. Ingress Routing Table 확인
 
-![](.gitbook/assets/image%20%2832%29.png)
+![](.gitbook/assets/image%20%2834%29.png)
 
 아래 흐름과 같이 트래픽이 처리됩니다.
 
@@ -254,35 +254,164 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101  이며, Appliance IP와 터�
 9. Private Subnet 인스턴스로 전달 
 10. Return되는 트래픽은 Private Subnet의 Route Table에 의해 VPC Endpoint로 다시 전
 
-![](.gitbook/assets/image%20%289%29.png)
+![](.gitbook/assets/image%20%2811%29.png)
 
 ### 7.VPC Endpoint 확인
 
 AWS 관리 콘솔 - VPC - Endpoint를 선택하여 실제 구성된 VPC Endpoint를 확인해 봅니다. 3개의 VPC에 2개씩 구성된 AZ를 위해 총 6개의 Endpoint가 구성되어 있습니다. \(VPC Endpoint는 AZ Subnet당 연결됩니다.\)
 
-![](.gitbook/assets/image%20%2831%29.png)
+![](.gitbook/assets/image%20%2833%29.png)
 
 ### 8. Private Subnet Route Table 확인
 
 AWS 관리콘솔 - VPC - 라우팅 테이블을 선택하고 VPC01,02,03-Private-Subnet-A,B-RT 이름의 라우팅 테이블을 확인해 봅니다. Return되는 트래픽의 경로는 GWLB VPC Endpoint로 설정되어 있습니다.
 
-![](.gitbook/assets/image%20%2812%29.png)
+![](.gitbook/assets/image%20%2814%29.png)
 
-![](.gitbook/assets/image%20%2833%29.png)
+![](.gitbook/assets/image%20%2835%29.png)
 
 ### 9. Ingress Routing Table 확인
 
 AWS 관리콘솔 - VPC - 라우팅 테이블을 선택하고 VPC01,02,03-IGW-Ingress-RT 이름의 라우팅 테이블을 확인해 봅니다.  Ingress Routing Table에 대한 구성을 확인 할 수 있습니다. VPC로 인입 되는 트래픽을 특정 경로로 보내는 역할을 합니다. 여기에서는 GWLB VPC Endpoint로 구성하도록 되어 있습니다.
 
-![](.gitbook/assets/image%20%2821%29.png)
+![](.gitbook/assets/image%20%2823%29.png)
 
-![](.gitbook/assets/image%20%2811%29.png)
+![](.gitbook/assets/image%20%2813%29.png)
 
+## 트래픽 확인.
 
+### 10. Workload VPC의 EC2에서 트래픽 확인
 
+VPC 01,02,03의 EC2에서 외부로 정상적으로 트래픽이 처리되는 지 확인 해 봅니다.
 
+Cloud9 터미널을 다시 접속해서 , VPC 01,02,03의 Private Subnet 에 배치된 EC2 인스턴스에 접속해 봅니다. Private Subnet은 직접 연결이 불가능하기 때문에 Session Manager를 통해 접속합니다.
 
+VPC01,02,03 을 Cloudformation을 통해 배포할 때 해당 인스턴스들에 Session Manager 접속을 위한 Role과 Session Manager 연결을 위한 Endpoint가 이미 구성되어 있습니다.
 
+아래 그림에서 처럼 확인해 볼 수 있습니다.
+
+![](.gitbook/assets/image%20%284%29.png)
+
+![](.gitbook/assets/image%20%285%29.png)
+
+먼저 Cloud9에 Session Manager 기반 접속을 위해 아래와 같이 설치합니다.
+
+```text
+curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm"
+sudo yum install -y session-manager-plugin.rpm
+git clone https://github.com/whchoi98/useful-shell.git
+
+```
+
+session manager 기반으로 접속하기 위해, 아래 명령을 실행하여 ec2 인스턴스의 id값을 확인합니다.
+
+```text
+cd ~/environment/useful-shell/
+./aws_ec2_ext.sh
+
+```
+
+아래와 같이 결과를 확인 할 수 있습니다.
+
+```text
+whchoi:~/environment/useful-shell (master) $ ./aws_ec2_ext.sh 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|                                                                                     DescribeInstances                                                                                    |
++-----------------------------------------------------------+------------------+----------------------+------------+------------------------+----------+----------------+------------------+
+|  GWLBVPC-Appliance-10.254.12.101                          |  ap-northeast-2b |  i-065852170f36be268 |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.254.12.101 |  3.35.5.188      |
+|  GWLBVPC-Appliance-10.254.12.102                          |  ap-northeast-2b |  i-0cd6b81597257e7a0 |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.254.12.102 |  3.34.28.238     |
+|  VPC02-Private-B-10.2.22.102                              |  ap-northeast-2b |  i-022bfff134299b305 |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.2.22.102   |  13.125.203.174  |
+|  VPC01-Private-B-10.1.22.101                              |  ap-northeast-2b |  i-09ba281fa2130726a |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.1.22.101   |  13.209.2.88     |
+|  VPC03-Private-B-10.3.22.101                              |  ap-northeast-2b |  i-0c3c92c6fc8c9c691 |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.3.22.101   |  52.78.149.110   |
+|  VPC03-Private-B-10.3.22.102                              |  ap-northeast-2b |  i-01d50385674c2884b |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.3.22.102   |  13.125.240.3    |
+|  VPC01-Private-B-10.1.22.102                              |  ap-northeast-2b |  i-05e27a3db037bc1bd |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.1.22.102   |  3.35.225.49     |
+|  VPC02-Private-B-10.2.22.101                              |  ap-northeast-2b |  i-0548e17996fd96d57 |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.2.22.101   |  13.125.91.69    |
+|  GWLBVPC-Appliance-10.254.11.102                          |  ap-northeast-2a |  i-08d1d4dda9d43e487 |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.254.11.102 |  3.35.53.210     |
+|  GWLBVPC-Appliance-10.254.11.101                          |  ap-northeast-2a |  i-0ba703c865a94fd04 |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.254.11.101 |  3.35.55.51      |
+|  VPC01-Private-A-10.1.21.102                              |  ap-northeast-2a |  i-085558b0d0c93b570 |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.1.21.102   |  13.125.15.119   |
+|  VPC03-Private-A-10.3.21.101                              |  ap-northeast-2a |  i-0f6869867c9c1f1ff |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.3.21.101   |  3.36.58.217     |
+|  VPC03-Private-A-10.3.21.102                              |  ap-northeast-2a |  i-0c3cfe2fc1ad3a0eb |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.3.21.102   |  13.125.97.211   |
+|  VPC01-Private-A-10.1.21.101                              |  ap-northeast-2a |  i-0b41f548586fc53c0 |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.1.21.101   |  52.79.199.91    |
+|  VPC02-Private-A-10.2.21.101                              |  ap-northeast-2a |  i-02a6ec623eb3ac8e5 |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.2.21.101   |  3.35.19.145     |
+|  VPC02-Private-A-10.2.21.102                              |  ap-northeast-2a |  i-0f9c43ca89cff209d |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.2.21.102   |  15.165.74.201   |
+|  aws-cloud9-gwlb-console-aec439cc7860438d93a04af41e4f2364 |  ap-northeast-2d |  i-029d2fd2d6485b1d7 |  m5.xlarge |  ami-011f8bfe22440499a |  running |  172.31.63.114 |  3.36.43.51      |
++-----------------------------------------------------------+------------------+----------------------+------------+------------------------+----------+----------------+------------------+
+```
+
+session manager 명령을 통해 해당 인스턴스에 연결해 봅니다. \(VPC01-Private-A-10.1.21.101\)
+
+```text
+aws ssm start-session --target instance-id
+```
+
+터미널에 접속한 후에 , 아래 명령을 통해 bash로 접근해서 외부로 트래픽을 전송해 봅니다.
+
+```text
+sudo -s
+ping www.aws.com
+
+```
+
+아래와 같은 결과를 확인할 수 있습니다.
+
+```text
+whchoi:~/environment/useful-shell (master) $ aws ssm start-session --target i-0b41f548586fc53c0
+
+Starting session with SessionId: whchoi-01dc306dd4b046251
+sh-4.2$ sudo -s
+[root@ip-10-1-21-101 bin]# ping www.aws.com
+PING aws.com (54.230.62.60) 56(84) bytes of data.
+64 bytes from server-54-230-62-60.icn54.r.cloudfront.net (54.230.62.60): icmp_seq=1 ttl=240 time=2.51 ms
+64 bytes from server-54-230-62-60.icn54.r.cloudfront.net (54.230.62.60): icmp_seq=2 ttl=240 time=2.08 ms
+64 bytes from server-54-230-62-60.icn54.r.cloudfront.net (54.230.62.60): icmp_seq=3 ttl=240 time=2.08 ms
+```
+
+### 11. Appliance에서 확인
+
+앞서 Session manager를 통해 www.aws.com으로 ping을 실행했습니다. 해당 터미널을 실행한 상태에서 Cloud9 터미널을 2개로 추가로 열어 봅니다. 
+
+아래와 같이 2개의 Appliance에 SSH로 연결해서 명령을 실행해 보고, Appliance로 Traffic이 들어오는지 확인해 봅니다.
+
+Cloud9 터미널 1
+
+```text
+ssh -i ~/environment/JAN-2021-whchoi.pem ec2-user@$Appliance1
+sudo tcpdump -nvv 'port 6081'
+
+```
+
+Cloud9 터미널 2
+
+```text
+ssh -i ~/environment/JAN-2021-whchoi.pem ec2-user@$Appliance2
+sudo tcpdump -nvv 'port 6081'
+
+```
+
+다음과 같이 1개의 터미널에서 icmp가 처리되는 것을 확인 할 수 있습니다.
+
+```text
+[ec2-user@ip-10-254-11-101 ~]$ sudo tcpdump -nvv 'port 6081'
+tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 bytes
+15:58:04.744658 IP (tos 0x0, ttl 255, id 0, offset 0, flags [none], proto UDP (17), length 152)
+    10.254.11.60.60001 > 10.254.11.101.6081: [udp sum ok] Geneve, Flags [none], vni 0x0, options [class Unknown (0x108) type 0x1 len 12 data 2356de92 d389839c, class Unknown (0x108) type 0x2 len 12 data 00000000 00000000, class Unknown (0x108) type 0x3 len 8 data 98ef1b00]
+        IP (tos 0x0, ttl 254, id 27551, offset 0, flags [DF], proto ICMP (1), length 84)
+    10.1.21.101 > 54.230.62.60: ICMP echo request, id 1591, seq 370, length 64
+15:58:04.744689 IP (tos 0x0, ttl 254, id 0, offset 0, flags [none], proto UDP (17), length 152)
+    10.254.11.101.60001 > 10.254.11.60.6081: [udp sum ok] Geneve, Flags [none], vni 0x0, options [class Unknown (0x108) type 0x1 len 12 data 2356de92 d389839c, class Unknown (0x108) type 0x2 len 12 data 00000000 00000000, class Unknown (0x108) type 0x3 len 8 data 98ef1b00]
+        IP (tos 0x0, ttl 254, id 27551, offset 0, flags [DF], proto ICMP (1), length 84)
+    10.1.21.101 > 54.230.62.60: ICMP echo request, id 1591, seq 370, length 64
+15:58:04.746459 IP (tos 0x0, ttl 255, id 0, offset 0, flags [none], proto UDP (17), length 152)
+    10.254.11.60.60001 > 10.254.11.101.6081: [udp sum ok] Geneve, Flags [none], vni 0x0, options [class Unknown (0x108) type 0x1 len 12 data 2356de92 d389839c, class Unknown (0x108) type 0x2 len 12 data 00000000 00000000, class Unknown (0x108) type 0x3 len 8 data 98ef1b00]
+        IP (tos 0x0, ttl 241, id 28778, offset 0, flags [none], proto ICMP (1), length 84)
+    54.230.62.60 > 10.1.21.101: ICMP echo reply, id 1591, seq 370, length 64
+15:58:04.746476 IP (tos 0x0, ttl 254, id 0, offset 0, flags [none], proto UDP (17), length 152)
+    10.254.11.101.60001 > 10.254.11.60.6081: [udp sum ok] Geneve, Flags [none], vni 0x0, options [class Unknown (0x108) type 0x1 len 12 data 2356de92 d389839c, class Unknown (0x108) type 0x2 len 12 data 00000000 00000000, class Unknown (0x108) type 0x3 len 8 data 98ef1b00]
+        IP (tos 0x0, ttl 241, id 28778, offset 0, flags [none], proto ICMP (1), length 84)
+    54.230.62.60 > 10.1.21.101: ICMP echo reply, id 1591, seq 370, length 64
+```
+
+Source IP와  Destination IP가 모두 유지된 채로 통신하는 것을 확인 할 수 있습니다.
 
 
 
