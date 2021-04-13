@@ -118,7 +118,19 @@ ELB와 동일하게 대상그룹\(Target Group\)에 상태를 검사할 수 있�
 
 Workload VPC\(VPC01,02,03\)들과 Private link로 연결하기 위해, GWLB VPC에 Endpoint Service를 구성하였습니다. 이를 확인해 봅니다.
 
+AWS 관리 콘솔 - VPC - 엔드포인트 서비스를 선택합니다. 생성된 VPC Endpoint Service를 확인할 수 있습니다.
+
+* 서비스 이름 - 예 com.amazonaws.vpce.ap-northeast-2.vpce-svc-03f01aa9fbb85beb4
+* 유형 : GatewayLoadBalancer
+* 가용영역 : ap-northeast-2a, ap-northeast-2b
+
+2개 영역에 걸쳐서 GWLB에 대해 VPC Endpoint Service를 구성하고 있습니다.
+
 ![](.gitbook/assets/image%20%2815%29.png)
+
+AWS 관리 콘솔 - VPC - 엔드포인트 서비스-엔드포인트 연결를 선택합니다.
+
+Workload VPC \(VPC01,02,03\)의 각 가용영역들과 연결된 것을 확인 할 수 있습니다. 각 VPC별 2개의 가용영역을 구성하였기 때문에 VPC별 2개의 Endpoint가 연결됩니다.
 
 ![](.gitbook/assets/image%20%287%29.png)
 
