@@ -10,7 +10,7 @@ description: 'Update : 2021-04-12 / 1h'
 
 아래 그림은 목표 구성도 입니다.
 
-
+![](.gitbook/assets/image%20%2858%29.png)
 
 ## Cloudformation기반 VPC 배포
 
