@@ -22,8 +22,6 @@ description: 'Update : 2021-04-12 / 1h'
 
 ```
 
-### 2.AWS 관리콘솔에서 VPC 배포
-
 AWS 관리콘솔에서 Cloudformation을 선택합니다.
 
 ![](.gitbook/assets/image%20%2847%29.png)
@@ -34,6 +32,8 @@ AWS 관리콘솔에서 Cloudformation을 선택합니다.
 2. N2SVPC.yml
 3. VPC01.yml, VPC02.yml
 4. GWLBTGW.yml
+
+### 2.GWLB VPC 배포
 
 앞서 다운로드 해둔 yaml 파일 중에서, 아래 그림과 같이 GWLBVPC.yml 파일을 선택합니다.
 
@@ -64,6 +64,10 @@ AWS 관리콘솔 - VPC - 가상 프라이빗 클라우드 - 엔드포인트 서�
 
 ![](.gitbook/assets/image%20%2837%29.png)
 
+### 3.N2SVPC 배포 
+
+외부 인터넷으로 통신하는 North-South 트래픽 처리를 하는 VPC를 생성합니다.
+
 N2SVPC를 Cloudformation에서 앞서 과정과 동일하게 생성합니다. 다운로드 받은 Yaml 파일들 중에 N2SVPC 선택해서 생성합니다.스택 이름을 생성하고, GWLBVPC의 VPC Endpoint 서비스 이름을 "VPCEndpointServiceName" 에 입력합니다. 또한 나머지 파라미터들도 입력합니다. 대부분 기본값을 사용합니다.
 
 ![](.gitbook/assets/image%20%2849%29.png)
@@ -86,6 +90,8 @@ N2SVPC를 Cloudformation에서 앞서 과정과 동일하게 생성합니다. �
 * VPCEndpointServiceName : 앞서 복사해둔 GWLBVPC의 VPC endpoint service name을 입력합니다.
 * InstanceTyep: t3.small
 * KeyPair : 사전에 만들어 둔 keyPair를 사용합니다.
+
+### 4.VPC01,02 배포  
 
 #### 나머지 VPC01,VPC02,VPC03 의 Cloudformation Yaml 파일을 업로드 합니다.
 
@@ -116,6 +122,18 @@ N2SVPC, VPC01,02,03 을 연결할 TGW를 생성합니다.  N2STGW는 TGW Routing
 ![](.gitbook/assets/image%20%2840%29.png)
 
 아래와 같이 VPC가 모두 정상적으로 설정되었는지 확인해 봅니다.
+
+AWS 관리 콘솔 - VPC 대시 보드 - VPC
+
+![](.gitbook/assets/image%20%2859%29.png)
+
+AWS 관리 콘솔 - VPC 대시 보드 - 서브
+
+![](.gitbook/assets/image%20%2860%29.png)
+
+
+
+### 5.TransitGateway 배 
 
 
 
