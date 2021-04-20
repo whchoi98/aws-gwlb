@@ -10,7 +10,7 @@ description: 'Update : 2021-04-12 / 1h'
 
 아래 그림은 목표 구성도 입니다.
 
-![](.gitbook/assets/image%20%2864%29.png)
+![](.gitbook/assets/image%20%2865%29.png)
 
 ## Cloudformation기반 VPC 배포
 
@@ -125,50 +125,50 @@ N2SVPC, VPC01,02,03 을 연결할 TGW를 생성합니다.  N2STGW는 TGW Routing
 
 AWS 관리 콘솔 - VPC 대시 보드 - VPC
 
-![](.gitbook/assets/image%20%2871%29.png)
+![](.gitbook/assets/image%20%2873%29.png)
 
 AWS 관리 콘솔 - VPC 대시 보드 - 서브
 
-![](.gitbook/assets/image%20%2876%29.png)
+![](.gitbook/assets/image%20%2878%29.png)
 
 ### 5. TransitGateway 배포 
 
 N2SVPC, VPC01,VPC02을 연결하기 위한 TransitGateway를 배포합니다. 앞서 git을 통해 다운 받은 파일 중 GWLBTGW.yml 파일을 Cloudformation을 통해서 배포합니다.
 
-![](.gitbook/assets/image%20%2877%29.png)
+![](.gitbook/assets/image%20%2879%29.png)
 
 Default Route Table과 VPC01, VPC02 CIDR 주소를 입력합니다. \(기본 값으로 설정되어 있습니다.\)
 
-![](.gitbook/assets/image%20%2861%29.png)
+![](.gitbook/assets/image%20%2862%29.png)
 
 ### 6. 라우팅 테이블 확인  
 
 TransitGateway 구성과 RouteTable을 아래에서 확인합니다. 
 
-![](.gitbook/assets/image%20%2862%29.png)
+![](.gitbook/assets/image%20%2863%29.png)
 
 AWS 관리 콘솔 - VPC 대시보드 - TransitGateway 에서 TransitGateway가 정상적으로 구성되었는지 확인합니다.
 
-![](.gitbook/assets/image%20%2873%29.png)
+![](.gitbook/assets/image%20%2875%29.png)
 
 AWS 관리 콘솔 - VPC 대시보드 - TransitGateway- TransitGateway 연결\(Attachment\) 에서 TransitGateway와 VPC가 정상적으로 연결되었는지 확인합니다.
 
-![](.gitbook/assets/image%20%2859%29.png)
+![](.gitbook/assets/image%20%2860%29.png)
 
 AWS 관리콘솔 - VPC 대시보드 -TransitGateway-TransitGateway 라우팅 테이블-Route 에서 "GWLBTGW-RT-North-To-South", "GWLBTGW-RT-East-To-West" 라우팅 테이블을 확인합니다.
 
 * GWLBTGW-RT-North-To-South : VPC01,VPC02 에서 인터넷으로 향하는 트래픽
 * GWLBTGW-RT-East-To-West: VPC01,VPC02 상호간에 트래
 
-![](.gitbook/assets/image%20%2883%29.png)
+![](.gitbook/assets/image%20%2885%29.png)
 
-![](.gitbook/assets/image%20%2870%29.png)
+![](.gitbook/assets/image%20%2872%29.png)
 
 AWS 관리 콘솔 -VPC 대시보드 - 가상 프라이빗 클라우드 - 라우팅테이블에서  각 Private-Subnet-A,B-RT 라우팅 테이블을 확인합니다. 
 
 * VPC01,02-Private-Subnet-A,B-RT  : 0.0.0.0/0 - tgw 
 
-![](.gitbook/assets/image%20%2869%29.png)
+![](.gitbook/assets/image%20%2871%29.png)
 
 ## GWLB 구성 확인
 
@@ -185,7 +185,7 @@ GWLBVPC 구성을 확인해 봅니다.
 
 AWS 관리 콘솔 - EC2 - 로드밸런싱 - 로드밸런서 메뉴를 선택합니다. Gateway LoadBalancer 구성을 확인할 수 있습니다. ELB 유형이 "gateway"로 구성된 것을 확인 할 수 있습니다.
 
-![](.gitbook/assets/image%20%2880%29.png)
+![](.gitbook/assets/image%20%2882%29.png)
 
 ### 8.GWLB Target Group 구성 
 
@@ -194,13 +194,13 @@ AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹을 선택합니다. GW
 *  프로토콜 : GENEVE 6081 \(포트 6081의 GENGEVE 프로토콜을 사용하여 모든 IP 패킷을 수신하고 리스너 규칙에 지정된 대상 그룹에 트래픽을 전달합니다.\)
 * 등록된 대상 : GWLB가 로드밸런싱을 하고 있는 Target 장비를 확인합니다.
 
-![](.gitbook/assets/image%20%2868%29.png)
+![](.gitbook/assets/image%20%2870%29.png)
 
 AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹 - 상태검사 메뉴를 확인합니다.
 
 ELB와 동일하게 대상그룹\(Target Group\)에 상태를 검사할 수 있습니다. 이 랩에서는 HTTP  Path / 를 통해서 Health Check를 하도록 구성했습니다.
 
-![](.gitbook/assets/image%20%2860%29.png)
+![](.gitbook/assets/image%20%2861%29.png)
 
 ### 9. VPC Endpoint Service 확인
 
@@ -214,25 +214,25 @@ AWS 관리 콘솔 - VPC - 엔드포인트 서비스를 선택합니다. 생성�
 
 2개 영역에 걸쳐서 GWLB에 대해 VPC Endpoint Service를 구성하고 있습니다.
 
-![](.gitbook/assets/image%20%2875%29.png)
+![](.gitbook/assets/image%20%2877%29.png)
 
 AWS 관리 콘솔 - VPC - 엔드포인트 서비스-엔드포인트 연결를 선택합니다.
 
 N2SVPC의 각 가용영역들과 연결된 것을 확인 할 수 있습니다. VPC별 2개의 가용영역의 Private Subnet에 배치된 VPC Endpoint에 연결된 것을 확인 합니다.
 
-![](.gitbook/assets/image%20%2858%29.png)
+![](.gitbook/assets/image%20%2859%29.png)
 
 ### 10. Appliance 확인 
 
 AWS 관리 콘솔 - EC2 - 인스턴스 메뉴를 선택하고, "appliance" 키워드로 필터링 해 봅니다. 4개의 리눅스 기반의 appliance가 설치되어 있습니다.
 
-![](.gitbook/assets/image%20%2867%29.png)
+![](.gitbook/assets/image%20%2869%29.png)
 
 Appliance 구성 정보를 확인해 봅니다.
 
 AWS 관리콘솔 - Cloudformation - 스택을 선택하면, 앞서 배포했던 Cloudformation 스택들을 확인 할 수 있습니다. "GWLBVPC"를 선택합니다. 그리고 출력을 선택합니다. 값을 확인해 보면 공인 IP 주소를 확인 할 수 있습니다.
 
-![](.gitbook/assets/image%20%2878%29.png)
+![](.gitbook/assets/image%20%2880%29.png)
 
 앞서 사전 준비에서 생성한 Cloud9에서 Appliance로 직접 접속해 봅니다.
 
@@ -337,7 +337,7 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101  이며, Appliance IP와 터�
 
 아래 흐름과 같이 트래픽이 처리됩니다.
 
-![](.gitbook/assets/image%20%2872%29.png)
+![](.gitbook/assets/image%20%2874%29.png)
 
 1. VPC1,2 인스턴스는 외부로 향하기 위해 TransitGateway로 접근
 2. VPC 1,2 Private Subnet Route Table을 참조해서, Transit Gateway로 전
@@ -353,30 +353,164 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101  이며, Appliance IP와 터�
 
 AWS 관리 콘솔 - VPC - Endpoint를 선택하여 실제 구성된 VPC Endpoint를 확인해 봅니다. N2SVPC에 2개씩 구성된 AZ를 위해 2개의 Endpoint가 구성되어 있습니다. \(VPC Endpoint는 AZ Subnet당 연결됩니다.\)
 
-![](.gitbook/assets/image%20%2866%29.png)
+![](.gitbook/assets/image%20%2868%29.png)
 
 ### 12. N2S VPC Route Table 확인
 
 AWS 관리콘솔 - VPC - 라우팅 테이블을 선택하고 각 라우팅 테이블을 확인해 봅니다. 
 
-![](.gitbook/assets/image%20%2863%29.png)
+![](.gitbook/assets/image%20%2864%29.png)
 
 AWS 관리 콘솔 - VPC 대시보드 - 라우팅 테이블 - N2SVPC TGW Routing Table 확인 
 
-![](.gitbook/assets/image%20%2882%29.png)
+![](.gitbook/assets/image%20%2884%29.png)
 
 AWS 관리 콘솔 - VPC 대시보드 - 라우팅 테이블 - N2SVPC Private Routing Table 확인
 
-![](.gitbook/assets/image%20%2874%29.png)
+![](.gitbook/assets/image%20%2876%29.png)
 
 AWS 관리 콘솔 - VPC 대시보드 - 라우팅 테이블 - N2SVPC Public Routing Table 확인
 
-![](.gitbook/assets/image%20%2881%29.png)
+![](.gitbook/assets/image%20%2883%29.png)
 
-### 13. Ingress Routing Table 확인
+## 트래픽 확인
 
-AWS 관리콘솔 - VPC - 라우팅 테이블을 선택하고 VPC01,02,03-IGW-Ingress-RT 이름의 라우팅 테이블을 확인해 봅니다.  Ingress Routing Table에 대한 구성을 확인 할 수 있습니다. VPC로 인입 되는 트래픽을 특정 경로로 보내는 역할을 합니다. 여기에서는 GWLB VPC Endpoint로 구성하도록 되어 있습니다.
+#### 13. Workload VPC의 EC2에서 트래픽 확인 
 
-  
+VPC01,02의 EC2에서 외부로 정상적으로 트래픽이 처리되는 지 확인 해 봅니다.
 
+Cloud9 터미널을 다시 접속해서 , VPC 01,02의 Private Subnet 에 배치된 EC2 인스턴스에 접속해 봅니다. Private Subnet은 직접 연결이 불가능하기 때문에 Session Manager를 통해 접속합니다.
+
+VPC01,02 을 Cloudformation을 통해 배포할 때 해당 인스턴스들에 Session Manager 접속을 위한 Role과 Session Manager 연결을 위한 Endpoint가 이미 구성되어 있습니다.
+
+```text
+##############################################
+# Create-Private-EC2: VPC Private EC2 Create #
+##############################################
+
+  PrivateAInstanace1:
+    Type: AWS::EC2::Instance
+    DependsOn: PrivateSubnetA
+    Properties:
+      SubnetId: !Ref PrivateSubnetA
+      ImageId: !Ref LatestAmiId
+      PrivateIpAddress: 10.1.21.101
+      InstanceType: !Ref InstanceType
+      SecurityGroupIds: 
+        - Ref: PrivateEC2SG
+      KeyName: !Ref KeyPair
+      IamInstanceProfile: !Ref InstanceProfileSSM
+#생략 
+###############################################
+# Create-SSM: Create PrivateServer ServerRole #
+###############################################
+
+  ServerRoleSSM:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${AWS::StackName}-SSMRole'
+      Path: "/"
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - sts:AssumeRole
+
+  InstanceProfileSSM:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: "/"
+      Roles: 
+        - Ref: ServerRoleSSM
+  #이하 생
+```
+
+아래 그림에서 처럼 확인해 볼 수 있습니다.
+
+AWS 관리콘솔 - VPC 대시보드 - VPC - 앤드포인트 에서 SSM\(Session Manager\) 관련 VPC Endpoint 배포를 확인해 봅니다.
+
+![](.gitbook/assets/image%20%2858%29.png)
+
+AWS 관리콘솔 - EC2 대시보드 - 인스턴스 에서 VPC1,2 인스턴스를 선택하고 IAM Profile이 정상적으로 구성되었는지 확인합니.
+
+![](.gitbook/assets/image%20%2866%29.png)
+
+먼저 Cloud9에 Session Manager 기반 접속을 위해 아래와 같이 설치합니다. \(GWLB Design1 에서 설치하였으면 생략합니다.\)
+
+```text
+curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm"
+sudo yum install -y session-manager-plugin.rpm
+git clone https://github.com/whchoi98/useful-shell.git
+
+```
+
+session manager 기반으로 접속하기 위해, 아래 명령을 실행하여 ec2 인스턴스의 id값을 확인합니다.
+
+```text
+cd ~/environment/useful-shell/
+./aws_ec2_ext.sh
+
+```
+
+아래와 같이 결과를 확인 할 수 있습니다.
+
+```text
+whchoi:~/environment/useful-shell (master) $ ./aws_ec2_ext.sh 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|                                                                                     DescribeInstances                                                                                    |
++----------------------------------------------------------+------------------+----------------------+-------------+------------------------+----------+----------------+------------------+
+|  GWLBVPC-Appliance-10.254.12.101                         |  ap-northeast-2b |  i-0a6b2480d00cc4f2e |  t3.small   |  ami-07464b2b9929898f8 |  running |  10.254.12.101 |  13.125.201.96   |
+|  VPC01-Private-B-10.1.22.101                             |  ap-northeast-2b |  i-0e18cd39adc506152 |  t3.small   |  ami-07464b2b9929898f8 |  running |  10.1.22.101   |  15.165.71.140   |
+|  VPC02-Private-B-10.2.22.102                             |  ap-northeast-2b |  i-0c845727d893497e0 |  t3.small   |  ami-07464b2b9929898f8 |  running |  10.2.22.102   |  3.35.36.160     |
+|  VPC01-Private-B-10.1.22.102                             |  ap-northeast-2b |  i-0158f77d3d82bc5c5 |  t3.small   |  ami-07464b2b9929898f8 |  running |  10.1.22.102   |  3.36.16.73      |
+|  GWLBVPC-Appliance-10.254.12.102                         |  ap-northeast-2b |  i-034b96ea088fff702 |  t3.small   |  ami-07464b2b9929898f8 |  running |  10.254.12.102 |  15.164.176.82   |
+|  VPC02-Private-B-10.2.22.101                             |  ap-northeast-2b |  i-0bdf1041a2e96821b |  t3.small   |  ami-07464b2b9929898f8 |  running |  10.2.22.101   |  15.164.175.224  |
+|  aws-cloud9-gwlbconsole-48d6905e23ce4b4caa4485af333c10d2 |  ap-northeast-2a |  i-0de0bd7634580007f |  m5.2xlarge |  ami-011f8bfe22440499a |  running |  172.31.15.73  |  3.34.138.122    |
+|  GWLBVPC-Appliance-10.254.11.102                         |  ap-northeast-2a |  i-09cbcb92c6d56ba4f |  t3.small   |  ami-07464b2b9929898f8 |  running |  10.254.11.102 |  52.79.219.13    |
+|  GWLBVPC-Appliance-10.254.11.101                         |  ap-northeast-2a |  i-0392b05b26d86c2fb |  t3.small   |  ami-07464b2b9929898f8 |  running |  10.254.11.101 |  3.36.108.211    |
+|  VPC02-Private-A-10.2.21.102                             |  ap-northeast-2a |  i-0b13d38867d6478ac |  t3.small   |  ami-07464b2b9929898f8 |  running |  10.2.21.102   |  52.78.103.50    |
+|  VPC02-Private-A-10.2.21.101                             |  ap-northeast-2a |  i-0432ad8f68349c144 |  t3.small   |  ami-07464b2b9929898f8 |  running |  10.2.21.101   |  13.209.18.196   |
+|  VPC01-Private-A-10.1.21.101                             |  ap-northeast-2a |  i-014b816ced3052e9f |  t3.small   |  ami-07464b2b9929898f8 |  running |  10.1.21.101   |  13.125.81.136   |
+|  VPC01-Private-A-10.1.21.102                             |  ap-northeast-2a |  i-04cec9252330cce2b |  t3.small   |  ami-07464b2b9929898f8 |  running |  10.1.21.102   |  3.36.116.245    |
++----------------------------------------------------------+------------------+----------------------+-------------+------------------------+----------+----------------+------------------+
+```
+
+session manager 명령을 통해 해당 인스턴스에 연결해 봅니다. \(VPC01-Private-A-10.1.21.101\)
+
+```text
+aws ssm start-session --target instance-id
+
+```
+
+터미널에 접속한 후에 , 아래 명령을 통해 bash로 접근해서 외부로 트래픽을 전송해 봅니다.
+
+```text
+sudo -s
+ping www.aws.com
+
+```
+
+아래와 같은 결과를 확인할 수 있습니다.
+
+```text
+whchoi:~/environment $ aws ssm start-session --target i-014b816ced3052e9f
+
+Starting session with SessionId: whchoi-07f86055a80837cd0
+sh-4.2$ sudo -s
+[root@ip-10-1-21-101 bin]# ping www.aws.com
+PING aws.com (99.86.206.123) 56(84) bytes of data.
+64 bytes from server-99-86-206-123.icn51.r.cloudfront.net (99.86.206.123): icmp_seq=1 ttl=235 time=3.48 ms
+64 bytes from server-99-86-206-123.icn51.r.cloudfront.net (99.86.206.123): icmp_seq=2 ttl=235 time=2.39 ms
+64 bytes from server-99-86-206-123.icn51.r.cloudfront.net (99.86.206.123): icmp_seq=3 ttl=235 time=2.37 ms
+^C
+--- aws.com ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 2.371/2.751/3.489/0.521 ms
+```
 
