@@ -133,9 +133,11 @@ AWS 관리 콘솔 - VPC 대시 보드 - 서브
 
 
 
-### 5.TransitGateway 배 
+### 5.TransitGateway 배포 
 
+N2SVPC, VPC01,VPC02을 연결하기 위한 TransitGateway를 배포합니다. 앞서 git을 통해 다운 받은 파일 중 GWLBTGW.yml 파일을 Cloudformation을 통해서 배포합니다.
 
+![](.gitbook/assets/image%20%2861%29.png)
 
 ## GWLB 구성 확인
 
