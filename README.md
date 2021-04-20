@@ -8,9 +8,9 @@ description: 'update : 2021-03-31'
 
 ### GWLB\(Gateway LoadBalancer\)소개
 
-### GWLB Design 1
+### GWLB Design 1 \(1h\)
 
-### GWLB Design 2
+### GWLB Design 2 \(1h\)
 
 ### GWLB PaloAlto 연동
 
