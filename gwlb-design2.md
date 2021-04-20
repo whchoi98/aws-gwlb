@@ -375,7 +375,7 @@ AWS 관리 콘솔 - VPC 대시보드 - 라우팅 테이블 - N2SVPC Public Routi
 
 ## 트래픽 확인
 
-#### 13. Workload VPC의 EC2에서 트래픽 확인 
+### 13. Workload VPC의 EC2에서 트래픽 확인 
 
 VPC01,02의 EC2에서 외부로 정상적으로 트래픽이 처리되는 지 확인 해 봅니다.
 
@@ -496,7 +496,7 @@ ping www.aws.com
 
 ```
 
-아래와 같은 결과를 확인할 수 있습니다.
+아래와 같은 결과를 확인할 수 있습니다. 해당 터미널에서 ping을 계속 실행해 둡니다.
 
 ```text
 whchoi:~/environment $ aws ssm start-session --target i-014b816ced3052e9f
@@ -508,9 +508,12 @@ PING aws.com (99.86.206.123) 56(84) bytes of data.
 64 bytes from server-99-86-206-123.icn51.r.cloudfront.net (99.86.206.123): icmp_seq=1 ttl=235 time=3.48 ms
 64 bytes from server-99-86-206-123.icn51.r.cloudfront.net (99.86.206.123): icmp_seq=2 ttl=235 time=2.39 ms
 64 bytes from server-99-86-206-123.icn51.r.cloudfront.net (99.86.206.123): icmp_seq=3 ttl=235 time=2.37 ms
-^C
---- aws.com ping statistics ---
-3 packets transmitted, 3 received, 0% packet loss, time 2003ms
-rtt min/avg/max/mdev = 2.371/2.751/3.489/0.521 ms
+
 ```
+
+앞서 Session manager를 통해 [www.aws.com으로](http://www.aws.xn--com-ky7m580d/) ping을 실행했습니다. 해당 터미널을 실행한 상태에서 Cloud9 터미널을 2개로 추가로 열어 봅니다.
+
+아래와 같이 2개의 Appliance에 SSH로 연결해서 명령을 실행해 보고, Appliance로 Traffic이 들어오는지 확인해 봅니다.
+
+Cloud9 터미널 1
 
