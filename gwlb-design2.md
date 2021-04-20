@@ -129,13 +129,13 @@ AWS 관리 콘솔 - VPC 대시 보드 - VPC
 
 AWS 관리 콘솔 - VPC 대시 보드 - 서브
 
-![](.gitbook/assets/image%20%2871%29.png)
+![](.gitbook/assets/image%20%2872%29.png)
 
 ### 5. TransitGateway 배포 
 
 N2SVPC, VPC01,VPC02을 연결하기 위한 TransitGateway를 배포합니다. 앞서 git을 통해 다운 받은 파일 중 GWLBTGW.yml 파일을 Cloudformation을 통해서 배포합니다.
 
-![](.gitbook/assets/image%20%2872%29.png)
+![](.gitbook/assets/image%20%2873%29.png)
 
 Default Route Table과 VPC01, VPC02 CIDR 주소를 입력합니다. \(기본 값으로 설정되어 있습니다.\)
 
@@ -149,7 +149,7 @@ TransitGateway 구성과 RouteTable을 아래에서 확인합니다.
 
 AWS 관리 콘솔 - VPC 대시보드 - TransitGateway 에서 TransitGateway가 정상적으로 구성되었는지 확인합니다.
 
-![](.gitbook/assets/image%20%2869%29.png)
+![](.gitbook/assets/image%20%2870%29.png)
 
 AWS 관리 콘솔 - VPC 대시보드 - TransitGateway- TransitGateway 연결\(Attachment\) 에서 TransitGateway와 VPC가 정상적으로 연결되었는지 확인합니다.
 
@@ -160,7 +160,7 @@ AWS 관리콘솔 - VPC 대시보드 -TransitGateway-TransitGateway 라우팅 테
 * GWLBTGW-RT-North-To-South : VPC01,VPC02 에서 인터넷으로 향하는 트래픽
 * GWLBTGW-RT-East-To-West: VPC01,VPC02 상호간에 트래
 
-![](.gitbook/assets/image%20%2876%29.png)
+![](.gitbook/assets/image%20%2877%29.png)
 
 ![](.gitbook/assets/image%20%2867%29.png)
 
@@ -185,7 +185,7 @@ GWLBVPC 구성을 확인해 봅니다.
 
 AWS 관리 콘솔 - EC2 - 로드밸런싱 - 로드밸런서 메뉴를 선택합니다. Gateway LoadBalancer 구성을 확인할 수 있습니다. ELB 유형이 "gateway"로 구성된 것을 확인 할 수 있습니다.
 
-![](.gitbook/assets/image%20%2875%29.png)
+![](.gitbook/assets/image%20%2876%29.png)
 
 ### 8.GWLB Target Group 구성 
 
@@ -214,7 +214,7 @@ AWS 관리 콘솔 - VPC - 엔드포인트 서비스를 선택합니다. 생성�
 
 2개 영역에 걸쳐서 GWLB에 대해 VPC Endpoint Service를 구성하고 있습니다.
 
-![](.gitbook/assets/image%20%2870%29.png)
+![](.gitbook/assets/image%20%2871%29.png)
 
 AWS 관리 콘솔 - VPC - 엔드포인트 서비스-엔드포인트 연결를 선택합니다.
 
@@ -232,7 +232,7 @@ Appliance 구성 정보를 확인해 봅니다.
 
 AWS 관리콘솔 - Cloudformation - 스택을 선택하면, 앞서 배포했던 Cloudformation 스택들을 확인 할 수 있습니다. "GWLBVPC"를 선택합니다. 그리고 출력을 선택합니다. 값을 확인해 보면 공인 IP 주소를 확인 할 수 있습니다.
 
-![](.gitbook/assets/image%20%2873%29.png)
+![](.gitbook/assets/image%20%2874%29.png)
 
 앞서 사전 준비에서 생성한 Cloud9에서 Appliance로 직접 접속해 봅니다.
 
@@ -337,18 +337,17 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101  이며, Appliance IP와 터�
 
 아래 흐름과 같이 트래픽이 처리됩니다.
 
-1. 외부 트래픽은 인터넷 게이트웨이로 접근
-2. Ingress Route Table에 의해 GWLB Endpoint로 트래픽 처리
-3. Public Subnet의 VPC Endpoint는 GWLB VPC Endpoint Service로 전달
-4. GWLB로 트래픽 전달
-5. AZ A,AZ B Target Group으로 LB 처리 - UDP 6081 GENEVE로 Encapsulation \(TLV Header - 5Tuple\)
-6. Appliance에서 트래픽 처리 후 다시 Return
-7. Decap 해서 다시 VPC Endpoint Service로 전달
-8. Public Subnet VPC Endpoint로 전달
-9. Private Subnet 인스턴스로 전달 
-10. Return되는 트래픽은 Private Subnet의 Route Table에 의해 VPC Endpoint로 다시 전
+![](.gitbook/assets/image%20%2869%29.png)
 
-
+1. VPC1,2 인스턴스는 외부로 향하기 위해 TransitGateway로 접근
+2. VPC 1,2 Private Subnet Route Table을 참조해서, Transit Gateway로 전
+3. TransitGateway Routing Table을 참조해서, N2SVPC Attachment로 전
+4. N2SVPC 로 인입된 트래픽은 N2SVPC TGW Routing Table에 의해 VPC Endpoint로 전달.
+5. VPC Endpoint는 GWLBVPC Private Link의 VPC Endpoint Service로 전달하고, VPC EndpointService는 GWLB로 트래픽 전달.
+6. AZ A,AZ B Target Group으로 LB 처리 - UDP 6081 GENEVE로 Encapsulation \(TLV Header - 5Tuple\)
+7. Appliance에서 트래픽 처리 후 다시 Return
+8. Decap 해서 다시 VPC Endpoint Service로 전달하고, N2SVPC VPC Endpoint로 전달
+9. Private Subnet Route Table에서 Public Subnet의 NAT Gateway로 트래픽 전달하고, 외부로 전송.
 
 ### 11.VPC Endpoint 확인
 
