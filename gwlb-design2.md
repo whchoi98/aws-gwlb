@@ -10,7 +10,7 @@ description: 'Update : 2021-04-12 / 1h'
 
 아래 그림은 목표 구성도 입니다.
 
-![](.gitbook/assets/image%20%2859%29.png)
+![](.gitbook/assets/image%20%2860%29.png)
 
 ## Cloudformation기반 VPC 배포
 
@@ -125,11 +125,11 @@ N2SVPC, VPC01,02,03 을 연결할 TGW를 생성합니다.  N2STGW는 TGW Routing
 
 AWS 관리 콘솔 - VPC 대시 보드 - VPC
 
-![](.gitbook/assets/image%20%2860%29.png)
+![](.gitbook/assets/image%20%2862%29.png)
 
 AWS 관리 콘솔 - VPC 대시 보드 - 서브
 
-![](.gitbook/assets/image%20%2861%29.png)
+![](.gitbook/assets/image%20%2864%29.png)
 
 
 
@@ -137,15 +137,25 @@ AWS 관리 콘솔 - VPC 대시 보드 - 서브
 
 N2SVPC, VPC01,VPC02을 연결하기 위한 TransitGateway를 배포합니다. 앞서 git을 통해 다운 받은 파일 중 GWLBTGW.yml 파일을 Cloudformation을 통해서 배포합니다.
 
-![](.gitbook/assets/image%20%2862%29.png)
+![](.gitbook/assets/image%20%2865%29.png)
 
 Default Route Table과 VPC01, VPC02 CIDR 주소를 입력합니다. \(기본 값으로 설정되어 있습니다.\)
 
-![](.gitbook/assets/image%20%2858%29.png)
+![](.gitbook/assets/image%20%2859%29.png)
 
 TransitGateway 구성과 RouteTable을 아래에서 확인합니다.
 
+AWS 관리 콘솔 - VPC 대시보드 - TransitGateway 에서 TransitGateway가 정상적으로 구성되었는지 확인합니다.
 
+![](.gitbook/assets/image%20%2863%29.png)
+
+AWS 관리 콘솔 - VPC 대시보드 - TransitGateway- TransitGateway 연결\(Attachment\) 에서 TransitGateway와 VPC가 정상적으로 연결되었는지 확인합니다.
+
+![](.gitbook/assets/image%20%2858%29.png)
+
+![](.gitbook/assets/image%20%2867%29.png)
+
+![](.gitbook/assets/image%20%2861%29.png)
 
 ## GWLB 구성 확인
 
