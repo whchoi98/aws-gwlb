@@ -10,7 +10,7 @@ description: 'Update : 2021-04-12 / 1h'
 
 아래 그림은 목표 구성도 입니다.
 
-![](.gitbook/assets/image%20%2863%29.png)
+![](.gitbook/assets/image%20%2864%29.png)
 
 ## Cloudformation기반 VPC 배포
 
@@ -125,17 +125,17 @@ N2SVPC, VPC01,02,03 을 연결할 TGW를 생성합니다.  N2STGW는 TGW Routing
 
 AWS 관리 콘솔 - VPC 대시 보드 - VPC
 
-![](.gitbook/assets/image%20%2868%29.png)
+![](.gitbook/assets/image%20%2871%29.png)
 
 AWS 관리 콘솔 - VPC 대시 보드 - 서브
 
-![](.gitbook/assets/image%20%2872%29.png)
+![](.gitbook/assets/image%20%2876%29.png)
 
 ### 5. TransitGateway 배포 
 
 N2SVPC, VPC01,VPC02을 연결하기 위한 TransitGateway를 배포합니다. 앞서 git을 통해 다운 받은 파일 중 GWLBTGW.yml 파일을 Cloudformation을 통해서 배포합니다.
 
-![](.gitbook/assets/image%20%2873%29.png)
+![](.gitbook/assets/image%20%2877%29.png)
 
 Default Route Table과 VPC01, VPC02 CIDR 주소를 입력합니다. \(기본 값으로 설정되어 있습니다.\)
 
@@ -149,7 +149,7 @@ TransitGateway 구성과 RouteTable을 아래에서 확인합니다.
 
 AWS 관리 콘솔 - VPC 대시보드 - TransitGateway 에서 TransitGateway가 정상적으로 구성되었는지 확인합니다.
 
-![](.gitbook/assets/image%20%2870%29.png)
+![](.gitbook/assets/image%20%2873%29.png)
 
 AWS 관리 콘솔 - VPC 대시보드 - TransitGateway- TransitGateway 연결\(Attachment\) 에서 TransitGateway와 VPC가 정상적으로 연결되었는지 확인합니다.
 
@@ -160,15 +160,15 @@ AWS 관리콘솔 - VPC 대시보드 -TransitGateway-TransitGateway 라우팅 테
 * GWLBTGW-RT-North-To-South : VPC01,VPC02 에서 인터넷으로 향하는 트래픽
 * GWLBTGW-RT-East-To-West: VPC01,VPC02 상호간에 트래
 
-![](.gitbook/assets/image%20%2877%29.png)
+![](.gitbook/assets/image%20%2883%29.png)
 
-![](.gitbook/assets/image%20%2867%29.png)
+![](.gitbook/assets/image%20%2870%29.png)
 
 AWS 관리 콘솔 -VPC 대시보드 - 가상 프라이빗 클라우드 - 라우팅테이블에서  각 Private-Subnet-A,B-RT 라우팅 테이블을 확인합니다. 
 
 * VPC01,02-Private-Subnet-A,B-RT  : 0.0.0.0/0 - tgw 
 
-![](.gitbook/assets/image%20%2866%29.png)
+![](.gitbook/assets/image%20%2869%29.png)
 
 ## GWLB 구성 확인
 
@@ -185,7 +185,7 @@ GWLBVPC 구성을 확인해 봅니다.
 
 AWS 관리 콘솔 - EC2 - 로드밸런싱 - 로드밸런서 메뉴를 선택합니다. Gateway LoadBalancer 구성을 확인할 수 있습니다. ELB 유형이 "gateway"로 구성된 것을 확인 할 수 있습니다.
 
-![](.gitbook/assets/image%20%2876%29.png)
+![](.gitbook/assets/image%20%2880%29.png)
 
 ### 8.GWLB Target Group 구성 
 
@@ -194,7 +194,7 @@ AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹을 선택합니다. GW
 *  프로토콜 : GENEVE 6081 \(포트 6081의 GENGEVE 프로토콜을 사용하여 모든 IP 패킷을 수신하고 리스너 규칙에 지정된 대상 그룹에 트래픽을 전달합니다.\)
 * 등록된 대상 : GWLB가 로드밸런싱을 하고 있는 Target 장비를 확인합니다.
 
-![](.gitbook/assets/image%20%2865%29.png)
+![](.gitbook/assets/image%20%2868%29.png)
 
 AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹 - 상태검사 메뉴를 확인합니다.
 
@@ -214,7 +214,7 @@ AWS 관리 콘솔 - VPC - 엔드포인트 서비스를 선택합니다. 생성�
 
 2개 영역에 걸쳐서 GWLB에 대해 VPC Endpoint Service를 구성하고 있습니다.
 
-![](.gitbook/assets/image%20%2871%29.png)
+![](.gitbook/assets/image%20%2875%29.png)
 
 AWS 관리 콘솔 - VPC - 엔드포인트 서비스-엔드포인트 연결를 선택합니다.
 
@@ -226,13 +226,13 @@ N2SVPC의 각 가용영역들과 연결된 것을 확인 할 수 있습니다. V
 
 AWS 관리 콘솔 - EC2 - 인스턴스 메뉴를 선택하고, "appliance" 키워드로 필터링 해 봅니다. 4개의 리눅스 기반의 appliance가 설치되어 있습니다.
 
-![](.gitbook/assets/image%20%2864%29.png)
+![](.gitbook/assets/image%20%2867%29.png)
 
 Appliance 구성 정보를 확인해 봅니다.
 
 AWS 관리콘솔 - Cloudformation - 스택을 선택하면, 앞서 배포했던 Cloudformation 스택들을 확인 할 수 있습니다. "GWLBVPC"를 선택합니다. 그리고 출력을 선택합니다. 값을 확인해 보면 공인 IP 주소를 확인 할 수 있습니다.
 
-![](.gitbook/assets/image%20%2874%29.png)
+![](.gitbook/assets/image%20%2878%29.png)
 
 앞서 사전 준비에서 생성한 Cloud9에서 Appliance로 직접 접속해 봅니다.
 
@@ -337,7 +337,7 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101  이며, Appliance IP와 터�
 
 아래 흐름과 같이 트래픽이 처리됩니다.
 
-![](.gitbook/assets/image%20%2869%29.png)
+![](.gitbook/assets/image%20%2872%29.png)
 
 1. VPC1,2 인스턴스는 외부로 향하기 위해 TransitGateway로 접근
 2. VPC 1,2 Private Subnet Route Table을 참조해서, Transit Gateway로 전
@@ -351,15 +351,27 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101  이며, Appliance IP와 터�
 
 ### 11.VPC Endpoint 확인
 
-AWS 관리 콘솔 - VPC - Endpoint를 선택하여 실제 구성된 VPC Endpoint를 확인해 봅니다. 3개의 VPC에 2개씩 구성된 AZ를 위해 총 6개의 Endpoint가 구성되어 있습니다. \(VPC Endpoint는 AZ Subnet당 연결됩니다.\)
+AWS 관리 콘솔 - VPC - Endpoint를 선택하여 실제 구성된 VPC Endpoint를 확인해 봅니다. N2SVPC에 2개씩 구성된 AZ를 위해 2개의 Endpoint가 구성되어 있습니다. \(VPC Endpoint는 AZ Subnet당 연결됩니다.\)
 
+![](.gitbook/assets/image%20%2866%29.png)
 
+### 12. N2S VPC Route Table 확인
 
-### 12. Private Subnet Route Table 확인
+AWS 관리콘솔 - VPC - 라우팅 테이블을 선택하고 각 라우팅 테이블을 확인해 봅니다. 
 
-AWS 관리콘솔 - VPC - 라우팅 테이블을 선택하고 VPC01,02,03-Private-Subnet-A,B-RT 이름의 라우팅 테이블을 확인해 봅니다. Return되는 트래픽의 경로는 GWLB VPC Endpoint로 설정되어 있습니다.
+![](.gitbook/assets/image%20%2863%29.png)
 
+AWS 관리 콘솔 - VPC 대시보드 - 라우팅 테이블 - N2SVPC TGW Routing Table 확인 
 
+![](.gitbook/assets/image%20%2882%29.png)
+
+AWS 관리 콘솔 - VPC 대시보드 - 라우팅 테이블 - N2SVPC Private Routing Table 확인
+
+![](.gitbook/assets/image%20%2874%29.png)
+
+AWS 관리 콘솔 - VPC 대시보드 - 라우팅 테이블 - N2SVPC Public Routing Table 확인
+
+![](.gitbook/assets/image%20%2881%29.png)
 
 ### 13. Ingress Routing Table 확인
 
