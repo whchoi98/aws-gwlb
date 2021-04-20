@@ -141,6 +141,8 @@ Default Route Table과 VPC01, VPC02 CIDR 주소를 입력합니다. \(기본 값
 
 ![](.gitbook/assets/image%20%2859%29.png)
 
+### 6. 라우팅 테이블 확인  
+
 TransitGateway 구성과 RouteTable을 아래에서 확인합니다. 
 
 ![](.gitbook/assets/image%20%2860%29.png)
@@ -179,13 +181,13 @@ GWLBVPC 구성을 확인해 봅니다.
 
 ![](.gitbook/assets/image%20%2845%29.png)
 
-### 3.GWLB 구성 
+### 7.GWLB 구성 
 
 AWS 관리 콘솔 - EC2 - 로드밸런싱 - 로드밸런서 메뉴를 선택합니다. Gateway LoadBalancer 구성을 확인할 수 있습니다. ELB 유형이 "gateway"로 구성된 것을 확인 할 수 있습니다.
 
 ![](.gitbook/assets/image%20%2839%29.png)
 
-### 4.GWLB Target Group 구성 
+### 8.GWLB Target Group 구성 
 
 AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹을 선택합니다. GWLB가 로드밸런싱을 하게 되는 대상그룹\(Target Group\)을 확인 할 수 있습니다.
 
@@ -200,7 +202,7 @@ ELB와 동일하게 대상그룹\(Target Group\)에 상태를 검사할 수 있�
 
 ![](.gitbook/assets/image%20%2853%29.png)
 
-### 5. VPC Endpoint Service 확인
+### 9. VPC Endpoint Service 확인
 
 Workload VPC\(VPC01,02,03\)들과 Private link로 연결하기 위해, GWLB VPC에 Endpoint Service를 구성하였습니다. 이를 확인해 봅니다.
 
@@ -220,7 +222,7 @@ Workload VPC \(VPC01,02,03\)의 각 가용영역들과 연결된 것을 확인 �
 
 ![](.gitbook/assets/image%20%2846%29.png)
 
-### 6. Appliance 확인 
+### 10. Appliance 확인 
 
 AWS 관리 콘솔 - EC2 - 인스턴스 메뉴를 선택하고, "appliance" 키워드로 필터링 해 봅니다. 4개의 리눅스 기반의 appliance가 설치되어 있습니다.
 
@@ -317,10 +319,6 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101  이며, Appliance IP와 터�
 
 이렇게 GWLB 에서 생성된 IP주소와 각 Appliance의 IP간에 UDP 6081 포트로 터널링되어 , 외부의 IP 주소와 내부의 IP 주소를 그대로 유지할 수 있습니다. 또한 터널링으로 인입시 5Tuple \(출발지 IP, Port, 목적지 IP, Port, 프로토콜\)의 정보를 TLV로 Encapsulation하여 분산처리할 때 사용합니다.
 
-
-
-
-
 ## 외부 연결용 VPC 확인
 
 이제 외부 연결 VPC에서 실제 구성과 트래픽을 확인해 봅니다.
@@ -346,19 +344,19 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101  이며, Appliance IP와 터�
 
 
 
-### 7.VPC Endpoint 확인
+### 11.VPC Endpoint 확인
 
 AWS 관리 콘솔 - VPC - Endpoint를 선택하여 실제 구성된 VPC Endpoint를 확인해 봅니다. 3개의 VPC에 2개씩 구성된 AZ를 위해 총 6개의 Endpoint가 구성되어 있습니다. \(VPC Endpoint는 AZ Subnet당 연결됩니다.\)
 
 
 
-### 8. Private Subnet Route Table 확인
+### 12. Private Subnet Route Table 확인
 
 AWS 관리콘솔 - VPC - 라우팅 테이블을 선택하고 VPC01,02,03-Private-Subnet-A,B-RT 이름의 라우팅 테이블을 확인해 봅니다. Return되는 트래픽의 경로는 GWLB VPC Endpoint로 설정되어 있습니다.
 
 
 
-### 9. Ingress Routing Table 확인
+### 13. Ingress Routing Table 확인
 
 AWS 관리콘솔 - VPC - 라우팅 테이블을 선택하고 VPC01,02,03-IGW-Ingress-RT 이름의 라우팅 테이블을 확인해 봅니다.  Ingress Routing Table에 대한 구성을 확인 할 수 있습니다. VPC로 인입 되는 트래픽을 특정 경로로 보내는 역할을 합니다. 여기에서는 GWLB VPC Endpoint로 구성하도록 되어 있습니다.
 
