@@ -131,9 +131,7 @@ AWS 관리 콘솔 - VPC 대시 보드 - 서브
 
 ![](.gitbook/assets/image%20%2865%29.png)
 
-
-
-### 5.TransitGateway 배포 
+### 5. TransitGateway 배포 
 
 N2SVPC, VPC01,VPC02을 연결하기 위한 TransitGateway를 배포합니다. 앞서 git을 통해 다운 받은 파일 중 GWLBTGW.yml 파일을 Cloudformation을 통해서 배포합니다.
 
@@ -153,9 +151,18 @@ AWS 관리 콘솔 - VPC 대시보드 - TransitGateway- TransitGateway 연결\(At
 
 ![](.gitbook/assets/image%20%2858%29.png)
 
+AWS 관리콘솔 - VPC 대시보드 -TransitGateway-TransitGateway 라우팅 테이블-Route 에서 "GWLBTGW-RT-North-To-South", "GWLBTGW-RT-East-To-West" 라우팅 테이블을 확인합니다.
+
+* GWLBTGW-RT-North-To-South : VPC01,VPC02 에서 인터넷으로 향하는 트래픽
+* GWLBTGW-RT-East-To-West: VPC01,VPC02 상호간에 트래
+
 ![](.gitbook/assets/image%20%2868%29.png)
 
 ![](.gitbook/assets/image%20%2862%29.png)
+
+AWS 관리 콘솔 -VPC 대시보드 - 가상 프라이빗 클라우드 - 라우팅테이블에서  각 Private-Subnet-A,B-RT 라우팅 테이블을 확인합니다. 
+
+* VPC01,02-Private-Subnet-A,B-RT  : 0.0.0.0/0 - tgw 
 
 ![](.gitbook/assets/image%20%2861%29.png)
 
