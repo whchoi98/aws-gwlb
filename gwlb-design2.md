@@ -246,10 +246,10 @@ export Appliance4={Appliance4ip address}
 아래와 같이 구성합니다.
 
 ```text
-export Appliance1=3.35.55.51
-export Appliance2=3.35.53.210
-export Appliance3=3.35.5.188
-export Appliance4=3.34.28.238
+export Appliance1=3.36.108.211
+export Appliance2=52.79.219.13
+export Appliance3=13.125.201.96
+export Appliance4=15.164.176.82
 echo "export Appliance1=$Appliance1" | tee -a ~/.bash_profile
 echo "export Appliance2=$Appliance2" | tee -a ~/.bash_profile
 echo "export Appliance3=$Appliance3" | tee -a ~/.bash_profile
@@ -268,30 +268,30 @@ ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance4
 
 ```
 
-각 Appliance에서 아래 명령을 통해 , GWLB IP와 어떻게 매핑되었는지 확인합니다.
+각 Appliance에서 아래 명령을 통해 , GWLB IP와 어떻게 매핑되었는지 확인합니다. 
 
 ```text
+ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance1
 sudo iptables -L -n -v -t nat
-
 ```
 
 AZ A에 배포된 Appliance는 다음과 같이 출력됩니다.
 
 ```text
 [ec2-user@ip-10-254-11-101 ~]$ sudo iptables -L -n -v -t nat
-Chain PREROUTING (policy ACCEPT 4987 packets, 298K bytes)
+Chain PREROUTING (policy ACCEPT 3417 packets, 204K bytes)
  pkts bytes target     prot opt in     out     source               destination         
-  178 22464 DNAT       udp  --  eth0   *       10.254.11.60         10.254.11.101        to:10.254.11.60:6081
+  351 45728 DNAT       udp  --  eth0   *       10.254.11.107        10.254.11.101        to:10.254.11.107:6081
 
-Chain INPUT (policy ACCEPT 4987 packets, 298K bytes)
- pkts bytes target     prot opt in     out     source               destination         
-
-Chain OUTPUT (policy ACCEPT 1315 packets, 102K bytes)
+Chain INPUT (policy ACCEPT 3417 packets, 204K bytes)
  pkts bytes target     prot opt in     out     source               destination         
 
-Chain POSTROUTING (policy ACCEPT 1315 packets, 102K bytes)
+Chain OUTPUT (policy ACCEPT 981 packets, 75316 bytes)
  pkts bytes target     prot opt in     out     source               destination         
-  178 22464 MASQUERADE  udp  --  *      eth0    10.254.11.60         10.254.11.60         udp dpt:6081
+
+Chain POSTROUTING (policy ACCEPT 981 packets, 75316 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+  351 45728 MASQUERADE  udp  --  *      eth0    10.254.11.107        10.254.11.107        udp dpt:6081
 ```
 
 GENEVE 터널링의 GWLB IP주소는 10.254.11.60  이며, Appliance IP와 터널링 된 것을 확인 할 수 있습니다.
@@ -299,20 +299,26 @@ GENEVE 터널링의 GWLB IP주소는 10.254.11.60  이며, Appliance IP와 터�
 AZ B에 배포된 Appliance는 다음과 같이 출력됩니다.
 
 ```text
+ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance3
+sudo iptables -L -n -v -t nat
+
+```
+
+```text
 [ec2-user@ip-10-254-12-101 ~]$ sudo iptables -L -n -v -t nat
-Chain PREROUTING (policy ACCEPT 5313 packets, 316K bytes)
+Chain PREROUTING (policy ACCEPT 3765 packets, 225K bytes)
  pkts bytes target     prot opt in     out     source               destination         
-  192 23456 DNAT       udp  --  eth0   *       10.254.12.149        10.254.12.101        to:10.254.12.149:6081
+  353 45872 DNAT       udp  --  eth0   *       10.254.12.28         10.254.12.101        to:10.254.12.28:6081
 
-Chain INPUT (policy ACCEPT 5313 packets, 316K bytes)
- pkts bytes target     prot opt in     out     source               destination         
-
-Chain OUTPUT (policy ACCEPT 1626 packets, 123K bytes)
+Chain INPUT (policy ACCEPT 3765 packets, 225K bytes)
  pkts bytes target     prot opt in     out     source               destination         
 
-Chain POSTROUTING (policy ACCEPT 1626 packets, 123K bytes)
+Chain OUTPUT (policy ACCEPT 1693 packets, 136K bytes)
  pkts bytes target     prot opt in     out     source               destination         
-  192 23456 MASQUERADE  udp  --  *      eth0    10.254.12.149        10.254.12.149        udp dpt:6081
+
+Chain POSTROUTING (policy ACCEPT 1693 packets, 136K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+  353 45872 MASQUERADE  udp  --  *      eth0    10.254.12.28         10.254.12.28         udp dpt:6081
 ```
 
 GENEVE 터널링의 GWLB IP주소는 10.254.12.101  이며, Appliance IP와 터널링 된 것을 확인 할 수 있습니다.
