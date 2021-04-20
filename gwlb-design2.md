@@ -160,7 +160,7 @@ AWS 관리콘솔 - VPC 대시보드 -TransitGateway-TransitGateway 라우팅 테
 * GWLBTGW-RT-North-To-South : VPC01,VPC02 에서 인터넷으로 향하는 트래픽
 * GWLBTGW-RT-East-To-West: VPC01,VPC02 상호간에 트래
 
-![](.gitbook/assets/image%20%2885%29.png)
+![](.gitbook/assets/image%20%2886%29.png)
 
 ![](.gitbook/assets/image%20%2872%29.png)
 
@@ -516,4 +516,59 @@ PING aws.com (99.86.206.123) 56(84) bytes of data.
 아래와 같이 2개의 Appliance에 SSH로 연결해서 명령을 실행해 보고, Appliance로 Traffic이 들어오는지 확인해 봅니다.
 
 Cloud9 터미널 1
+
+```text
+ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance1
+sudo tcpdump -nvv 'port 6081'
+
+```
+
+Cloud9 터미널 2
+
+```text
+ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance2
+sudo tcpdump -nvv 'port 6081'
+
+```
+
+다음과 같이 1개의 터미널에서 icmp가 처리되는 것을 확인 할 수 있습니다.
+
+```text
+[ec2-user@ip-10-254-11-102 ~]$ sudo tcpdump -nvv 'port 6081'
+tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 bytes
+15:12:15.788834 IP (tos 0x0, ttl 255, id 0, offset 0, flags [none], proto UDP (17), length 152)
+    10.254.11.107.60000 > 10.254.11.102.6081: [udp sum ok] Geneve, Flags [none], vni 0x0, options [class Unknown (0x108) type 0x1 len 12 data f583215d 2e66b39c, class Unknown (0x108) type 0x2 len 12 data 00000000 00000000, class Unknown (0x108) type 0x3 len 8 data 6742cc6d]
+        IP (tos 0x0, ttl 253, id 62598, offset 0, flags [DF], proto ICMP (1), length 84)
+    10.1.21.101 > 99.86.206.123: ICMP echo request, id 32496, seq 4971, length 64
+15:12:15.788867 IP (tos 0x0, ttl 254, id 0, offset 0, flags [none], proto UDP (17), length 152)
+    10.254.11.102.60000 > 10.254.11.107.6081: [udp sum ok] Geneve, Flags [none], vni 0x0, options [class Unknown (0x108) type 0x1 len 12 data f583215d 2e66b39c, class Unknown (0x108) type 0x2 len 12 data 00000000 00000000, class Unknown (0x108) type 0x3 len 8 data 6742cc6d]
+        IP (tos 0x0, ttl 253, id 62598, offset 0, flags [DF], proto ICMP (1), length 84)
+    10.1.21.101 > 99.86.206.123: ICMP echo request, id 32496, seq 4971, length 64
+15:12:15.790832 IP (tos 0x0, ttl 255, id 0, offset 0, flags [none], proto UDP (17), length 152)
+    10.254.11.107.60000 > 10.254.11.102.6081: [udp sum ok] Geneve, Flags [none], vni 0x0, options [class Unknown (0x108) type 0x1 len 12 data f583215d 2e66b39c, class Unknown (0x108) type 0x2 len 12 data 00000000 00000000, class Unknown (0x108) type 0x3 len 8 data 6742cc6d]
+        IP (tos 0x0, ttl 237, id 27319, offset 0, flags [none], proto ICMP (1), length 84)
+    99.86.206.123 > 10.1.21.101: ICMP echo reply, id 32496, seq 4971, length 64
+15:12:15.790847 IP (tos 0x0, ttl 254, id 0, offset 0, flags [none], proto UDP (17), length 152)
+    10.254.11.102.60000 > 10.254.11.107.6081: [udp sum ok] Geneve, Flags [none], vni 0x0, options [class Unknown (0x108) type 0x1 len 12 data f583215d 2e66b39c, class Unknown (0x108) type 0x2 len 12 data 00000000 00000000, class Unknown (0x108) type 0x3 len 8 data 6742cc6d]
+        IP (tos 0x0, ttl 237, id 27319, offset 0, flags [none], proto ICMP (1), length 84)
+    99.86.206.123 > 10.1.21.101: ICMP echo reply, id 32496, seq 4971, length 64
+
+```
+
+Source IP와 Destination IP가 모두 유지된 채로 통신하는 것을 확인 할 수 있습니다.
+
+이제 다른 VPC\(VPC01,VPC02\)와 다른 서브넷의 EC2에서도 트래픽이 정상적으로 처리되는지 확인해 봅니다.
+
+## 자원 삭제
+
+AWS 관리콘솔 - Cloudformation - 스택 을 선택하고 생성된 Stack을 삭제합니다.
+
+GWLBTGW,VPC01,VPC02,N2SVPC,GWLBVPC 순으로 삭제합니다.\(Cloud9은 계속 사용하기 위해 삭제 하지 않습니다.\) 
+
+1. GWLBTGW를 삭제합니다.
+2. VPC01,VPC02를 삭제합니다.
+3. N2SVPC를 삭제 합니다.
+4. GWLBVPC를 삭제 합니다.
+
+![](.gitbook/assets/image%20%2885%29.png)
 
