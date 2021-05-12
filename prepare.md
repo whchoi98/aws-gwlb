@@ -4,6 +4,19 @@ description: 'Update : 2021-03-31/ 20min'
 
 # 사전 준비
 
+## 시작에 앞서 
+
+이 Lab에서는 GWLB와 연동되는 디자인을 2가지로 구성합니다.
+
+* Design 1 \(North to South 흐름 방식\) - VPC 에서 외부 전송 트래픽에 대해 GWLB VPC Endpoint와 Private Link를 사용해서 구성합니다.
+* Design 2 \(East to West 흐름 방식\) - VPC 에서 외부 전송 트래픽에 대해 TransitGateway를 기반으로 구성합니다. \(이때 별도의 VPC를 구성합니다.\)
+
+각 Lab에서는 3개의 가상 어플라이언스 구성을 만들어 봅니다.
+
+* Linux IPTABLE 기반의 어플라이언스
+* Fortinet 사의 FortiGate 가상 어플라이언스 \(BYOL 기반으로 평가판 라이센스 필요\)
+* PaloAlto 사의 VM Firewall 가상 어플라이언 \(BYOL 기반으로 평가판 라이센스 필요\)
+
 ## Cloud9 구성
 
 ### Cloud9 소개 
