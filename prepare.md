@@ -25,19 +25,23 @@ AWS Cloud9은 브라우저만으로 코드를 작성, 실행 및 디버깅할 �
 
 ### Cloud9 구성
 
-Cloud9을 실행하기 위해 아래와 같이 AWS 관리콘솔에서 "Cloud9" 을 입력합니다.
+Cloud9을 실행하기 위해 아래와 같이 AWS 관리콘솔에서 **`"Cloud9"`** 을 입력합니다.
 
-![](.gitbook/assets/image%20%2887%29.png)
+![](.gitbook/assets/image%20%2888%29.png)
 
-AWS 관리 콘솔 - Cloud9 - Create environment를 선택합니다.
+**`AWS 관리 콘솔 - Cloud9 - Create environment`**를 선택합니다.
 
-* name : gwlb-console 
+* name : gwlb-console \(고유의 이름을 입력합니다.\)
 
 ![](.gitbook/assets/image%20%2832%29.png)
 
-모든 설정을 기본값으로 사용하고, Cost-Saving Setting만 Never로 변경합니다. 절전모드로 변경되는 것을 방지하게 됩니다. 다음 진행 버튼을 계속 누르고 Cloud9을 생성합니다.
+모든 설정을 기본값으로 사용하고, 인스턴스타입은 t3.small ,Cost-Saving Setting Never로 변경합니다. 절전모드로 변경되는 것을 방지하게 됩니다. 다음 진행 버튼을 계속 누르고 Cloud9을 생성합니다.
 
-![](.gitbook/assets/image%20%281%29.png)
+* instance type : t3.small
+* Cost-saving setting : Never
+* 기타 옵션 : 기본
+
+![](.gitbook/assets/image%20%2887%29.png)
 
 2~3분 후에 Cloud9 이 동작하는 것을 확인 할 수 있습니다. Cloud9 창에서 "+" 버튼을 누르고 New Terminal을 띄워서 터미널을 생성합니다. 추가로 "+"를 계속 생성하게 되면 Terminal을 다중으로 사용할 수 있습니다.
 
