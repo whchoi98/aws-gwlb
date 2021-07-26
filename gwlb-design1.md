@@ -168,6 +168,8 @@ echo "export Appliance2=$Appliance2" | tee -a ~/.bash_profile
 echo "export Appliance3=$Appliance3" | tee -a ~/.bash_profile
 echo "export Appliance4=$Appliance4" | tee -a ~/.bash_profile
 source ~/.bash_profile
+mv ~/environment/gwlbkey ~/environment/gwlbkey.pem
+chmod 400 ./glwbkey.pem
 
 ```
 
@@ -392,7 +394,7 @@ sudo tcpdump -nvv 'port 6081'
 다음과 같이 1개의 터미널에서 icmp가 처리되는 것을 확인 할 수 있습니다.
 
 ```text
-[ec2-user@ip-10-254-11-101 ~]$ sudo tcpdump -nvv 'port 6081'
+[ec2-user@ip-10-254-11-101 ~]$ sudo tcpdump -nvv 'port 6081'| grep 'ICMP'
 tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 bytes
 15:58:04.744658 IP (tos 0x0, ttl 255, id 0, offset 0, flags [none], proto UDP (17), length 152)
     10.254.11.60.60001 > 10.254.11.101.6081: [udp sum ok] Geneve, Flags [none], vni 0x0, options [class Unknown (0x108) type 0x1 len 12 data 2356de92 d389839c, class Unknown (0x108) type 0x2 len 12 data 00000000 00000000, class Unknown (0x108) type 0x3 len 8 data 98ef1b00]
