@@ -97,7 +97,8 @@ N2SVPC를 Cloudformation에서 앞서 과정과 동일하게 생성합니다. �
 #### 나머지 VPC01,VPC02,VPC03 의 Cloudformation Yaml 파일을 업로드 합니다.
 
 {% hint style="warning" %}
-VPC는 계정당 기본 5개가 할당되어 있습니다. 1개는 Default VPC로 사용 중이고, 4개를 사용 가능하므로 일반 계정에서는 GWLBVPC, N2SVPC, VPC01,VPC02 까지만 생성 가능합니다
+VPC는 계정당 기본 5개가 할당되어 있습니다. 1개는 Default VPC로 사용 중이고, 4개를 사용 가능하므로 일반 계정에서는 GWLBVPC, N2SVPC, VPC01,VPC02 까지만 생성 가능합니다.  
+5개 모두를 사용하시려면, Default VPC를 삭제하시기 바랍니다. Default VPC는 삭제 후 다시 생성이 가능합니다.
 {% endhint %}
 
 ![](.gitbook/assets/image%20%2841%29.png)
