@@ -31,7 +31,7 @@ Cloud9을 실행하기 위해 아래와 같이 AWS 관리콘솔에서 **`"Cloud9
 
 **`AWS 관리 콘솔 - Cloud9 - Create environment`**를 선택합니다.
 
-* name : gwlb-console \(고유의 이름을 입력합니다.\)
+* name : gwlb-console \(고유의 이름을 입력합니다. 예 : username-console\)
 
 ![](.gitbook/assets/image%20%2832%29.png)
 
