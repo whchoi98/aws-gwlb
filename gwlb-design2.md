@@ -16,7 +16,7 @@ description: 'Update : 2021-04-12 / 1h'
 
 ### 1.VPC yaml 파일 다운로드
 
-아래 github에서 VPC yaml 파일을 다운로드 합니다.
+Cloud9 콘솔에서 아래 github로 부터 VPC yaml 파일을 다운로드 합니다.
 
 ```text
 git clone https://github.com/whchoi98/gwlb.git
