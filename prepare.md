@@ -100,7 +100,7 @@ gwlbkey
 아래와 같이 ssh key가 구성됩니다.
 
 ```text
- ssh-keygen
+ssh-keygen
 Generating public/private rsa key pair.
 Enter file in which to save the key (/home/ec2-user/.ssh/id_rsa): gwlbkey
 Enter passphrase (empty for no passphrase): 
@@ -126,7 +126,7 @@ The key's randomart image is:
 이제 생성된 Public Key를 계정으로 업로드 합니다.
 
 ```text
-aws ec2 import-key-pair --key-name "gwlbkey" --public-key-material fileb://gwlbkey.pub --region ap-northeast-2
+aws ec2 import-key-pair --key-name "gwlbkey" --public-key-material fileb://gwlbkey.pub --region ap-northeast-1
 ```
 
 아래와 같이 업로드가 완료됩니다.
