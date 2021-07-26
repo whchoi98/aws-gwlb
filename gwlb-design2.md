@@ -19,6 +19,7 @@ description: 'Update : 2021-04-12 / 1h'
 아래 github에서 VPC yaml 파일을 다운로드 합니다.
 
 ```text
+git clone https://github.com/whchoi98/gwlb.git
 
 ```
 
