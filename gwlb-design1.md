@@ -84,7 +84,7 @@ VPC01,02,03 3개의 VPC를 Cloudformation에서 앞서 과정과 동일하게 �
 * VPCEndpointServiceName : 앞서 복사해둔 GWLBVPC의 VPC endpoint service name을 입력합니다.
 * PrivateToGWLB : 0.0.0.0/0 \(Private Subnet이 외부로 가는 목적지에 대한 라우팅 경로 설정입니다.\)
 * InstanceTyep: t3.small
-* KeyPair : 사전에 만들어 둔 keyPair를 사용합니다. 
+* KeyPair : 미 만들어 둔 keyPair를 사용합니다. 
 
 ![](.gitbook/assets/image%20%2833%29.png)
 
