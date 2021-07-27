@@ -18,5 +18,19 @@ description: 'update : 2021-03-31'
 
 
 
+#### written by Woohyung Choi \(whchoi98@gmail.com\)
+
+#### 📔 Markdown code
+
+{% embed url="https://github.com/whchoi98/aws-gwlb/blob/master/README.md" %}
+
+#### 📔 Lab - Cloudformation code \(yaml files\)
+
+{% embed url="https://github.com/whchoi98/gwlb" %}
+
+
+
+
+
 
 
