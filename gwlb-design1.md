@@ -53,7 +53,7 @@ AWS 관리콘솔에서 Cloudformation을 선택합니다.
 * PublicSubnetABlock: 10.254.11.0/24
 * PublicSubnetBBlock: 10.254.12.0/24
 * InstanceTyep: t3.small
-* KeyPair : 사전에 만들어 둔 keyPair를 사용합니다.
+* KeyPair : 미리 만들어 둔 keyPair를 사용합니다.
 
 ![](.gitbook/assets/image%20%2811%29.png)
 
