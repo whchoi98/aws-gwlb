@@ -6,7 +6,7 @@ description: 'update : 2021-03-31'
 
 ## 목차 
 
-### ☑ [GWLB\(Gateway LoadBalancer\)소개](gwlb-overview.md) 
+### ☑[GWLB\(Gateway LoadBalancer\)소개](gwlb-overview.md) 
 
 ### ☑[사전 준비 \(10m\)](prepare.md)
 
