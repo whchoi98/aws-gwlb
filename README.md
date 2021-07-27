@@ -6,7 +6,7 @@ description: 'update : 2021-03-31'
 
 ## 목차 
 
-### GWLB\(Gateway LoadBalancer\)소개
+### [GWLB\(Gateway LoadBalancer\)소개](gwlb-overview.md)
 
 ### [사전 준비 \(10m\)](prepare.md)
 
@@ -14,7 +14,7 @@ description: 'update : 2021-03-31'
 
 ### [GWLB Design 2 \(1h\)](gwlb-design2.md)
 
-### GWLB Design 3 \(1h\)
+### [GWLB Design 3 \(1h\)](gwlb-design-3.md)
 
 
 
