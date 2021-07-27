@@ -52,17 +52,5 @@ Gateway Load Balancer 내에 배치 된 타사 가상 어플라이언스는 네�
 
 또한 Gateway Load Balancer 는 AWS 리소스의 배포 및 관리를 자동화하는 강력한 도구 인 [AWS CloudFormation](https://aws.amazon.com/cloudformation/) 과 함께 작동 합니다. Gateway Load Balancer는 여러 계층의 VPC 및로드 밸런서를 하나의 중앙 서비스로 대체하기 때문에 CloudFormation 템플릿은 작성 및 유지 관리가 더 쉽습니다.
 
-## 참조 동영상
-
-해당 랩 구성은 아래 Youtube 동영상에서도 확인 할 수 있습니다.
-
-#### 🎬 사전 준비 - [https://youtu.be/Jdzj0fSA4YU](https://youtu.be/Jdzj0fSA4YU)
-
-#### 🎬GWLB Design1 - 분산형 GWLB 디자인
-
-#### 🎬GWLB Desing2 - 중앙집중형 GWLB 디자인
-
-#### 🎬GWLB Design 3 - 분산형 GWLB 디자인 기반 외부 서비스 제공 
-
 
 
