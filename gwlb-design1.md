@@ -27,7 +27,7 @@ git clone https://github.com/whchoi98/gwlb.git
 
 Cloud9에서 로컬로 파일을 다운로드 받습니다.
 
-
+![](.gitbook/assets/image%20%2890%29.png)
 
 ### 2.AWS 관리콘솔에서 VPC 배포
 
