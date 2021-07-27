@@ -16,12 +16,16 @@ description: 'Update : 2021-04-12 / 1h'
 
 ### 1.VPC yaml 파일 다운로드
 
-Cloud9 콘솔에서 아래 github로 부터 VPC yaml 파일을 다운로드 합니다.
+Cloud9 콘솔에서 아래 github로 부터 VPC yaml 파일을 다운로드 합니다. \(앞서 다운로드 하였으면 생략합니다.\)
 
 ```text
 git clone https://github.com/whchoi98/gwlb.git
 
 ```
+
+Cloud9에서 로컬로 파일을 다운로드 받습니다.
+
+![](.gitbook/assets/image%20%2892%29.png)
 
 AWS 관리콘솔에서 Cloudformation을 선택합니다.
 
