@@ -175,7 +175,7 @@ echo "export Appliance3=$Appliance3" | tee -a ~/.bash_profile
 echo "export Appliance4=$Appliance4" | tee -a ~/.bash_profile
 source ~/.bash_profile
 mv ~/environment/gwlbkey ~/environment/gwlbkey.pem
-chmod 400 ./glwbkey.pem
+chmod 400 ./gwlbkey.pem
 
 ```
 
