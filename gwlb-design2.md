@@ -31,12 +31,16 @@ AWS 관리콘솔에서 Cloudformation을 선택합니다.
 
 ![](.gitbook/assets/image%20%2847%29.png)
 
-아래와 같은 순서로 Cloudformation에서 Yaml파일을 배포합니다.
+아래와 같은 순서로 Cloudformation에서 Yaml파일을 배포합니다. 
 
 1. GWLBVPC.yml
 2. N2SVPC.yml
 3. VPC01.yml, VPC02.yml
 4. GWLBTGW.yml
+
+{% hint style="danger" %}
+계정에서 VPC 기본 할당량은 Default VPC 포함 5개입니다. 이 랩에서는 VPC03 은 생성하지 않습니다.
+{% endhint %}
 
 ### 2.GWLB VPC 배포
 
