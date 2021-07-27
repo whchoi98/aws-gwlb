@@ -11,7 +11,11 @@ description: 'Update : 2021-03-31/ 20min'
 * Design 1 \(North to South 흐름 방식\) - VPC 에서 외부 전송 트래픽에 대해 GWLB VPC Endpoint와 Private Link를 사용해서 구성합니다.
 * Design 2 \(East to West 흐름 방식\) - VPC 에서 외부 전송 트래픽에 대해 TransitGateway를 기반으로 구성합니다. \(이때 별도의 VPC를 구성합니다.\)
 
-각 Lab에서는 Linux IPTABLE 기반의 어플라이언스 구성을 만들어 봅니다.
+각 Lab에서는 3개의 가상 어플라이언스 구성을 만들어 봅니다.
+
+* Linux IPTABLE 기반의 어플라이언스
+* Fortinet 사의 FortiGate 가상 어플라이언스 \(BYOL 기반으로 평가판 라이센스 필요\)
+* PaloAlto 사의 VM Firewall 가상 어플라이언 \(BYOL 기반으로 평가판 라이센스 필요\)
 
 ## Cloud9 구성
 
@@ -19,7 +23,7 @@ description: 'Update : 2021-03-31/ 20min'
 
 AWS Cloud9은 브라우저만으로 코드를 작성, 실행 및 디버깅할 수 있는 클라우드 기반 IDE\(통합 개발 환경\)입니다. 코드 편집기, 디버거 및 터미널이 포함되어 있습니다. Cloud9은 JavaScript, Python, PHP를 비롯하여 널리 사용되는 프로그래밍 언어를 위한 필수 도구가 사전에 패키징되어 제공되므로, 새로운 프로젝트를 시작하기 위해 파일을 설치하거나 개발 머신을 구성할 필요가 없습니다. Cloud9 IDE는 클라우드 기반이므로, 인터넷이 연결된 머신을 사용하여 사무실, 집 또는 어디서든 프로젝트 작업을 할 수 있습니다. 또한, Cloud9은 서버리스 애플리케이션을 개발할 수 있는 원활한 환경을 제공하므로 손쉽게 서버리스 애플리케이션의 리소스를 정의하고, 디버깅하고, 로컬 실행과 원격 실행 간에 전환할 수 있습니다. Cloud9에서는 개발 환경을 팀과 신속하게 공유할 수 있으므로 프로그램을 연결하고 서로의 입력 값을 실시간으로 추적할 수 있습니다.
 
-🎬 아래 동영상 링크에서 구성방법을 확인 할 수 있습니다.
+아래 동영상 링크에서 구성방법을 확인 할 수 있습니다.
 
 {% embed url="https://youtu.be/Jdzj0fSA4YU" %}
 
@@ -134,9 +138,9 @@ aws ec2 import-key-pair --key-name "gwlbkey" --public-key-material fileb://gwlbk
 ```text
 whchoi:~/environment $ aws ec2 import-key-pair --key-name "gwlbkey" --public-key-material fileb://gwlbkey.pub --region ap-northeast-2
 {
-    "KeyFingerprint": "xx:xx:xx:xx:xx:65:3a:70:fb:b1:fa:dd:6c:59:c6:9e",
+    "KeyFingerprint": "f0:34:e0:bd:32:65:3a:70:fb:b1:fa:dd:6c:59:c6:9e",
     "KeyName": "gwlbkey",
-    "KeyPairId": "key-xxxxxxxxx"
+    "KeyPairId": "key-0407ab8844e3272ad"
 }
 ```
 
