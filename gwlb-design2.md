@@ -25,7 +25,7 @@ git clone https://github.com/whchoi98/gwlb.git
 
 Cloud9에서 로컬로 파일을 다운로드 받습니다.
 
-![](.gitbook/assets/image%20%2892%29.png)
+![](.gitbook/assets/image%20%2895%29.png)
 
 AWS 관리콘솔에서 Cloudformation을 선택합니다.
 
@@ -71,7 +71,7 @@ AWS 관리콘솔 - VPC - 가상 프라이빗 클라우드 - 엔드포인트 서�
 
 서비스 이름을 복사해 둡니다. 뒤에서 생성할 VPC들의 Cloudformation에서 사용할 것입니다.
 
-![](.gitbook/assets/image%20%2893%29.png)
+![](.gitbook/assets/image%20%2896%29.png)
 
 ### 3.N2SVPC 배포 
 
@@ -155,7 +155,7 @@ Default Route Table과 VPC01, VPC02 CIDR 주소를 입력합니다. \(기본 값
 
 TransitGateway 구성과 RouteTable을 아래에서 확인합니다. 
 
-![](.gitbook/assets/image%20%2863%29.png)
+![](.gitbook/assets/image%20%2894%29.png)
 
 AWS 관리 콘솔 - VPC 대시보드 - TransitGateway 에서 TransitGateway가 정상적으로 구성되었는지 확인합니다.
 
@@ -165,14 +165,14 @@ AWS 관리 콘솔 - VPC 대시보드 - TransitGateway- TransitGateway 연결\(At
 
 ![](.gitbook/assets/image%20%2860%29.png)
 
-AWS 관리콘솔 - VPC 대시보드 -TransitGateway-TransitGateway 라우팅 테이블-Route 에서 "GWLBTGW-RT-North-To-South", "GWLBTGW-RT-East-To-West" 라우팅 테이블을 확인합니다.
+AWS 관리콘솔 - VPC 대시보드 -TransitGateway-TransitGateway 라우팅 테이블-Route 에서 "GWLBTGW-RT-VPC-OUT, "GWLBTGW-RT-VPC-IN" 라우팅 테이블을 확인합니다.
 
-* GWLBTGW-RT-North-To-South : VPC01,VPC02 에서 인터넷으로 향하는 트래픽
-* GWLBTGW-RT-East-To-West: VPC01,VPC02 상호간에 트래
+* GWLBTGW-RT-VPC-OUT : VPC01,VPC02 에서 인터넷으로 향하는 트래픽
+* GWLBTGW-RT-VPC-IN: VPC01,VPC02 로 내부로 향하는 트래픽
 
-![](.gitbook/assets/image%20%2886%29.png)
+![](.gitbook/assets/image%20%2891%29.png)
 
-![](.gitbook/assets/image%20%2872%29.png)
+![](.gitbook/assets/image%20%2893%29.png)
 
 AWS 관리 콘솔 -VPC 대시보드 - 가상 프라이빗 클라우드 - 라우팅테이블에서  각 Private-Subnet-A,B-RT 라우팅 테이블을 확인합니다. 
 
