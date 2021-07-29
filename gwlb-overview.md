@@ -58,9 +58,9 @@ Gateway Load Balancer 내에 배치 된 타사 가상 어플라이언스는 네�
 
 #### 🎬 사전 준비 - [https://youtu.be/Jdzj0fSA4YU](https://youtu.be/Jdzj0fSA4YU)
 
-#### 🎬GWLB Design1 - 분산형 GWLB 디자인
+#### 🎬GWLB Design1 - 분산형 GWLB 디자인 [https://www.youtube.com/watch?v=J4mXEfsWZUs](https://www.youtube.com/watch?v=J4mXEfsWZUs)
 
-#### 🎬GWLB Desing2 - 중앙집중형 GWLB 디자인
+#### 🎬GWLB Desing2 - 중앙집중형 GWLB 디자인 [https://www.youtube.com/watch?v=ZyxN2fOiw9A](https://www.youtube.com/watch?v=ZyxN2fOiw9A)
 
 #### 🎬GWLB Design 3 - 분산형 GWLB 디자인 기반 외부 서비스 제공 
 
