@@ -81,7 +81,7 @@ VPC01,02 2개의 VPC를 Cloudformation에서 앞서 과정과 동일하게 생�
 * InstanceTyep: t3.small
 * KeyPair : 미 만들어 둔 keyPair를 사용합니다.
 
-![](.gitbook/assets/image%20%28106%29.png)
+![](.gitbook/assets/image%20%28118%29.png)
 
 아래와 같이 VPC가 모두 정상적으로 설정되었는지 확인해 봅니다.
 
@@ -176,6 +176,7 @@ echo "export Appliance2=$Appliance2" | tee -a ~/.bash_profile
 echo "export Appliance3=$Appliance3" | tee -a ~/.bash_profile
 echo "export Appliance4=$Appliance4" | tee -a ~/.bash_profile
 source ~/.bash_profile
+## 앞서 변경했으면 적용하지 않습니다.
 mv ~/environment/gwlbkey ~/environment/gwlbkey.pem
 chmod 400 ./gwlbkey.pem
 
