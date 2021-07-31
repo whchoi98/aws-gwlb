@@ -10,7 +10,7 @@ description: 'Update : 2021-07-01'
 
 이러한 구성은 VPC Endpoint를 각 VPC에 분산하고, GWLB에 VPC Endpoint Service를 연결하는 분산형 구조입니다. 각 VPC01,02는 외부에 서비스를 제공하기 위해 ALB를 통해 웹 서비스를 제공하고 있으며, Private Subnet의 인스턴스는 타겟 그룹으로 연결되어 있습니다. 해당 인스턴스들을 패치 관리를 위해서 NAT Gateway를 통해 Source NAT 서비스를 받게 됩니다.
 
-앞선 [GWLB Design1](gwlb-design1.md) 구성보다 , 외부 서비스에 더 중점을 둔 디자인입니다.
+이러한 구성은 VPC Endpoint를 각 VPC에 분산하고, GWLB에 VPC Endpoint Service를 연결하는 분산형 구조이지만, 앞선 [GWLB Design1](gwlb-design1.md) 구성보다는  외부 서비스에 더 중점을 둔 디자인입니다.
 
 아래 그림은 목표 구성도 입니다.
 
