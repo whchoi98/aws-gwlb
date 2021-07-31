@@ -176,7 +176,7 @@ export Appliance4={Appliance4ip address}
 
 ```text
 #기존 Appliance 정보를 삭제
-sed ~/.bash_profile '/Appliance/d'
+sudo sed '/Appliance/d' ~/.bash_profile
 #Appliance IP Export
 export Appliance1=3.36.108.211
 export Appliance2=52.79.219.13
