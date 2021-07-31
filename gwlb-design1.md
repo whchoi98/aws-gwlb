@@ -437,7 +437,10 @@ AWS 관리콘솔 - Cloudformation - 스택 을 선택하고 생성된 Stack을 ,
 
 VPC01,VPC02,VPC03-GWLBVPC 순으로 삭제합니다.\(Cloud9은 계속 사용하기 위해 삭제 하지 않습니다.\)  VPC01,02,03이 완전히 삭제된후, GWLBVPC를 삭제 합니다.
 
+1. VPC01,02,03 선택 후 삭제 \(3~4분 소요 , 동시진행 가능\)
+2. GWLBVPC 선택 후 삭제 \(3~4분 소요\)
+
 ![](.gitbook/assets/image%20%282%29.png)
 
-
+랩을 완전히 종료하려면 **`AWS 관리콘솔 - Cloudformation - 스택`**  가장 마지막 하단의 aws cloud9 콘솔 스택도 삭제합니다.
 
