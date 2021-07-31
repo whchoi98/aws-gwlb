@@ -265,7 +265,7 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101  이며, Appliance IP와 터�
 7. Decap 해서 다시 VPC Endpoint Service로 전달
 8. Public Subnet VPC Endpoint로 전달
 9. Private Subnet 인스턴스로 전달 
-10. Return되는 트래픽은 Private Subnet의 Route Table에 의해 VPC Endpoint로 다시 전
+10. Return되는 트래픽은 Private Subnet의 Route Table에 의해 VPC Endpoint로 다시 전달.
 
 ![](.gitbook/assets/image%20%2812%29.png)
 
