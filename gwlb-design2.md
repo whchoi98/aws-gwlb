@@ -262,11 +262,15 @@ export Appliance4={Appliance4ip address}
 아래와 같이 구성합니다.
 
 ```text
+#기존 Appliance 정보를 삭제
+sed ~/.bash_profile '/Appliance/d'
+
 #Appliance IP Export
 export Appliance1=3.36.108.211
 export Appliance2=52.79.219.13
 export Appliance3=13.125.201.96
 export Appliance4=15.164.176.82
+
 #bash profile에 등록
 echo "export Appliance1=$Appliance1" | tee -a ~/.bash_profile
 echo "export Appliance2=$Appliance2" | tee -a ~/.bash_profile
