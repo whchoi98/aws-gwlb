@@ -261,16 +261,20 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101 이며, Appliance IP와 터�
 3. GWLB Subnet의 VPC Endpoint는 GWLB VPC Endpoint Service로 전달
 4. GWLB로 트래픽 전달
 5. AZ A,AZ B Target Group으로 LB 처리 - UDP 6081 GENEVE로 Encapsulation \(TLV Header - 5Tuple\)
-6. Appliance에서 트래픽 처리 후 다시 Return
-7. Decap 해서 다시 VPC Endpoint Service로 전달
-8. GWLB Subnet VPC Endpoint로 전달
-9. Public Subnet ALB로 전달
-10. ALB \(Internet Facing\) 은 Private Target Group에 포함된 인스턴스로 전달. \(Private EC2 인스턴스\)
-11. Return되는 트래픽은 ALB를 거쳐서, GWLB EP-GWLB-Internet Gateway로 다시 전달
+6. Appliance으로 트래픽 인입
+7. Appliance에서 트래픽 반환
+8. GWLB로 트래픽 반환
+9. Decap 해서 다시 VPC Endpoint Service로 전달
+10. GWLB Subnet VPC Endpoint로 전달
+11. Public Subnet ALB로 전달
+12. ALB \(Internet Facing\) 은 Private Target Group에 포함된 인스턴스로 전달. \(Private EC2 인스턴스\)
+13. Return되는 트래픽은 ALB를 거쳐서, GWLB EP-GWLB-Internet Gateway로 다시 전달
 
 {% hint style="info" %}
 VPC01,02 NAT Gateway는 Private EC2 인스턴스들의 PAT로 동작하며, Private EC2 인스턴스들이 내부에서 외부로 Initiate 되는 트래픽들을 처리합니다. \(Patch, 패키지 다운드로 등...\)
 {% endhint %}
+
+![](.gitbook/assets/image%20%28121%29.png)
 
 
 
