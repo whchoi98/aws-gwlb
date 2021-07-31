@@ -322,7 +322,7 @@ AWS 관리콘솔 - VPC - 라우팅 테이블을 선택하고 VPC01,02-Public-A,B
 
 ![](.gitbook/assets/image%20%28126%29.png)
 
-**`AWS 관리콘솔 - EC2 - 로드밸런싱- 대상그룹`** 를 선택하고,  VPC01,02-ALB-tg 를 선택합니다. 하단에서 상태검사를 선택합니다. Private Subnet에 속한 4개의 인스턴스의 "/ec2meta-webpage/index.php" 로 상태검사를 하고 있는 것을 확인 할 수 있습니다. 이 랩에서는 이후에 해당 URL로 외부에서 접속해서 로드밸런싱이 제대로 되는지 확인할 것입니다.
+**`AWS 관리콘솔 - EC2 - 로드밸런싱- 대상그룹`** 를 선택하고,  VPC01,02-ALB-tg 를 선택합니다. 하단에서 상태검사를 선택합니다. Private Subnet에 속한 4개의 인스턴스의 **`"/ec2meta-webpage/index.php"`** 로 상태검사를 하고 있는 것을 확인 할 수 있습니다. 이 랩에서는 이후에 해당 URL로 외부에서 접속해서 로드밸런싱이 제대로 되는지 확인할 것입니다.
 
 ![](.gitbook/assets/image%20%28129%29.png)
 
