@@ -312,7 +312,7 @@ Ingress Routing에서 Private Subnet에 대한 라우팅 설정은 왜 없을까
 
 **`AWS 관리콘솔 - VPC - 라우팅 테이블`**을 선택하고 VPC01,02-Public-A,B-RT 이름의 라우팅 테이블을 확인해 봅니다. Egress\(외부로 향하는 트래픽\) 트래픽은 모두 GWLB VPC Endpoint로 향하도록 구성되어 있습니다.
 
-![](.gitbook/assets/image%20%28140%29.png)
+![](.gitbook/assets/image%20%28141%29.png)
 
 ### 10. ALB 확인
 
@@ -346,7 +346,7 @@ VPC01,02 을 Cloudformation을 통해 배포할 때 해당 인스턴스들에 Se
 
 아래 그림에서 처럼 확인해 볼 수 있습니다.
 
-![](.gitbook/assets/image%20%28141%29.png)
+![](.gitbook/assets/image%20%28142%29.png)
 
 ![](.gitbook/assets/image%20%28137%29.png)
 
@@ -484,6 +484,10 @@ tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 byt
 AWS 콘솔 - Cloudformation - VPC01, VPC02 스택 을 선택하고, Output\(출력\) 을 선택하고, ALB DNS A Record와 서비스 URL을 확인합니다.
 
 ![](.gitbook/assets/image%20%28139%29.png)
+
+VPC01,02 ALB URL로 브라우저에서 접속하고, 로드밸런싱이 정상적으로 되는지 확인합니다. 
+
+![](.gitbook/assets/image%20%28140%29.png)
 
 
 
