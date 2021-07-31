@@ -14,7 +14,7 @@ description: 'update : 2021-03-31'
 
 ### ☑[GWLB Design 2 \(1h\)](gwlb-design2.md)
 
-### ☑[GWLB Design 3 \(1h\)](gwlb-design-3.md)
+### ☑[GWLB Design 3 \(1h\)](gwlb-design3.md)
 
 
 
