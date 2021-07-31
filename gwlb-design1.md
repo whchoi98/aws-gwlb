@@ -312,6 +312,7 @@ VPC01,02,03 을 Cloudformation을 통해 배포할 때 해당 인스턴스들에
 먼저 Cloud9에 Session Manager 기반 접속을 위해 아래와 같이 설치합니다.
 
 ```text
+#session manager plugin 설치
 curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm"
 sudo yum install -y session-manager-plugin.rpm
 git clone https://github.com/whchoi98/useful-shell.git
@@ -356,7 +357,7 @@ whchoi:~/environment/useful-shell (master) $ ./aws_ec2_ext.sh
 session manager 명령을 통해 해당 인스턴스에 연결해 봅니다. \(VPC01-Private-A-10.1.21.101\)
 
 ```text
-aws ssm start-session --target instance-id
+aws ssm start-session --target {VPC01-Private-A-10.1.21.101 Instance ID}
 ```
 
 터미널에 접속한 후에 , 아래 명령을 통해 bash로 접근해서 외부로 트래픽을 전송해 봅니다.

@@ -367,7 +367,7 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101  이며, Appliance IP와 터�
 
 ### 11.VPC Endpoint 확인
 
-AWS 관리 콘솔 - VPC - Endpoint를 선택하여 실제 구성된 VPC Endpoint를 확인해 봅니다. N2SVPC에 2개씩 구성된 AZ를 위해 2개의 Endpoint가 구성되어 있습니다. \(VPC Endpoint는 AZ Subnet당 연결됩니다.\)
+**`AWS 관리 콘솔 - VPC - Endpoint`**를 선택하여 실제 구성된 VPC Endpoint를 확인해 봅니다. N2SVPC에 2개씩 구성된 AZ를 위해 2개의 Endpoint가 구성되어 있습니다. \(VPC Endpoint는 AZ Subnet당 연결됩니다.\)
 
 ![](.gitbook/assets/image%20%2868%29.png)
 
@@ -377,15 +377,15 @@ AWS 관리콘솔 - VPC - 라우팅 테이블을 선택하고 각 라우팅 테�
 
 ![](.gitbook/assets/image%20%2896%29.png)
 
-AWS 관리 콘솔 - VPC 대시보드 - 라우팅 테이블 - N2SVPC TGW Routing Table 확인 
+**`AWS 관리 콘솔 - VPC 대시보드 - 라우팅 테이블 - N2SVPC TGW Routing Table`** 확인 
 
 ![](.gitbook/assets/image%20%2884%29.png)
 
-AWS 관리 콘솔 - VPC 대시보드 - 라우팅 테이블 - N2SVPC Private Routing Table 확인
+**`AWS 관리 콘솔 - VPC 대시보드 - 라우팅 테이블 - N2SVPC Private Routing Table`** 확인
 
 ![](.gitbook/assets/image%20%2876%29.png)
 
-AWS 관리 콘솔 - VPC 대시보드 - 라우팅 테이블 - N2SVPC Public Routing Table 확인
+**`AWS 관리 콘솔 - VPC 대시보드 - 라우팅 테이블 - N2SVPC Public Routing Table`** 확인
 
 ![](.gitbook/assets/image%20%2883%29.png)
 
@@ -444,22 +444,23 @@ VPC01,02 을 Cloudformation을 통해 배포할 때 해당 인스턴스들에 Se
       Path: "/"
       Roles: 
         - Ref: ServerRoleSSM
-  #이하 생
+  #이하 생략 
 ```
 
 아래 그림에서 처럼 확인해 볼 수 있습니다.
 
-AWS 관리콘솔 - VPC 대시보드 - VPC - 앤드포인트 에서 SSM\(Session Manager\) 관련 VPC Endpoint 배포를 확인해 봅니다.
+**`AWS 관리콘솔 - VPC 대시보드 - VPC - 앤드포인트`** 에서 SSM\(Session Manager\) 관련 VPC Endpoint 배포를 확인해 봅니다.
 
 ![](.gitbook/assets/image%20%2858%29.png)
 
-AWS 관리콘솔 - EC2 대시보드 - 인스턴스 에서 VPC1,2 인스턴스를 선택하고 IAM Profile이 정상적으로 구성되었는지 확인합니.
+**`AWS 관리콘솔 - EC2 대시보드 - 인스턴스`** 에서 VPC1,2 인스턴스를 선택하고 IAM Profile이 정상적으로 구성되었는지 확인합니다.
 
 ![](.gitbook/assets/image%20%2866%29.png)
 
-먼저 Cloud9에 Session Manager 기반 접속을 위해 아래와 같이 설치합니다. \(GWLB Design1 에서 설치하였으면 생략합니다.\)
+먼저 Cloud9에 Session Manager 기반 접속을 위해 아래와 같이 설치합니다. **\(GWLB Design1 에서 설치하였으면 생략합니다.\)**
 
 ```text
+#session manager plugin 설치.
 curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm"
 sudo yum install -y session-manager-plugin.rpm
 git clone https://github.com/whchoi98/useful-shell.git
@@ -497,10 +498,10 @@ whchoi:~/environment/useful-shell (master) $ ./aws_ec2_ext.sh
 +----------------------------------------------------------+------------------+----------------------+-------------+------------------------+----------+----------------+------------------+
 ```
 
-session manager 명령을 통해 해당 인스턴스에 연결해 봅니다. \(VPC01-Private-A-10.1.21.101\)
+session manager 명령을 통해 해당 인스턴스에 연결해 봅니다. \(예. VPC01-Private-A-10.1.21.101\)
 
 ```text
-aws ssm start-session --target instance-id
+aws ssm start-session --target {VPC01-Private-A-10.1.21.101 Instance ID}
 
 ```
 
@@ -535,7 +536,7 @@ Cloud9 터미널 1
 
 ```text
 ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance1
-sudo tcpdump -nvv 'port 6081'
+sudo tcpdump -nvv 'port 6081' | grep 'ICMP'
 
 ```
 
@@ -543,7 +544,7 @@ Cloud9 터미널 2
 
 ```text
 ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance2
-sudo tcpdump -nvv 'port 6081'
+sudo tcpdump -nvv 'port 6081' | grep 'ICMP'
 
 ```
 
@@ -577,7 +578,7 @@ Source IP와 Destination IP가 모두 유지된 채로 통신하는 것을 확�
 
 ## 자원 삭제
 
-AWS 관리콘솔 - Cloudformation - 스택 을 선택하고 생성된 Stack을 삭제합니다.
+**`AWS 관리콘솔 - Cloudformation - 스택`** 을 선택하고 생성된 Stack을 삭제합니다.
 
 GWLBTGW,VPC01,VPC02,N2SVPC,GWLBVPC 순으로 삭제합니다.\(Cloud9은 계속 사용하기 위해 삭제 하지 않습니다.\) 
 
