@@ -197,6 +197,7 @@ chmod 400 ./gwlbkey.pem
 각 Appliance에서 아래 명령을 통해 , GWLB IP와 어떻게 매핑되었는지 확인합니다. Cloud9에서 새로운 터미널 4개를 탭에서 추가해서 4개 Appliance를 모두 확인해 봅니다.
 
 ```text
+#Appliance 접
 ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance1
 ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance2
 ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance3
