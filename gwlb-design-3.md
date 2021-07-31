@@ -243,13 +243,16 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101 이며, Appliance IP와 터�
 
 이렇게 GWLB 에서 생성된 IP주소와 각 Appliance의 IP간에 UDP 6081 포트로 터널링되어 , 외부의 IP 주소와 내부의 IP 주소를 그대로 유지할 수 있습니다. 또한 터널링으로 인입시 5Tuple \(출발지 IP, Port, 목적지 IP, Port, 프로토콜\)의 정보를 TLV로 Encapsulation하여 분산처리할 때 사용합니다.
 
-### Workload VPC 확인
+## Workload VPC 확인
 
 이제 각 VPC에서 실제 구성과 트래픽을 확인해 봅니다.
 
 1. VPC Endpoint 확인
-2. Public/Private Subnet Route Table 확인
-3. Ingress Routing Table 확인
+2. GWLB Subnet Route Table 확인
+3. Public Subnet Route Table 확인
+4. ALB 확인
+5. Private Subnet Route Table 확인
+6. Ingress Routing Table 확인
 
-
+![](.gitbook/assets/image%20%28119%29.png)
 
