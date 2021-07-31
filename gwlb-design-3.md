@@ -424,7 +424,54 @@ PING aws.com (54.230.62.60) 56(84) bytes of data.
 64 bytes from server-54-230-62-60.icn54.r.cloudfront.net (54.230.62.60): icmp_seq=3 ttl=240 time=2.08 ms
 ```
 
+### 12. Appliance에서 확인
 
+앞서 Session manager를 통해 [www.aws.com으로](http://www.aws.xn--com-ky7m580d/) ping을 실행했습니다. 해당 터미널을 실행한 상태에서 Cloud9 터미널을 2개로 추가로 열어 봅니다.
+
+아래와 같이 2개의 Appliance에 SSH로 연결해서 명령을 실행해 보고, Appliance로 Traffic이 들어오는지 확인해 봅니다.
+
+Cloud9 터미널 1
+
+```text
+ssh -i ~/environment/JAN-2021-whchoi.pem ec2-user@$Appliance1
+sudo tcpdump -nvv 'port 6081'
+sudo tcpdump -nvv 'port 6081'| grep 'ICMP'
+```
+
+Cloud9 터미널 2
+
+```text
+ssh -i ~/environment/JAN-2021-whchoi.pem ec2-user@$Appliance2
+sudo tcpdump -nvv 'port 6081'
+sudo tcpdump -nvv 'port 6081'| grep 'ICMP'
+```
+
+다음과 같이 1개의 터미널에서 icmp가 처리되는 것을 확인 할 수 있습니다.
+
+```text
+[ec2-user@ip-10-254-11-101 ~]$ sudo tcpdump -nvv 'port 6081'| grep 'ICMP'
+tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 bytes
+15:58:04.744658 IP (tos 0x0, ttl 255, id 0, offset 0, flags [none], proto UDP (17), length 152)
+    10.254.11.60.60001 > 10.254.11.101.6081: [udp sum ok] Geneve, Flags [none], vni 0x0, options [class Unknown (0x108) type 0x1 len 12 data 2356de92 d389839c, class Unknown (0x108) type 0x2 len 12 data 00000000 00000000, class Unknown (0x108) type 0x3 len 8 data 98ef1b00]
+        IP (tos 0x0, ttl 254, id 27551, offset 0, flags [DF], proto ICMP (1), length 84)
+    10.1.21.101 > 54.230.62.60: ICMP echo request, id 1591, seq 370, length 64
+15:58:04.744689 IP (tos 0x0, ttl 254, id 0, offset 0, flags [none], proto UDP (17), length 152)
+    10.254.11.101.60001 > 10.254.11.60.6081: [udp sum ok] Geneve, Flags [none], vni 0x0, options [class Unknown (0x108) type 0x1 len 12 data 2356de92 d389839c, class Unknown (0x108) type 0x2 len 12 data 00000000 00000000, class Unknown (0x108) type 0x3 len 8 data 98ef1b00]
+        IP (tos 0x0, ttl 254, id 27551, offset 0, flags [DF], proto ICMP (1), length 84)
+    10.1.21.101 > 54.230.62.60: ICMP echo request, id 1591, seq 370, length 64
+15:58:04.746459 IP (tos 0x0, ttl 255, id 0, offset 0, flags [none], proto UDP (17), length 152)
+    10.254.11.60.60001 > 10.254.11.101.6081: [udp sum ok] Geneve, Flags [none], vni 0x0, options [class Unknown (0x108) type 0x1 len 12 data 2356de92 d389839c, class Unknown (0x108) type 0x2 len 12 data 00000000 00000000, class Unknown (0x108) type 0x3 len 8 data 98ef1b00]
+        IP (tos 0x0, ttl 241, id 28778, offset 0, flags [none], proto ICMP (1), length 84)
+    54.230.62.60 > 10.1.21.101: ICMP echo reply, id 1591, seq 370, length 64
+15:58:04.746476 IP (tos 0x0, ttl 254, id 0, offset 0, flags [none], proto UDP (17), length 152)
+    10.254.11.101.60001 > 10.254.11.60.6081: [udp sum ok] Geneve, Flags [none], vni 0x0, options [class Unknown (0x108) type 0x1 len 12 data 2356de92 d389839c, class Unknown (0x108) type 0x2 len 12 data 00000000 00000000, class Unknown (0x108) type 0x3 len 8 data 98ef1b00]
+        IP (tos 0x0, ttl 241, id 28778, offset 0, flags [none], proto ICMP (1), length 84)
+    54.230.62.60 > 10.1.21.101: ICMP echo reply, id 1591, seq 370, length 64
+```
+
+Source IP와 Destination IP가 모두 유지된 채로 통신하는 것을 확인 할 수 있습니다.
+
+이제 다른 VPC와 다른 서브넷의 EC2에서도 트래픽이 정상적으로 처리되는지 확인해 봅니다.
 
 
 
