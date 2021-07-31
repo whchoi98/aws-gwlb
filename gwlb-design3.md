@@ -12,6 +12,10 @@ description: 'Update : 2021-07-01 / 1h'
 
 이러한 구성은 VPC Endpoint를 각 VPC에 분산하고, GWLB에 VPC Endpoint Service를 연결하는 분산형 구조이지만, 앞선 [GWLB Design1](gwlb-design1.md) 구성보다는  외부 서비스에 더 중점을 둔 디자인입니다.
 
+#### 🎬 아래 동영상 링크에서 구성방법을 확인 할 수 있습니다.
+
+
+
 아래 그림은 목표 구성도 입니다.
 
 ![](.gitbook/assets/image%20%28100%29.png)
