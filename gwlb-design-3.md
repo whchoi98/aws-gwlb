@@ -312,13 +312,13 @@ Ingress Routing에서 Private Subnet에 대한 라우팅 설정은 왜 없을까
 
 **`AWS 관리콘솔 - VPC - 라우팅 테이블`**을 선택하고 VPC01,02-Public-A,B-RT 이름의 라우팅 테이블을 확인해 봅니다. Egress\(외부로 향하는 트래픽\) 트래픽은 모두 GWLB VPC Endpoint로 향하도록 구성되어 있습니다.
 
-![](.gitbook/assets/image%20%28136%29.png)
+![](.gitbook/assets/image%20%28137%29.png)
 
 ### 10. ALB 확인
 
 **`AWS 관리콘솔 - EC2 - 로드밸런싱 - 로드밸런서`** 를 선택하고,  VPC01,02-alb를 선택합니다. ALB의 외부 노출되어 있는 DNS A 레코드를 확인하고, 복사해 둡니다.
 
-![](.gitbook/assets/image%20%28135%29.png)
+![](.gitbook/assets/image%20%28136%29.png)
 
 **`AWS 관리콘솔 - EC2 - 로드밸런싱- 대상그룹`** 를 선택하고,  VPC01,02-ALB-tg 를 선택합니다. 하단의 세부 정보를 확인하면 Private Subnet에 속한 4개의 인스턴스가 정상적으로 Target Group에 선택된 것을 확인 할 수 있습니다.
 
@@ -346,9 +346,9 @@ VPC01,02 을 Cloudformation을 통해 배포할 때 해당 인스턴스들에 Se
 
 아래 그림에서 처럼 확인해 볼 수 있습니다.
 
-![](.gitbook/assets/image%20%28137%29.png)
+![](.gitbook/assets/image%20%28138%29.png)
 
-![](.gitbook/assets/image%20%28134%29.png)
+![](.gitbook/assets/image%20%28135%29.png)
 
 먼저 Cloud9 터미널에 Session Manager 기반 접속을 위해 아래와 같이 설치합니다. \(앞서 랩에서 수행했다면, 생략합니다.\)
 
@@ -451,29 +451,31 @@ sudo tcpdump -nvv 'port 6081'| grep 'ICMP'
 다음과 같이 1개의 터미널에서 icmp가 처리되는 것을 확인 할 수 있습니다.
 
 ```text
-[ec2-user@ip-10-254-11-101 ~]$ sudo tcpdump -nvv 'port 6081'| grep 'ICMP'
+[ec2-user@ip-10-254-11-101 ~]$ sudo tcpdump -nvv 'port 6081' | grep 'ICMP'
 tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 bytes
-15:58:04.744658 IP (tos 0x0, ttl 255, id 0, offset 0, flags [none], proto UDP (17), length 152)
-    10.254.11.60.60001 > 10.254.11.101.6081: [udp sum ok] Geneve, Flags [none], vni 0x0, options [class Unknown (0x108) type 0x1 len 12 data 2356de92 d389839c, class Unknown (0x108) type 0x2 len 12 data 00000000 00000000, class Unknown (0x108) type 0x3 len 8 data 98ef1b00]
-        IP (tos 0x0, ttl 254, id 27551, offset 0, flags [DF], proto ICMP (1), length 84)
-    10.1.21.101 > 54.230.62.60: ICMP echo request, id 1591, seq 370, length 64
-15:58:04.744689 IP (tos 0x0, ttl 254, id 0, offset 0, flags [none], proto UDP (17), length 152)
-    10.254.11.101.60001 > 10.254.11.60.6081: [udp sum ok] Geneve, Flags [none], vni 0x0, options [class Unknown (0x108) type 0x1 len 12 data 2356de92 d389839c, class Unknown (0x108) type 0x2 len 12 data 00000000 00000000, class Unknown (0x108) type 0x3 len 8 data 98ef1b00]
-        IP (tos 0x0, ttl 254, id 27551, offset 0, flags [DF], proto ICMP (1), length 84)
-    10.1.21.101 > 54.230.62.60: ICMP echo request, id 1591, seq 370, length 64
-15:58:04.746459 IP (tos 0x0, ttl 255, id 0, offset 0, flags [none], proto UDP (17), length 152)
-    10.254.11.60.60001 > 10.254.11.101.6081: [udp sum ok] Geneve, Flags [none], vni 0x0, options [class Unknown (0x108) type 0x1 len 12 data 2356de92 d389839c, class Unknown (0x108) type 0x2 len 12 data 00000000 00000000, class Unknown (0x108) type 0x3 len 8 data 98ef1b00]
-        IP (tos 0x0, ttl 241, id 28778, offset 0, flags [none], proto ICMP (1), length 84)
-    54.230.62.60 > 10.1.21.101: ICMP echo reply, id 1591, seq 370, length 64
-15:58:04.746476 IP (tos 0x0, ttl 254, id 0, offset 0, flags [none], proto UDP (17), length 152)
-    10.254.11.101.60001 > 10.254.11.60.6081: [udp sum ok] Geneve, Flags [none], vni 0x0, options [class Unknown (0x108) type 0x1 len 12 data 2356de92 d389839c, class Unknown (0x108) type 0x2 len 12 data 00000000 00000000, class Unknown (0x108) type 0x3 len 8 data 98ef1b00]
-        IP (tos 0x0, ttl 241, id 28778, offset 0, flags [none], proto ICMP (1), length 84)
-    54.230.62.60 > 10.1.21.101: ICMP echo reply, id 1591, seq 370, length 64
+        IP (tos 0x0, ttl 253, id 29265, offset 0, flags [DF], proto ICMP (1), length 84)
+    10.1.11.251 > 18.65.200.67: ICMP echo request, id 20223, seq 311, length 64
+        IP (tos 0x0, ttl 253, id 29265, offset 0, flags [DF], proto ICMP (1), length 84)
+    10.1.11.251 > 18.65.200.67: ICMP echo request, id 20223, seq 311, length 64
+        IP (tos 0x0, ttl 234, id 55743, offset 0, flags [none], proto ICMP (1), length 84)
+    18.65.200.67 > 10.1.11.251: ICMP echo reply, id 20223, seq 311, length 64
+        IP (tos 0x0, ttl 234, id 55743, offset 0, flags [none], proto ICMP (1), length 84)
+    18.65.200.67 > 10.1.11.251: ICMP echo reply, id 20223, seq 311, length 64
+        IP (tos 0x0, ttl 253, id 29276, offset 0, flags [DF], proto ICMP (1), length 84)
+    10.1.11.251 > 18.65.200.67: ICMP echo request, id 20223, seq 312, length 64
+        IP (tos 0x0, ttl 253, id 29276, offset 0, flags [DF], proto ICMP (1), length 84)
+    10.1.11.251 > 18.65.200.67: ICMP echo request, id 20223, seq 312, length 64
 ```
 
-Source IP와 Destination IP가 모두 유지된 채로 통신하는 것을 확인 할 수 있습니다.
+[GWLB Design1](gwlb-design1.md)의 결과와 다르게 인스턴스 IP 주소가 보이지 않습니다. 인스턴스가 Private Subnet에 속해 있고, 외부에 IP가 노출되지 않고 NAT Gateway를 통해서 통신하기 때문입니다.
+
+**`AWS 콘솔 - VPC - NAT Gateway`** 를 선택하고,  NAT Gateway 주소가 맞는 지 확인해 봅니다.
+
+![](.gitbook/assets/image%20%28134%29.png)
 
 이제 다른 VPC와 다른 서브넷의 EC2에서도 트래픽이 정상적으로 처리되는지 확인해 봅니다.
+
+
 
 
 
