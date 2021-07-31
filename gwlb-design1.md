@@ -169,10 +169,12 @@ export Appliance4={Appliance4ip address}
 아래와 같이 구성합니다.
 
 ```text
-export Appliance1=3.35.55.51
-export Appliance2=3.35.53.210
-export Appliance3=3.35.5.188
-export Appliance4=3.34.28.238
+#Appliance IP Export
+export Appliance1=3.36.108.211
+export Appliance2=52.79.219.13
+export Appliance3=13.125.201.96
+export Appliance4=15.164.176.82
+#bash profile에 등록
 echo "export Appliance1=$Appliance1" | tee -a ~/.bash_profile
 echo "export Appliance2=$Appliance2" | tee -a ~/.bash_profile
 echo "export Appliance3=$Appliance3" | tee -a ~/.bash_profile
@@ -183,7 +185,7 @@ chmod 400 ./gwlbkey.pem
 
 ```
 
-cloud9에서 아래와 같이 각 Appliance로 접속해 봅니다.
+각 Appliance에서 아래 명령을 통해 , GWLB IP와 어떻게 매핑되었는지 확인합니다. Cloud9에서 새로운 터미널 4개를 탭에서 추가해서 4개 Appliance를 모두 확인해 봅니다.
 
 ```text
 ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance1
