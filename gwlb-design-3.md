@@ -135,13 +135,13 @@ AWS 관리 콘솔 - VPC - 엔드포인트 서비스를 선택합니다. 생성�
 
 2개 영역에 걸쳐서 GWLB에 대해 VPC Endpoint Service를 구성하고 있습니다.
 
-![](.gitbook/assets/image%20%28125%29.png)
+![](.gitbook/assets/image%20%28126%29.png)
 
 AWS 관리 콘솔 - VPC - 엔드포인트 서비스-엔드포인트 연결를 선택합니다.
 
 Workload VPC \(VPC01,02\)의 각 가용영역들과 연결된 것을 확인 할 수 있습니다. 각 VPC별 2개의 가용영역을 구성하였기 때문에 VPC별 2개의 Endpoint가 연결됩니다. \(VPC 2개를 생성해서 VPC Endpoint를 각 리전별로 구성하기 때문에 이 랩에서는 4개가 보이게 됩니다.\)
 
-![](.gitbook/assets/image%20%28124%29.png)
+![](.gitbook/assets/image%20%28125%29.png)
 
 ### 6. Appliance 확인
 
@@ -254,7 +254,7 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101 이며, Appliance IP와 터�
 5. Private Subnet Route Table 확인
 6. Ingress Routing Table 확인
 
-![](.gitbook/assets/image%20%28119%29.png)
+![](.gitbook/assets/image%20%28120%29.png)
 
 1. 외부 트래픽은 인터넷 게이트웨이로 접근
 2. Ingress Route Table에 의해 GWLB Endpoint로 트래픽 처리
@@ -274,21 +274,45 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101 이며, Appliance IP와 터�
 VPC01,02 NAT Gateway는 Private EC2 인스턴스들의 PAT로 동작하며, Private EC2 인스턴스들이 내부에서 외부로 Initiate 되는 트래픽들을 처리합니다. \(Patch, 패키지 다운드로 등...\)
 {% endhint %}
 
-![](.gitbook/assets/image%20%28122%29.png)
+![](.gitbook/assets/image%20%28123%29.png)
+
+### 7. Ingress Route Table 확인
+
+AWS 관리콘솔 - VPC - 라우팅 테이블을 선택하고 VPC01,02-IGW-Ingress-RT 이름의 라우팅 테이블을 확인해 봅니다. Ingress Routing Table에 대한 구성을 확인 할 수 있습니다. GWLB Subnet,Public Subnet으로 인입 되는 트래픽을 특정 경로로 보내는 역할을 합니다. 여기에서는 GWLB VPC Endpoint로 구성하도록 되어 있습니다.
+
+![](.gitbook/assets/image%20%28119%29.png)
+
+{% hint style="info" %}
+Ingress Routing에서 Private Subnet에 대한 라우팅 설정은 왜 없을까요?
+
+외부에서 Ingress Routing 접근은 Internet Gateway에서 공인 IP로 설정된 트래픽만 설정할 수 있습니다. 이 랩에서는 외부에서 ALB로 접근할 것입니다. ALB는 Public Subnet에 할당 되어 있고, 공인 IP를 받을 수 있도록 설정되어 있습니다. Private Subnet에 대한 라우팅 설정은 Ingress Routing에서 설정해도 동작하지 않습니다.
+{% endhint %}
 
 ### 7.VPC Endpoint 확인
 
 AWS 관리 콘솔 - VPC - Endpoint를 선택하여 실제 구성된 VPC Endpoint를 확인해 봅니다. 2개의 VPC에 2개씩 구성된 AZ를 위해 총 4개의 Endpoint가 구성되어 있습니다. \(VPC Endpoint는 AZ Subnet당 연결됩니다.\)
 
-![](.gitbook/assets/image%20%28120%29.png)
+![](.gitbook/assets/image%20%28121%29.png)
 
 #### 
 
-#### 8. Private Subnet Route Table 확인
+### 8. GWLB Subnet Route Table 확인
 
 AWS 관리콘솔 - VPC - 라우팅 테이블을 선택하고 VPC01,02-Private-Subnet-A,B-RT 이름의 라우팅 테이블을 확인해 봅니다. Return되는 트래픽의 경로는 GWLB VPC Endpoint로 설정되어 있습니다.
 
 
+
+### 9. Public Subnet Route Table 확인
+
+
+
+### 10. ALB 확인
+
+
+
+### 11. Private Subnet Route Table 확인
+
+### 
 
 
 
