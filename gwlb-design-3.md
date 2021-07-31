@@ -312,13 +312,13 @@ Ingress Routing에서 Private Subnet에 대한 라우팅 설정은 왜 없을까
 
 **`AWS 관리콘솔 - VPC - 라우팅 테이블`**을 선택하고 VPC01,02-Public-A,B-RT 이름의 라우팅 테이블을 확인해 봅니다. Egress\(외부로 향하는 트래픽\) 트래픽은 모두 GWLB VPC Endpoint로 향하도록 구성되어 있습니다.
 
-![](.gitbook/assets/image%20%28137%29.png)
+![](.gitbook/assets/image%20%28140%29.png)
 
 ### 10. ALB 확인
 
 **`AWS 관리콘솔 - EC2 - 로드밸런싱 - 로드밸런서`** 를 선택하고,  VPC01,02-alb를 선택합니다. ALB의 외부 노출되어 있는 DNS A 레코드를 확인하고, 복사해 둡니다.
 
-![](.gitbook/assets/image%20%28136%29.png)
+![](.gitbook/assets/image%20%28138%29.png)
 
 **`AWS 관리콘솔 - EC2 - 로드밸런싱- 대상그룹`** 를 선택하고,  VPC01,02-ALB-tg 를 선택합니다. 하단의 세부 정보를 확인하면 Private Subnet에 속한 4개의 인스턴스가 정상적으로 Target Group에 선택된 것을 확인 할 수 있습니다.
 
@@ -346,9 +346,9 @@ VPC01,02 을 Cloudformation을 통해 배포할 때 해당 인스턴스들에 Se
 
 아래 그림에서 처럼 확인해 볼 수 있습니다.
 
-![](.gitbook/assets/image%20%28138%29.png)
+![](.gitbook/assets/image%20%28141%29.png)
 
-![](.gitbook/assets/image%20%28135%29.png)
+![](.gitbook/assets/image%20%28137%29.png)
 
 먼저 Cloud9 터미널에 Session Manager 기반 접속을 위해 아래와 같이 설치합니다. \(앞서 랩에서 수행했다면, 생략합니다.\)
 
@@ -471,9 +471,19 @@ tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 byt
 
 **`AWS 콘솔 - VPC - NAT Gateway`** 를 선택하고,  NAT Gateway 주소가 맞는 지 확인해 봅니다.
 
-![](.gitbook/assets/image%20%28134%29.png)
+![](.gitbook/assets/image%20%28136%29.png)
 
 이제 다른 VPC와 다른 서브넷의 EC2에서도 트래픽이 정상적으로 처리되는지 확인해 봅니다.
+
+### 13. 외부에서 웹 서비스 접속 확인
+
+이제 외부에서 웹서비스가 정상적으로 접속되는 지 확인해 보고, GWLB를 통해서 처리되는 지 확인해 봅니다.
+
+아래에서 처럼 ALB 주소를 확인합니다.
+
+AWS 콘솔 - Cloudformation - VPC01, VPC02 스택 을 선택하고, Output\(출력\) 을 선택하고, ALB DNS A Record와 서비스 URL을 확인합니다.
+
+![](.gitbook/assets/image%20%28139%29.png)
 
 
 
