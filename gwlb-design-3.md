@@ -100,7 +100,7 @@ GWLBVPC 구성을 확인해 봅니다.
 
 ![](.gitbook/assets/image%20%28110%29.png)
 
-#### 3.GWLB 구성
+### 3.GWLB 구성
 
 AWS 관리 콘솔 - EC2 - 로드밸런싱 - 로드밸런서 메뉴를 선택합니다. Gateway LoadBalancer 구성을 확인할 수 있습니다. ELB 유형이 "gateway"로 구성된 것을 확인 할 수 있습니다.
 
@@ -108,7 +108,7 @@ AWS 관리 콘솔 - EC2 - 로드밸런싱 - 로드밸런서 메뉴를 선택합�
 
 
 
-#### 4.GWLB Target Group 구성
+### 4.GWLB Target Group 구성
 
 AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹을 선택합니다. GWLB가 로드밸런싱을 하게 되는 대상그룹\(Target Group\)을 확인 할 수 있습니다.
 
@@ -123,7 +123,7 @@ ELB와 동일하게 대상그룹\(Target Group\)에 상태를 검사할 수 있�
 
 ![](.gitbook/assets/image%20%28101%29.png)
 
-#### 5. VPC Endpoint Service 확인
+### 5. VPC Endpoint Service 확인
 
 Workload VPC\(VPC01,02\)들과 Private link로 연결하기 위해, GWLB VPC에 Endpoint Service를 구성하였습니다. 이를 확인해 봅니다.
 
@@ -143,7 +143,7 @@ Workload VPC \(VPC01,02\)의 각 가용영역들과 연결된 것을 확인 할 
 
 ![](.gitbook/assets/image%20%28112%29.png)
 
-#### 6. Appliance 확인
+### 6. Appliance 확인
 
 AWS 관리 콘솔 - EC2 - 인스턴스 메뉴를 선택하고, "appliance" 키워드로 필터링 해 봅니다. 4개의 리눅스 기반의 appliance가 설치되어 있습니다.
 
