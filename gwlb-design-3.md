@@ -135,13 +135,13 @@ AWS 관리 콘솔 - VPC - 엔드포인트 서비스를 선택합니다. 생성�
 
 2개 영역에 걸쳐서 GWLB에 대해 VPC Endpoint Service를 구성하고 있습니다.
 
-![](.gitbook/assets/image%20%28103%29.png)
+![](.gitbook/assets/image%20%28124%29.png)
 
 AWS 관리 콘솔 - VPC - 엔드포인트 서비스-엔드포인트 연결를 선택합니다.
 
 Workload VPC \(VPC01,02\)의 각 가용영역들과 연결된 것을 확인 할 수 있습니다. 각 VPC별 2개의 가용영역을 구성하였기 때문에 VPC별 2개의 Endpoint가 연결됩니다. \(VPC 2개를 생성해서 VPC Endpoint를 각 리전별로 구성하기 때문에 이 랩에서는 4개가 보이게 됩니다.\)
 
-![](.gitbook/assets/image%20%28112%29.png)
+![](.gitbook/assets/image%20%28123%29.png)
 
 ### 6. Appliance 확인
 
@@ -275,6 +275,10 @@ VPC01,02 NAT Gateway는 Private EC2 인스턴스들의 PAT로 동작하며, Priv
 {% endhint %}
 
 ![](.gitbook/assets/image%20%28121%29.png)
+
+### 7.VPC Endpoint 확인
+
+AWS 관리 콘솔 - VPC - Endpoint를 선택하여 실제 구성된 VPC Endpoint를 확인해 봅니다. 2개의 VPC에 2개씩 구성된 AZ를 위해 총 4개의 Endpoint가 구성되어 있습니다. \(VPC Endpoint는 AZ Subnet당 연결됩니다.\)
 
 
 
