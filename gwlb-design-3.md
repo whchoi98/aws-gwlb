@@ -336,7 +336,7 @@ Ingress Routing에서 Private Subnet에 대한 라우팅 설정은 왜 없을까
 
 ## 트래픽 확인
 
-#### Workload VPC의 EC2에서 트래픽 확인
+### 12. Workload VPC의 EC2에서 트래픽 확인
 
 VPC 01,02의 EC2에서 외부로 정상적으로 트래픽이 처리되는 지 확인 해 봅니다.
 
@@ -350,7 +350,79 @@ VPC01,02 을 Cloudformation을 통해 배포할 때 해당 인스턴스들에 Se
 
 ![](.gitbook/assets/image%20%28134%29.png)
 
+먼저 Cloud9 터미널에 Session Manager 기반 접속을 위해 아래와 같이 설치합니다. \(앞서 랩에서 수행했다면, 생략합니다.\)
 
+```text
+#session manager plugin 설치
+curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm"
+sudo yum install -y session-manager-plugin.rpm
+git clone https://github.com/whchoi98/useful-shell.git
+
+```
+
+session manager 기반으로 접속하기 위해, 아래 명령을 실행하여 ec2 인스턴스의 id값을 확인합니다.
+
+```text
+cd ~/environment/useful-shell/
+./aws_ec2_ext.sh
+
+```
+
+아래와 같이 결과를 확인 할 수 있습니다.
+
+```text
+whchoi:~/environment/useful-shell (master) $ ./aws_ec2_ext.sh 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|                                                                                     DescribeInstances                                                                                    |
++-----------------------------------------------------------+------------------+----------------------+------------+------------------------+----------+----------------+------------------+
+|  GWLBVPC-Appliance-10.254.12.101                          |  ap-northeast-2b |  i-065852170f36be268 |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.254.12.101 |  3.35.5.188      |
+|  GWLBVPC-Appliance-10.254.12.102                          |  ap-northeast-2b |  i-0cd6b81597257e7a0 |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.254.12.102 |  3.34.28.238     |
+|  VPC02-Private-B-10.2.22.102                              |  ap-northeast-2b |  i-022bfff134299b305 |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.2.22.102   |  13.125.203.174  |
+|  VPC01-Private-B-10.1.22.101                              |  ap-northeast-2b |  i-09ba281fa2130726a |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.1.22.101   |  13.209.2.88     |
+|  VPC03-Private-B-10.3.22.101                              |  ap-northeast-2b |  i-0c3c92c6fc8c9c691 |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.3.22.101   |  52.78.149.110   |
+|  VPC03-Private-B-10.3.22.102                              |  ap-northeast-2b |  i-01d50385674c2884b |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.3.22.102   |  13.125.240.3    |
+|  VPC01-Private-B-10.1.22.102                              |  ap-northeast-2b |  i-05e27a3db037bc1bd |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.1.22.102   |  3.35.225.49     |
+|  VPC02-Private-B-10.2.22.101                              |  ap-northeast-2b |  i-0548e17996fd96d57 |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.2.22.101   |  13.125.91.69    |
+|  GWLBVPC-Appliance-10.254.11.102                          |  ap-northeast-2a |  i-08d1d4dda9d43e487 |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.254.11.102 |  3.35.53.210     |
+|  GWLBVPC-Appliance-10.254.11.101                          |  ap-northeast-2a |  i-0ba703c865a94fd04 |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.254.11.101 |  3.35.55.51      |
+|  VPC01-Private-A-10.1.21.102                              |  ap-northeast-2a |  i-085558b0d0c93b570 |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.1.21.102   |  13.125.15.119   |
+|  VPC03-Private-A-10.3.21.101                              |  ap-northeast-2a |  i-0f6869867c9c1f1ff |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.3.21.101   |  3.36.58.217     |
+|  VPC03-Private-A-10.3.21.102                              |  ap-northeast-2a |  i-0c3cfe2fc1ad3a0eb |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.3.21.102   |  13.125.97.211   |
+|  VPC01-Private-A-10.1.21.101                              |  ap-northeast-2a |  i-0b41f548586fc53c0 |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.1.21.101   |  52.79.199.91    |
+|  VPC02-Private-A-10.2.21.101                              |  ap-northeast-2a |  i-02a6ec623eb3ac8e5 |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.2.21.101   |  3.35.19.145     |
+|  VPC02-Private-A-10.2.21.102                              |  ap-northeast-2a |  i-0f9c43ca89cff209d |  t3.small  |  ami-07464b2b9929898f8 |  running |  10.2.21.102   |  15.165.74.201   |
+|  aws-cloud9-gwlb-console-aec439cc7860438d93a04af41e4f2364 |  ap-northeast-2d |  i-029d2fd2d6485b1d7 |  m5.xlarge |  ami-011f8bfe22440499a |  running |  172.31.63.114 |  3.36.43.51      |
++-----------------------------------------------------------+------------------+----------------------+------------+------------------------+----------+----------------+------------------+
+```
+
+session manager 명령을 통해 해당 인스턴스에 연결해 봅니다. \(VPC01-Private-A-10.1.21.101\)
+
+```text
+aws ssm start-session --target {VPC01-Private-A-10.1.21.101 Instance ID}
+
+```
+
+터미널에 접속한 후에 , 아래 명령을 통해 bash로 접근해서 외부로 트래픽을 전송해 봅니다.
+
+```text
+sudo -s
+ping www.aws.com
+
+```
+
+아래와 같은 결과를 확인할 수 있습니다.
+
+```text
+whchoi:~/environment/useful-shell (master) $ aws ssm start-session --target i-0b41f548586fc53c0
+
+Starting session with SessionId: whchoi-01dc306dd4b046251
+sh-4.2$ sudo -s
+[root@ip-10-1-21-101 bin]# ping www.aws.com
+PING aws.com (54.230.62.60) 56(84) bytes of data.
+64 bytes from server-54-230-62-60.icn54.r.cloudfront.net (54.230.62.60): icmp_seq=1 ttl=240 time=2.51 ms
+64 bytes from server-54-230-62-60.icn54.r.cloudfront.net (54.230.62.60): icmp_seq=2 ttl=240 time=2.08 ms
+64 bytes from server-54-230-62-60.icn54.r.cloudfront.net (54.230.62.60): icmp_seq=3 ttl=240 time=2.08 ms
+```
 
 
 
