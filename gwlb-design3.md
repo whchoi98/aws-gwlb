@@ -432,7 +432,7 @@ PING aws.com (54.230.62.60) 56(84) bytes of data.
 64 bytes from server-54-230-62-60.icn54.r.cloudfront.net (54.230.62.60): icmp_seq=3 ttl=240 time=2.08 ms
 ```
 
-### 12. Appliance에서 ICMP 확인
+### 13. Appliance에서 ICMP 확인
 
 앞서 Session manager를 통해 [www.aws.com으로](http://www.aws.xn--com-ky7m580d/) ping을 실행했습니다. 해당 터미널을 실행한 상태에서 Cloud9 터미널을 2개로 추가로 열어 봅니다.
 
@@ -483,7 +483,7 @@ tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 byt
 
 이제 다른 VPC와 다른 서브넷의 EC2에서도 트래픽이 정상적으로 처리되는지 확인해 봅니다.
 
-### 13. 외부에서 웹 서비스 접속 확인
+### 14. 외부에서 웹 서비스 접속 확인
 
 이제 외부에서 웹서비스가 정상적으로 접속되는 지 확인해 보고, GWLB를 통해서 처리되는 지 확인해 봅니다.
 
