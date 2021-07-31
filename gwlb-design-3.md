@@ -507,7 +507,22 @@ sudo tcpdump -nvv 'port 6081' | grep '10.1.11.95'
 
 ![](.gitbook/assets/image%20%28145%29.png)
 
-
+```text
+[ec2-user@ip-10-254-11-101 ~]$ sudo tcpdump -nvv 'port 6081' | grep '10.1.11.95'
+tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 bytes
+    122.40.8.88.61353 > 10.1.11.95.http: Flags [F.], cksum 0x404b (correct), seq 3541430532, ack 2591768305, win 128, options [nop,nop,TS val 111416899 ecr 4265801061], length 0
+    122.40.8.88.61353 > 10.1.11.95.http: Flags [F.], cksum 0x404b (correct), seq 0, ack 1, win 128, options [nop,nop,TS val 111416899 ecr 4265801061], length 0
+    10.1.11.95.http > 122.40.8.88.61353: Flags [.], cksum 0x1ec0 (correct), seq 1, ack 1, win 105, options [nop,nop,TS val 4265809671 ecr 111416899], length 0
+    10.1.11.95.http > 122.40.8.88.61353: Flags [.], cksum 0x1ec0 (correct), seq 1, ack 1, win 105, options [nop,nop,TS val 4265809671 ecr 111416899], length 0
+    122.40.8.88.61352 > 10.1.11.95.http: Flags [P.], cksum 0xb9b6 (correct), seq 2928254709:2928255258, ack 3566751671, win 128, options [nop,nop,TS val 111416917 ecr 4265773694], length 549: HTTP, length: 549
+    122.40.8.88.61352 > 10.1.11.95.http: Flags [P.], cksum 0xb9b6 (correct), seq 0:549, ack 1, win 128, options [nop,nop,TS val 111416917 ecr 4265773694], length 549: HTTP, length: 549
+    10.1.11.95.http > 122.40.8.88.61352: Flags [.], cksum 0x481a (correct), seq 1, ack 549, win 127, options [nop,nop,TS val 4265809690 ecr 111416917], length 0
+    10.1.11.95.http > 122.40.8.88.61352: Flags [.], cksum 0x481a (correct), seq 1, ack 549, win 127, options [nop,nop,TS val 4265809690 ecr 111416917], length 0
+    10.1.11.95.http > 122.40.8.88.61352: Flags [.], cksum 0x7242 (correct), seq 1:1449, ack 549, win 127, options [nop,nop,TS val 4265809777 ecr 111416917], length 1448: HTTP, length: 1448
+    10.1.11.95.http > 122.40.8.88.61352: Flags [.], cksum 0x7242 (correct), seq 1:1449, ack 549, win 127, options [nop,nop,TS val 4265809777 ecr 111416917], length 1448: HTTP, length: 1448
+    10.1.11.95.http > 122.40.8.88.61352: Flags [P.], cksum 0x9b20 (correct), seq 1449:2819, ack 549, win 127, options [nop,nop,TS val 4265809777 ecr 111416917], length 1370: HTTP
+    10.1.11.95.http > 122.40.8.88.61352: Flags [P.], cksum 0x9b20 (correct), seq 1449:2819, ack 549, win 127, options [nop,nop,TS val 4265809777 ecr 111416917], length 1370: HTTP
+```
 
 
 
