@@ -424,7 +424,7 @@ PING aws.com (54.230.62.60) 56(84) bytes of data.
 64 bytes from server-54-230-62-60.icn54.r.cloudfront.net (54.230.62.60): icmp_seq=3 ttl=240 time=2.08 ms
 ```
 
-### 12. Appliance에서 확인
+### 12. Appliance에서 ICMP 확인
 
 앞서 Session manager를 통해 [www.aws.com으로](http://www.aws.xn--com-ky7m580d/) ping을 실행했습니다. 해당 터미널을 실행한 상태에서 Cloud9 터미널을 2개로 추가로 열어 봅니다.
 
