@@ -1,3 +1,7 @@
+---
+description: 'Update : 2021-07-01'
+---
+
 # GWLB Design 3
 
 ### 목표 구성 개요
