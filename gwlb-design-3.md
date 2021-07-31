@@ -501,11 +501,11 @@ sudo tcpdump -nvv 'port 6081' | grep '10.1.11.95'
 
 웹 브라우저에서 다시 ALB 주소로 접속합니다.
 
-![](.gitbook/assets/image%20%28144%29.png)
+![](.gitbook/assets/image%20%28145%29.png)
 
 이제 Cloud9의 Appliance 1 터미널에서 결과를 확인해 봅니다. 아래에서 처럼 ALB로 접속되는 모든 트래픽도 GWLB의 Appliance들을 통해서 검사한 이후에 통과되는 것을 확인 할 수 있습니다.
 
-![](.gitbook/assets/image%20%28145%29.png)
+![](.gitbook/assets/image%20%28146%29.png)
 
 ```text
 [ec2-user@ip-10-254-11-101 ~]$ sudo tcpdump -nvv 'port 6081' | grep '10.1.11.95'
@@ -524,8 +524,20 @@ tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 byt
     10.1.11.95.http > 122.40.8.88.61352: Flags [P.], cksum 0x9b20 (correct), seq 1449:2819, ack 549, win 127, options [nop,nop,TS val 4265809777 ecr 111416917], length 1370: HTTP
 ```
 
+VPC02의 ALB에서도 동일하게 확인해 봅니다.
 
+## 자원 삭제
 
+**`AWS 관리콘솔 - Cloudformation - 스택`** 을 선택하고 생성된 Stack을 , 생성된 역순으로 삭제합니다.
+
+VPC01,VPC02,GWLBVPC 순으로 삭제합니다.\(Cloud9은 계속 사용하기 위해 삭제 하지 않습니다.\) VPC01,02이 완전히 삭제된후, GWLBVPC를 삭제 합니다.
+
+1. VPC01,02 선택 후 삭제 \(3~4분 소요 , 동시진행 가능\)
+2. GWLBVPC 선택 후 삭제 \(3~4분 소요\)
+
+![](.gitbook/assets/image%20%28144%29.png)
+
+랩을 완전히 종료하려면 **`AWS 관리콘솔 - Cloudformation - 스택`** aws cloud9 콘솔 스택도 삭제합니다.  
 
 
 
