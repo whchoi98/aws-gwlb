@@ -589,5 +589,5 @@ GWLBTGW,VPC01,VPC02,N2SVPC,GWLBVPC 순으로 삭제합니다.\(Cloud9은 계속 
 
 ![](.gitbook/assets/image%20%2885%29.png)
 
-랩을 완전히 종료하려면 **`AWS 관리콘솔 - Cloudformation - 스택`**  가장 마지막 하단의 aws cloud9 콘솔 스택도 삭제합니다.
+랩을 완전히 종료하려면 **`AWS 관리콘솔 - Cloudformation - 스택`**  aws cloud9 콘솔 스택도 삭제합니다.
 
