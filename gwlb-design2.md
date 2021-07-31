@@ -582,10 +582,12 @@ Source IP와 Destination IP가 모두 유지된 채로 통신하는 것을 확�
 
 GWLBTGW,VPC01,VPC02,N2SVPC,GWLBVPC 순으로 삭제합니다.\(Cloud9은 계속 사용하기 위해 삭제 하지 않습니다.\) 
 
-1. GWLBTGW를 삭제합니다.
-2. VPC01,VPC02를 삭제합니다.
-3. N2SVPC를 삭제 합니다.
-4. GWLBVPC를 삭제 합니다.
+1. GWLBTGW를 삭제합니다. \(3~4분 소요됩니다.\)
+2. VPC01,VPC02를 삭제합니다. \(3~4분 소요됩니다. 동시 진행합니다.\)
+3. N2SVPC를 삭제 합니다. \(3~4분 소요됩니다.\)
+4. GWLBVPC를 삭제 합니다. \(3~4분 소요됩니다.\)
 
 ![](.gitbook/assets/image%20%2885%29.png)
+
+랩을 완전히 종료하려면 **`AWS 관리콘솔 - Cloudformation - 스택`**  가장 마지막 하단의 aws cloud9 콘솔 스택도 삭제합니다.
 
