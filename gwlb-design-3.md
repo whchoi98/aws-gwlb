@@ -436,6 +436,7 @@ Cloud9 터미널 1
 ssh -i ~/environment/JAN-2021-whchoi.pem ec2-user@$Appliance1
 sudo tcpdump -nvv 'port 6081'
 sudo tcpdump -nvv 'port 6081'| grep 'ICMP'
+
 ```
 
 Cloud9 터미널 2
@@ -444,6 +445,7 @@ Cloud9 터미널 2
 ssh -i ~/environment/JAN-2021-whchoi.pem ec2-user@$Appliance2
 sudo tcpdump -nvv 'port 6081'
 sudo tcpdump -nvv 'port 6081'| grep 'ICMP'
+
 ```
 
 다음과 같이 1개의 터미널에서 icmp가 처리되는 것을 확인 할 수 있습니다.
