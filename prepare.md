@@ -6,12 +6,14 @@ description: 'Update : 2021-03-31/ 20min'
 
 ## 시작에 앞서 
 
-이 Lab에서는 GWLB와 연동되는 디자인을 2가지로 구성합니다.
+이 Lab에서는 GWLB와 연동되는 디자인을 4가지로 구성합니다.
 
-* Design 1 \(North to South 흐름 방식\) - VPC 에서 외부 전송 트래픽에 대해 GWLB VPC Endpoint와 Private Link를 사용해서 구성합니다.
-* Design 2 \(East to West 흐름 방식\) - VPC 에서 외부 전송 트래픽에 대해 TransitGateway를 기반으로 구성합니다. \(이때 별도의 VPC를 구성합니다.\)
+* Design 1 - VPC 에서 외부 전송 트래픽에 대해 GWLB VPC Endpoint와 Private Link를 사용해서 구성합니다.
+* Design 2 - VPC 에서 외부 전송 트래픽에 대해 TransitGateway를 기반으로 구성합니다. TransitGateway와 연동된 VPC에서 GWLB VPC Endpoint Link를 사용해서 보안 어플라이언스로 연동됩니다.
+* Design 3 - VPC 에서 외부 전송 트래픽에 대해 GWLB VPC Endpoint와 Private Link를 사용해서 구성합니다. 외부에 서비스를 제공하기 위해 ALB를 구성합니다. 내부 Private Subnet 자원들의 패치를 위해 NAT Gateway를 구성합니다.
+* Design 4 - VPC 에서 외부 전송 트래픽에 대해 TransitGateway를 기반으로 구성합니다. 외부에 서비스를 제공하기 위해 ALB를 구성합니다. 내부 Private Subnet 자원들의 패치를 위해 NAT Gateway를 구성합니다.
 
-각 Lab에서는 Linux IPTABLE 기반의 어플라이언스 구성을 만들어 봅니다.
+보안 어플라이언스는 상용 방화벽이나 기타 어플라이언스를 연동 가능합니다. 이 랩에서는 리눅스 기반 IPTABLE을 사용합니다.
 
 ## Cloud9 구성
 
