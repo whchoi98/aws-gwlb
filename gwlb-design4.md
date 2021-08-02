@@ -12,7 +12,7 @@ GWLB Design2와 다른 점은 ALB\(Application Load Balancer\)를 GWLB와 연계
 
 **🎬 아래 동영상 링크에서 구성방법을 확인 할 수 있습니다.**
 
-![](.gitbook/assets/image%20%28154%29.png)
+![](.gitbook/assets/image%20%28156%29.png)
 
 ## Cloudformation기반 VPC 배포
 
@@ -27,11 +27,11 @@ git clone https://github.com/whchoi98/gwlb.git
 
 Cloud9에서 로컬로 파일을 다운로드 받습니다.
 
-![](.gitbook/assets/image%20%28153%29.png)
+![](.gitbook/assets/image%20%28155%29.png)
 
 AWS 관리콘솔에서 Cloudformation을 선택합니다.
 
-![](.gitbook/assets/image%20%28149%29.png)
+![](.gitbook/assets/image%20%28150%29.png)
 
 아래와 같은 순서로 Cloudformation에서 Yaml파일을 배포합니다.
 
@@ -48,7 +48,7 @@ AWS 관리콘솔에서 Cloudformation을 선택합니다.
 
 앞서 다운로드 해둔 yaml 파일 중에서, 아래 그림과 같이 GWLBVPC.yml 파일을 선택합니다.
 
-![](.gitbook/assets/image%20%28169%29.png)
+![](.gitbook/assets/image%20%28172%29.png)
 
 스택 세부 정보 지정에서 , 스택이름과 VPC Parameters를 지정합니다. 대부분 기본값을 사용하면 됩니다.
 
@@ -61,11 +61,11 @@ AWS 관리콘솔에서 Cloudformation을 선택합니다.
 * InstanceTyep: t3.small
 * KeyPair : 사전에 만들어 둔 keyPair를 사용합니다. \(예. gwlbkey\)
 
-![](.gitbook/assets/image%20%28161%29.png)
+![](.gitbook/assets/image%20%28164%29.png)
 
 다음 단계를 계속 진행하고, 아래와 같이 **`"AWS CloudFormation에서 IAM 리소스를 생성할 수 있음을 승인합니다."`**를 선택하고, **`스택을 생성`**합니다.
 
-![](.gitbook/assets/image%20%28165%29.png)
+![](.gitbook/assets/image%20%28168%29.png)
 
 3~4분 후에 GWLBVPC가 완성됩니다.
 
@@ -81,7 +81,7 @@ AWS 관리콘솔에서 Cloudformation을 선택합니다.
 
 N2SVPC를 Cloudformation에서 앞서 과정과 동일하게 생성합니다. 다운로드 받은 Yaml 파일들 중에 N2SVPC 선택해서 생성합니다.스택 이름을 생성하고, GWLBVPC의 VPC Endpoint 서비스 이름을 **`"VPCEndpointServiceName"`** 에 입력합니다. 또한 나머지 파라미터들도 입력합니다. 대부분 기본값을 사용합니다.
 
-![](.gitbook/assets/image%20%28163%29.png)
+![](.gitbook/assets/image%20%28166%29.png)
 
 
 
@@ -113,7 +113,7 @@ VPC는 계정당 기본 5개가 할당되어 있습니다. 1개는 Default VPC�
  5개 모두를 사용하시려면, Default VPC를 삭제하시기 바랍니다. Default VPC는 삭제 후 다시 생성이 가능합니다.
 {% endhint %}
 
-![](.gitbook/assets/image%20%28158%29.png)
+![](.gitbook/assets/image%20%28160%29.png)
 
 * 스택이름 : VPC01,VPC02
 * AvailabilityZone A : ap-northeast-2a
@@ -137,11 +137,11 @@ N2SVPC, VPC01,02,03 을 연결할 TGW를 생성합니다. N2STGW는 TGW Routing 
 
 **`AWS 관리 콘솔 - VPC 대시 보드 - VPC`**
 
-![](.gitbook/assets/image%20%28151%29.png)
+![](.gitbook/assets/image%20%28152%29.png)
 
 **`AWS 관리 콘솔 - VPC 대시 보드 - 서브넷`**
 
-![](.gitbook/assets/image%20%28168%29.png)
+![](.gitbook/assets/image%20%28171%29.png)
 
 #### 
 
@@ -151,13 +151,13 @@ N2SVPC, VPC01,VPC02을 연결하기 위한 TransitGateway를 배포합니다. �
 
 `Default Route Table`과 **`VPC01, VPC02 CIDR`** 주소를 입력합니다. \(기본 값으로 설정되어 있습니다.\)
 
-![](.gitbook/assets/image%20%28155%29.png)
+![](.gitbook/assets/image%20%28157%29.png)
 
 ### 6. 라우팅 테이블 확인
 
 TransitGateway 구성과 RouteTable을 아래에서 확인합니다.
 
-![](.gitbook/assets/image%20%28159%29.png)
+![](.gitbook/assets/image%20%28161%29.png)
 
 #### 6. 라우팅 테이블 확인
 
@@ -167,35 +167,77 @@ TransitGateway 구성과 RouteTable을 아래에서 확인합니다. Egress\(VPC
 
 **`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, **`"VPC01-Private-Subnet-A,B-RT"`**의 **`라우팅`**을 확인합니다.
 
-![](.gitbook/assets/image%20%28157%29.png)
+![](.gitbook/assets/image%20%28159%29.png)
 
 **`AWS 관리콘솔 - TransitGateway`** 를 선택하고,  **`"GWLBTGW"`** 라는 이름으로 **`TransitGateway`**가 정상적으로 생성되었는지 확인합니다.
 
-![](.gitbook/assets/image%20%28171%29.png)
+![](.gitbook/assets/image%20%28175%29.png)
 
 **`AWS 관리콘솔 - TransitGateway - TransitGateway Attachment(연결)`** 을 선택하고, 각 VPC에 연결된 Attachment를 확인해 봅니다.
 
-![](.gitbook/assets/image%20%28156%29.png)
+![](.gitbook/assets/image%20%28158%29.png)
 
 **`AWS 관리콘솔 - TransitGateway - TransitGateway 라우팅테이블`**을 선택하고, **`"GWLBTGW-RT-VPC-OUT"`** 을 선택해서, TGW에서 트래픽이 외부로 가는 라우팅을 확인해 봅니다.
 
-![](.gitbook/assets/image%20%28152%29.png)
+![](.gitbook/assets/image%20%28154%29.png)
 
 **`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, **`"N2SVPC-Private-Subnet-A,B-RT"`**의 **`라우팅`**을 확인합니다.
 
-![](.gitbook/assets/image%20%28150%29.png)
+![](.gitbook/assets/image%20%28151%29.png)
 
 **`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, **`"N2SVPC-Public-Subnet-A,B-RT"`**의 **`라우팅`**을 확인합니다.
 
-![](.gitbook/assets/image%20%28170%29.png)
+![](.gitbook/assets/image%20%28173%29.png)
 
 **`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, **`"N2SVPC-GWLBe-Subnet-A,B-RT"`**의 **`라우팅`**을 확인합니다.
 
-![](.gitbook/assets/image%20%28160%29.png)
+![](.gitbook/assets/image%20%28162%29.png)
 
 **`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, **`"N2SVPC-IGW-Ingress-RT"`**의 **`라우팅`**을 확인합니다.
 
-![](.gitbook/assets/image%20%28166%29.png)
+![](.gitbook/assets/image%20%28169%29.png)
 
+## GWLB 구성 확인
 
+GWLBVPC 구성을 확인해 봅니다.
+
+1. GWLB 구성
+2. GWLB Target Group 구성
+3. VPC Endpoint 와 Service 확인
+4. Appliance 확인
+
+![](.gitbook/assets/image%20%28153%29.png)
+
+### 7.GWLB 구성
+
+**`AWS 관리 콘솔 - EC2 - 로드밸런싱 - 로드밸런서`** 메뉴를 선택합니다. Gateway LoadBalancer 구성을 확인할 수 있습니다. ELB 유형이 **`"gateway"`**로 구성된 것을 확인 할 수 있습니다.
+
+![](.gitbook/assets/image%20%28149%29.png)
+
+### 8.GWLB Target Group 구성
+
+**`AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹`**을 선택합니다. GWLB가 로드밸런싱을 하게 되는 대상그룹\(Target Group\)을 확인 할 수 있습니다.
+
+* 프로토콜 : **`GENEVE 6081`** \(포트 6081의 GENGEVE 프로토콜을 사용하여 모든 IP 패킷을 수신하고 리스너 규칙에 지정된 대상 그룹에 트래픽을 전달합니다.\)
+* 등록된 대상 : GWLB가 로드밸런싱을 하고 있는 Target 장비를 확인합니다.
+
+![](.gitbook/assets/image%20%28163%29.png)
+
+**`AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹 - 상태검사`** 메뉴를 확인합니다.
+
+ELB와 동일하게 대상그룹\(Target Group\)에 상태를 검사할 수 있습니다. 이 랩에서는 HTTP Path / 를 통해서 **`Health Check`**를 하도록 구성했습니다.
+
+![](.gitbook/assets/image%20%28174%29.png)
+
+### 9. VPC Endpoint Service 확인
+
+N2SVPC Private link로 연결하기 위해, GWLB VPC에 Endpoint Service를 구성하였습니다. 이를 확인해 봅니다.
+
+**`AWS 관리 콘솔 - VPC - 엔드포인트 서비스`**를 선택합니다. 생성된 VPC Endpoint Service를 확인할 수 있습니다.
+
+* 서비스 이름 - 예 com.amazonaws.vpce.ap-northeast-2.vpce-svc-082d152b9180f8ad0
+* 유형 : GatewayLoadBalancer
+* 가용영역 : ap-northeast-2a, ap-northeast-2b
+
+2개 영역에 걸쳐서 GWLB에 대해 VPC Endpoint Service를 구성하고 있습니다.
 
