@@ -12,7 +12,7 @@ GWLB Design2와 다른 점은 ALB\(Application Load Balancer\)를 GWLB와 연계
 
 **🎬 아래 동영상 링크에서 구성방법을 확인 할 수 있습니다.**
 
-![](.gitbook/assets/image%20%28151%29.png)
+![](.gitbook/assets/image%20%28152%29.png)
 
 ## Cloudformation기반 VPC 배포
 
@@ -27,11 +27,11 @@ git clone https://github.com/whchoi98/gwlb.git
 
 Cloud9에서 로컬로 파일을 다운로드 받습니다.
 
-![](.gitbook/assets/image%20%28150%29.png)
+![](.gitbook/assets/image%20%28151%29.png)
 
 AWS 관리콘솔에서 Cloudformation을 선택합니다.
 
-![](.gitbook/assets/image%20%28148%29.png)
+![](.gitbook/assets/image%20%28149%29.png)
 
 아래와 같은 순서로 Cloudformation에서 Yaml파일을 배포합니다.
 
@@ -48,7 +48,7 @@ AWS 관리콘솔에서 Cloudformation을 선택합니다.
 
 앞서 다운로드 해둔 yaml 파일 중에서, 아래 그림과 같이 GWLBVPC.yml 파일을 선택합니다.
 
-![](.gitbook/assets/image%20%28161%29.png)
+![](.gitbook/assets/image%20%28162%29.png)
 
 스택 세부 정보 지정에서 , 스택이름과 VPC Parameters를 지정합니다. 대부분 기본값을 사용하면 됩니다.
 
@@ -61,11 +61,11 @@ AWS 관리콘솔에서 Cloudformation을 선택합니다.
 * InstanceTyep: t3.small
 * KeyPair : 사전에 만들어 둔 keyPair를 사용합니다. \(예. gwlbkey\)
 
-![](.gitbook/assets/image%20%28155%29.png)
+![](.gitbook/assets/image%20%28156%29.png)
 
 다음 단계를 계속 진행하고, 아래와 같이 **`"AWS CloudFormation에서 IAM 리소스를 생성할 수 있음을 승인합니다."`**를 선택하고, **`스택을 생성`**합니다.
 
-![](.gitbook/assets/image%20%28158%29.png)
+![](.gitbook/assets/image%20%28159%29.png)
 
 3~4분 후에 GWLBVPC가 완성됩니다.
 
@@ -81,7 +81,7 @@ AWS 관리콘솔에서 Cloudformation을 선택합니다.
 
 N2SVPC를 Cloudformation에서 앞서 과정과 동일하게 생성합니다. 다운로드 받은 Yaml 파일들 중에 N2SVPC 선택해서 생성합니다.스택 이름을 생성하고, GWLBVPC의 VPC Endpoint 서비스 이름을 **`"VPCEndpointServiceName"`** 에 입력합니다. 또한 나머지 파라미터들도 입력합니다. 대부분 기본값을 사용합니다.
 
-![](.gitbook/assets/image%20%28156%29.png)
+![](.gitbook/assets/image%20%28157%29.png)
 
 
 
@@ -113,7 +113,7 @@ VPC는 계정당 기본 5개가 할당되어 있습니다. 1개는 Default VPC�
  5개 모두를 사용하시려면, Default VPC를 삭제하시기 바랍니다. Default VPC는 삭제 후 다시 생성이 가능합니다.
 {% endhint %}
 
-![](.gitbook/assets/image%20%28153%29.png)
+![](.gitbook/assets/image%20%28154%29.png)
 
 * 스택이름 : VPC01,VPC02
 * AvailabilityZone A : ap-northeast-2a
@@ -137,11 +137,11 @@ N2SVPC, VPC01,02,03 을 연결할 TGW를 생성합니다. N2STGW는 TGW Routing 
 
 **`AWS 관리 콘솔 - VPC 대시 보드 - VPC`**
 
-![](.gitbook/assets/image%20%28149%29.png)
+![](.gitbook/assets/image%20%28150%29.png)
 
 **`AWS 관리 콘솔 - VPC 대시 보드 - 서브넷`**
 
-![](.gitbook/assets/image%20%28160%29.png)
+![](.gitbook/assets/image%20%28161%29.png)
 
 #### 
 
@@ -151,11 +151,19 @@ N2SVPC, VPC01,VPC02을 연결하기 위한 TransitGateway를 배포합니다. �
 
 `Default Route Table`과 **`VPC01, VPC02 CIDR`** 주소를 입력합니다. \(기본 값으로 설정되어 있습니다.\)
 
-![](.gitbook/assets/image%20%28152%29.png)
+![](.gitbook/assets/image%20%28153%29.png)
 
 ### 6. 라우팅 테이블 확인
 
 TransitGateway 구성과 RouteTable을 아래에서 확인합니다.
 
-![](.gitbook/assets/image%20%28154%29.png)
+![](.gitbook/assets/image%20%28155%29.png)
+
+#### 6. 라우팅 테이블 확인
+
+TransitGateway 구성과 RouteTable을 아래에서 확인합니다.
+
+![](.gitbook/assets/image%20%28148%29.png)
+
+AWS 관리콘솔 - VPC - 
 
