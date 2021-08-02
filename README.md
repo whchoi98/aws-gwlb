@@ -1,5 +1,5 @@
 ---
-description: 'update : 2021-03-31'
+description: 'update : 2021-08-01'
 ---
 
 # GWLB
@@ -15,6 +15,8 @@ description: 'update : 2021-03-31'
 ### ☑[GWLB Design 2 \(1h\)](gwlb-design2.md)
 
 ### ☑[GWLB Design 3 \(1h\)](gwlb-design3.md)
+
+### ☑[GWLB Design 4 \(1h\)](gwlb-design4.md)
 
 
 
