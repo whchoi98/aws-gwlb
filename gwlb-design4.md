@@ -1,3 +1,7 @@
+---
+description: 'Update : 2021-08-01'
+---
+
 # GWLB Desing 4
 
 ## 목표 구성 개요

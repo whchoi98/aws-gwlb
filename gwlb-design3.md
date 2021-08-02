@@ -1,5 +1,5 @@
 ---
-description: 'Update : 2021-07-01 / 1h'
+description: 'Update : 2021-08-01 / 1h'
 ---
 
 # GWLB Design 3
