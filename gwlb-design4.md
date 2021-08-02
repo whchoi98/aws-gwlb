@@ -312,22 +312,22 @@ AZ A에 배포된 Appliance는 다음과 같이 출력됩니다.
 
 ```text
 [ec2-user@ip-10-254-11-101 ~]$ sudo iptables -L -n -v -t nat
-Chain PREROUTING (policy ACCEPT 3417 packets, 204K bytes)
+Chain PREROUTING (policy ACCEPT 26562 packets, 1587K bytes)
  pkts bytes target     prot opt in     out     source               destination         
-  351 45728 DNAT       udp  --  eth0   *       10.254.11.107        10.254.11.101        to:10.254.11.107:6081
+18792 2579K DNAT       udp  --  eth0   *       10.254.11.64         10.254.11.101        to:10.254.11.64:6081
 
-Chain INPUT (policy ACCEPT 3417 packets, 204K bytes)
- pkts bytes target     prot opt in     out     source               destination         
-
-Chain OUTPUT (policy ACCEPT 981 packets, 75316 bytes)
+Chain INPUT (policy ACCEPT 26562 packets, 1587K bytes)
  pkts bytes target     prot opt in     out     source               destination         
 
-Chain POSTROUTING (policy ACCEPT 981 packets, 75316 bytes)
+Chain OUTPUT (policy ACCEPT 20849 packets, 1611K bytes)
  pkts bytes target     prot opt in     out     source               destination         
-  351 45728 MASQUERADE  udp  --  *      eth0    10.254.11.107        10.254.11.107        udp dpt:6081
+
+Chain POSTROUTING (policy ACCEPT 20849 packets, 1611K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+18792 2579K MASQUERADE  udp  --  *      eth0    10.254.11.64         10.254.11.64         udp dpt:6081
 ```
 
-GENEVE 터널링의 GWLB IP주소는 10.254.11.60 이며, Appliance IP와 터널링 된 것을 확인 할 수 있습니다.
+GENEVE 터널링의 GWLB IP주소는 10.254.11.101 이며, Appliance IP와 터널링 된 것을 확인 할 수 있습니다.
 
 AZ B에 배포된 Appliance는 다음과 같이 출력됩니다.
 
@@ -339,22 +339,24 @@ sudo iptables -L -n -v -t nat
 
 ```text
 [ec2-user@ip-10-254-12-101 ~]$ sudo iptables -L -n -v -t nat
-Chain PREROUTING (policy ACCEPT 3765 packets, 225K bytes)
+Chain PREROUTING (policy ACCEPT 26358 packets, 1578K bytes)
  pkts bytes target     prot opt in     out     source               destination         
-  353 45872 DNAT       udp  --  eth0   *       10.254.12.28         10.254.12.101        to:10.254.12.28:6081
+19195 2608K DNAT       udp  --  eth0   *       10.254.12.122        10.254.12.101        to:10.254.12.122:6081
 
-Chain INPUT (policy ACCEPT 3765 packets, 225K bytes)
- pkts bytes target     prot opt in     out     source               destination         
-
-Chain OUTPUT (policy ACCEPT 1693 packets, 136K bytes)
+Chain INPUT (policy ACCEPT 26358 packets, 1578K bytes)
  pkts bytes target     prot opt in     out     source               destination         
 
-Chain POSTROUTING (policy ACCEPT 1693 packets, 136K bytes)
+Chain OUTPUT (policy ACCEPT 20713 packets, 1600K bytes)
  pkts bytes target     prot opt in     out     source               destination         
-  353 45872 MASQUERADE  udp  --  *      eth0    10.254.12.28         10.254.12.28         udp dpt:6081
+
+Chain POSTROUTING (policy ACCEPT 20713 packets, 1600K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+19195 2608K MASQUERADE  udp  --  *      eth0    10.254.12.122        10.254.12.122        udp dpt:6081
 ```
 
 GENEVE 터널링의 GWLB IP주소는 10.254.12.101 이며, Appliance IP와 터널링 된 것을 확인 할 수 있습니다.
 
 이렇게 GWLB 에서 생성된 IP주소와 각 Appliance의 IP간에 UDP 6081 포트로 터널링되어 , 외부의 IP 주소와 내부의 IP 주소를 그대로 유지할 수 있습니다. 또한 터널링으로 인입시 5Tuple \(출발지 IP, Port, 목적지 IP, Port, 프로토콜\)의 정보를 TLV로 Encapsulation하여 분산처리할 때 사용합니다.
+
+
 
