@@ -368,5 +368,5 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101 이며, Appliance IP와 터�
 2. TGW에서 VPC01의 Attachment 로 연결된 라우팅 테이블을 참조
 3. TGW에서 라우팅 테이블을 참조해서 N2VPC로 트래픽 전송
 4. N2SVPC NAT Gateway로 전송 \(Private Subnet Routing Table 참조\)
-5. Public Subnet 
+5. N2SVPC Public Subnet 에서 GWLB VPC Endpoint로 전송 \(
 
