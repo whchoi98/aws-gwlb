@@ -48,7 +48,7 @@ AWS 관리콘솔에서 Cloudformation을 선택합니다.
 
 앞서 다운로드 해둔 yaml 파일 중에서, 아래 그림과 같이 GWLBVPC.yml 파일을 선택합니다.
 
-![](.gitbook/assets/image%20%28196%29.png)
+![](.gitbook/assets/image%20%28197%29.png)
 
 스택 세부 정보 지정에서 , 스택이름과 VPC Parameters를 지정합니다. 대부분 기본값을 사용하면 됩니다.
 
@@ -61,11 +61,11 @@ AWS 관리콘솔에서 Cloudformation을 선택합니다.
 * InstanceTyep: t3.small
 * KeyPair : 사전에 만들어 둔 keyPair를 사용합니다. \(예. gwlbkey\)
 
-![](.gitbook/assets/image%20%28185%29.png)
+![](.gitbook/assets/image%20%28186%29.png)
 
 다음 단계를 계속 진행하고, 아래와 같이 **`"AWS CloudFormation에서 IAM 리소스를 생성할 수 있음을 승인합니다."`**를 선택하고, **`스택을 생성`**합니다.
 
-![](.gitbook/assets/image%20%28190%29.png)
+![](.gitbook/assets/image%20%28191%29.png)
 
 3~4분 후에 GWLBVPC가 완성됩니다.
 
@@ -81,7 +81,7 @@ AWS 관리콘솔에서 Cloudformation을 선택합니다.
 
 N2SVPC를 Cloudformation에서 앞서 과정과 동일하게 생성합니다. 다운로드 받은 Yaml 파일들 중에 N2SVPC 선택해서 생성합니다.스택 이름을 생성하고, GWLBVPC의 VPC Endpoint 서비스 이름을 **`"VPCEndpointServiceName"`** 에 입력합니다. 또한 나머지 파라미터들도 입력합니다. 대부분 기본값을 사용합니다.
 
-![](.gitbook/assets/image%20%28188%29.png)
+![](.gitbook/assets/image%20%28189%29.png)
 
 
 
@@ -113,7 +113,7 @@ VPC는 계정당 기본 5개가 할당되어 있습니다. 1개는 Default VPC�
  5개 모두를 사용하시려면, Default VPC를 삭제하시기 바랍니다. Default VPC는 삭제 후 다시 생성이 가능합니다.
 {% endhint %}
 
-![](.gitbook/assets/image%20%28175%29.png)
+![](.gitbook/assets/image%20%28176%29.png)
 
 * 스택이름 : VPC01,VPC02
 * AvailabilityZone A : ap-northeast-2a
@@ -141,7 +141,7 @@ N2SVPC, VPC01,02,03 을 연결할 TGW를 생성합니다. N2STGW는 TGW Routing 
 
 **`AWS 관리 콘솔 - VPC 대시 보드 - 서브넷`**
 
-![](.gitbook/assets/image%20%28194%29.png)
+![](.gitbook/assets/image%20%28195%29.png)
 
 #### 
 
@@ -157,7 +157,7 @@ N2SVPC, VPC01,VPC02을 연결하기 위한 TransitGateway를 배포합니다. �
 
 TransitGateway 구성과 RouteTable을 아래에서 확인합니다.
 
-![](.gitbook/assets/image%20%28177%29.png)
+![](.gitbook/assets/image%20%28178%29.png)
 
 #### 6. 라우팅 테이블 확인
 
@@ -167,11 +167,11 @@ TransitGateway 구성과 RouteTable을 아래에서 확인합니다. Egress\(VPC
 
 **`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, **`"VPC01-Private-Subnet-A,B-RT"`**의 **`라우팅`**을 확인합니다.
 
-![](.gitbook/assets/image%20%28173%29.png)
+![](.gitbook/assets/image%20%28174%29.png)
 
 **`AWS 관리콘솔 - TransitGateway`** 를 선택하고,  **`"GWLBTGW"`** 라는 이름으로 **`TransitGateway`**가 정상적으로 생성되었는지 확인합니다.
 
-![](.gitbook/assets/image%20%28200%29.png)
+![](.gitbook/assets/image%20%28201%29.png)
 
 **`AWS 관리콘솔 - TransitGateway - TransitGateway Attachment(연결)`** 을 선택하고, 각 VPC에 연결된 Attachment를 확인해 봅니다.
 
@@ -187,15 +187,15 @@ TransitGateway 구성과 RouteTable을 아래에서 확인합니다. Egress\(VPC
 
 **`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, **`"N2SVPC-Public-Subnet-A,B-RT"`**의 **`라우팅`**을 확인합니다.
 
-![](.gitbook/assets/image%20%28197%29.png)
+![](.gitbook/assets/image%20%28198%29.png)
 
 **`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, **`"N2SVPC-GWLBe-Subnet-A,B-RT"`**의 **`라우팅`**을 확인합니다.
 
-![](.gitbook/assets/image%20%28182%29.png)
+![](.gitbook/assets/image%20%28183%29.png)
 
 **`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, **`"N2SVPC-IGW-Ingress-RT"`**의 **`라우팅`**을 확인합니다.
 
-![](.gitbook/assets/image%20%28191%29.png)
+![](.gitbook/assets/image%20%28192%29.png)
 
 ## GWLB 구성 확인
 
@@ -221,13 +221,13 @@ GWLBVPC 구성을 확인해 봅니다.
 * 프로토콜 : **`GENEVE 6081`** \(포트 6081의 GENGEVE 프로토콜을 사용하여 모든 IP 패킷을 수신하고 리스너 규칙에 지정된 대상 그룹에 트래픽을 전달합니다.\)
 * 등록된 대상 : GWLB가 로드밸런싱을 하고 있는 Target 장비를 확인합니다.
 
-![](.gitbook/assets/image%20%28183%29.png)
+![](.gitbook/assets/image%20%28184%29.png)
 
 **`AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹 - 상태검사`** 메뉴를 확인합니다.
 
 ELB와 동일하게 대상그룹\(Target Group\)에 상태를 검사할 수 있습니다. 이 랩에서는 HTTP Path / 를 통해서 **`Health Check`**를 하도록 구성했습니다.
 
-![](.gitbook/assets/image%20%28199%29.png)
+![](.gitbook/assets/image%20%28200%29.png)
 
 ### 9. VPC Endpoint Service 확인
 
@@ -241,13 +241,13 @@ N2SVPC Private link로 연결하기 위해, GWLB VPC에 Endpoint Service를 구�
 
 2개 영역에 걸쳐서 GWLB에 대해 VPC Endpoint Service를 구성하고 있습니다.
 
-![](.gitbook/assets/image%20%28195%29.png)
+![](.gitbook/assets/image%20%28196%29.png)
 
 **`AWS 관리 콘솔 - VPC - 엔드포인트 서비스-엔드포인트 연결`**를 선택합니다.
 
 N2SVPC의 각 가용영역들과 연결된 것을 확인 할 수 있습니다. VPC별 2개의 가용영역의 Private Subnet에 배치된 VPC Endpoint에 연결된 것을 확인 합니다.
 
-![](.gitbook/assets/image%20%28184%29.png)
+![](.gitbook/assets/image%20%28185%29.png)
 
 ### 10. Appliance 확인
 
@@ -567,7 +567,7 @@ GWLB Design 4 랩에서는 외부에서 N2SVPC의 ALB의 공인 DNS A레코드�
 
 아래와 같은 도식으로 외부에서 내부로 웹서비스나 기타 퍼블릭 서비스를 제공할 수 있습니다.
 
-![](.gitbook/assets/image%20%28171%29.png)
+![](.gitbook/assets/image%20%28172%29.png)
 
 1. 외부에 노출된 ALB DNS A 레코드로 접근 합니다.
 2. IGW에서 Ingress Routing을 통해 N2SVPC GWLB VPC Endpoint로 접근합니다. \(ALB의 내부 주소는 10.11.11.0/24,10.11.12.0/24 이고 , Ingress Routing Table에서는 VPC Endpoint로 목적지를 설정해 두었습니다.\)
@@ -593,7 +593,7 @@ AWS의 Resource Group 구성과 System Manager RunBook을 통해서 , Shell을 �
 
 ![](.gitbook/assets/image%20%28151%29.png)
 
-![](.gitbook/assets/image%20%28172%29.png)
+![](.gitbook/assets/image%20%28173%29.png)
 
 * **`그룹 유형 : Cloudformation 스택기반`**
 * **`그룹화 기준 - Cloudformation 스택 : VPC01`**
@@ -617,11 +617,11 @@ AWS의 Resource Group 구성과 System Manager RunBook을 통해서 , Shell을 �
 
 **`명령 실행`**을 선택합니다.
 
-![](.gitbook/assets/image%20%28186%29.png)
+![](.gitbook/assets/image%20%28187%29.png)
 
 **`명령 실행`**에서 **`AWS-RunShellScript`** 를 선택합니다.
 
-![](.gitbook/assets/image%20%28201%29.png)
+![](.gitbook/assets/image%20%28202%29.png)
 
 명령 파라미터에서 아래 Shell 값을 입력합니다.
 
@@ -643,7 +643,7 @@ exit;
 
 ```
 
-![](.gitbook/assets/image%20%28179%29.png)
+![](.gitbook/assets/image%20%28180%29.png)
 
 대상에서 리소스그룹을 선택하고, 리소스 그룹은 앞서 생성한 "VPC01-Private-Instance", "VPC02-Private-Instance"를 선택합니다.
 
@@ -653,7 +653,7 @@ VPC01-Private-Instance, VPC02-Private-Instance를 각각 실행합니다.
 
 모두 실행하고 나면, 아래와 같이 명령기록에 Shell이 8개 인스턴스에 모두 실행된 것을 확인할 수 있습니다.
 
-![](.gitbook/assets/image%20%28176%29.png)
+![](.gitbook/assets/image%20%28177%29.png)
 
 ### 15. ALB 구성
 
@@ -666,7 +666,7 @@ VPC01-Private-Instance, VPC02-Private-Instance를 각각 실행합니다.
 * **`VPC - "N2SVPC"`** 를 선택합니다.
 * **`가용영역 - "N2SVPC-Public-Subnet-A,B"`**를 선택합니다.
 
-![](.gitbook/assets/image%20%28198%29.png)
+![](.gitbook/assets/image%20%28199%29.png)
 
 보안 그룹 구성에서 기존 보안 그룹 **`"ALBSecuritryGroup"`**을 선택합니다. 이미 앞서 Cloudformation Stack에서 생성했습니다.
 
@@ -678,7 +678,7 @@ VPC01-Private-Instance, VPC02-Private-Instance를 각각 실행합니다.
 * **`대상그룹 - 대상 유형 : "IP"`** 를 선택합니다.
 * **`상태검사 - 경로 : /ec2meta-webpage/index.php`** 를 입력합니다. \(앞서 System Manager - RunCommand 로 8개 인스턴스에 패키지 구성을 완료한 경로입니다.\)
 
-![](.gitbook/assets/image%20%28193%29.png)
+![](.gitbook/assets/image%20%28194%29.png)
 
 대상 등록에서는 N2SVPC 가 아닌, VPC01,02의 인스턴스가 Target이 되어야 합니다.
 
@@ -700,15 +700,15 @@ VPC01-Private-Instance, VPC02-Private-Instance를 각각 실행합니다.
 10.2.22.102
 ```
 
-![](.gitbook/assets/image%20%28174%29.png)
+![](.gitbook/assets/image%20%28175%29.png)
 
 **`AWS 관리콘솔 - EC2 - 로드밸런서`** 에서 생성한 N2SVPC 의 ALB로드밸런서를 확인합니다. **`ALB DNS A 레코드 값`**을 복사해 둡니다.
 
-![](.gitbook/assets/image%20%28170%29.png)
+![](.gitbook/assets/image%20%28171%29.png)
 
 **`AWS 관리콘솔 - EC2 - 로드밸런서`** 에서  VPC01,VPC02 를 대상그룹으로 생성한 Target 인스턴스들이 "Healthy" 상태인지 확인합니다.
 
-![](.gitbook/assets/image%20%28180%29.png)
+![](.gitbook/assets/image%20%28181%29.png)
 
 ### 16. ALB 트래픽 확인
 
@@ -716,7 +716,7 @@ VPC01-Private-Instance, VPC02-Private-Instance를 각각 실행합니다.
 
 **`AWS 관리콘솔 - EC2- 네트워크 및 보안 - 네트워크 인터페이스 - ALB-VPC01-TG`** 확인.
 
-![](.gitbook/assets/image%20%28181%29.png)
+![](.gitbook/assets/image%20%28182%29.png)
 
 이제 다시 Cloud9 콘솔에서 앞서 실행 해 둔 Applicance 터미널에서 아래를 실행합니다.
 
@@ -762,4 +762,30 @@ tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 byt
 ```
 
 VPC02의 인스턴스들과 ALB 로드밸런스도 위와 같은 방법으로 확인해 봅니다.
+
+## 자원 삭제
+
+로드 밸런서를 삭제 합니다. \(**ALB-VPC01-TG, ALB-VPC02-TG 만 삭제합니다.**\)
+
+![](.gitbook/assets/image%20%28170%29.png)
+
+**`AWS 관리 콘솔 - 로드밸런싱 - 로드밸런서 - ALB-VPC01-TG, ALB-VPC02-TG 선택 - 작업 - 삭제`** 
+
+ALB와 대상 그룹을 삭제합니다. \(**VPC01-TG,VPC02-TG 만 삭제 합니다.**\)
+
+* **`EC2 - 로드밸런싱 - 대상 그룹 - VPC01-TG 선택 - 작업 선택 - 삭제`**
+* **`EC2 - 로드밸런싱 - 대상 그룹 - VPC02-TG 선택 - 작업 선택 - 삭제`**
+
+**`AWS 관리콘솔 - Cloudformation - 스택`** 을 선택하고 생성된 Stack을 삭제합니다.
+
+GWLBTGW,VPC01,VPC02,N2SVPC,GWLBVPC 순으로 삭제합니다.\(Cloud9은 계속 사용하기 위해 삭제 하지 않습니다.\)
+
+1. GWLBTGW를 삭제합니다. \(3~4분 소요됩니다.\)
+2. VPC01,VPC02를 삭제합니다. \(3~4분 소요됩니다. 동시 진행합니다.\)
+3. N2SVPC를 삭제 합니다. \(3~4분 소요됩니다.\)
+4. GWLBVPC를 삭제 합니다. \(3~4분 소요됩니다.\)
+
+[![](https://github.com/whchoi98/aws-gwlb/raw/master/.gitbook/assets/image%20%2885%29.png)](https://github.com/whchoi98/aws-gwlb/blob/master/.gitbook/assets/image%20%2885%29.png)
+
+랩을 완전히 종료하려면 **`AWS 관리콘솔 - Cloudformation - 스택`** aws cloud9 콘솔 스택도 삭제합니다.
 
