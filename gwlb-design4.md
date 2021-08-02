@@ -565,7 +565,11 @@ Source IP와 Destination IP가 모두 유지된 채로 통신하는 것을 확�
 
 GWLB Design 4 랩에서는 외부에서 N2SVPC의 ALB의 공인 DNS A레코드로 접근하기 위해, GWLB VPC의 Appliacne 보안 장비를 통과한 이후에 다시 N2SVPC ALB 접근 이후 , Target Group을 VPC01,02로 구성해서 웹 서비스를 제공하는 방식을 구성했습니다.
 
-아
+아래와 같은 도식으로 외부에서 내부로 웹서비스나 기타 퍼블릭 서비스를 제공할 수 있습니다.
 
 ![](.gitbook/assets/image%20%28164%29.png)
+
+1. 외부에 노출된 ALB DNS A 레코드로 접근 합니다.
+2. IGW에서 Ingress Routing을 통해 N2SVPC GWLB VPC Endpoint로 접근합니다.
+3. N2SVPC GWLB VPC Endpoint
 
