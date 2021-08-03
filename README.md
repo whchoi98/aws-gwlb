@@ -8,7 +8,7 @@ description: 'update : 2021-08-01'
 
 ### ☑[GWLB\(Gateway LoadBalancer\)소개](gwlb-overview.md)
 
-### ☑[사전 준비 \(10m\)](prepare.md)
+### ☑[사전 준비 \(10min\)](prepare.md)
 
 ### ☑[GWLB Design 1 \(1h\)](gwlb-design1.md)
 
