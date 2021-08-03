@@ -56,15 +56,15 @@ Gateway Load Balancer 내에 배치 된 타사 가상 어플라이언스는 네�
 
 해당 랩 구성은 아래 Youtube 동영상에서도 확인 할 수 있습니다.
 
-#### 🎬[ 사전 준비 - Cloud9 환경 설정 ](%20https://youtu.be/Jdzj0fSA4YU)
+#### 🎬 [사전 준비 - Cloud9 환경 설정 ](https://youtu.be/Jdzj0fSA4YU)
 
-#### 🎬[GWLB Design1 - 분산형 GWLB 디자인 ](https://www.youtube.com/watch?v=J4mXEfsWZUs)
+#### 🎬[GWLB Design1 - 분산형 GWLB 디자인 ](https://youtu.be/J4mXEfsWZUs)
 
-#### 🎬[GWLB Desing2 - 중앙집중형 GWLB 디자인](https://www.youtube.com/watch?v=ZyxN2fOiw9A) 
+#### 🎬[GWLB Desing2 - 중앙집중형 GWLB 디자인](https://youtu.be/ZyxN2fOiw9A) 
 
-#### 🎬GWLB Design 3 - 분산형 GWLB 디자인 기반 외부 서비스 제공 \(ALB,NAT Gateway 연동\)
+#### 🎬[GWLB Design 3 - 분산형 GWLB 디자인 기반 외부 서비스 제공 \(ALB,NAT Gateway 연동\)](https://youtu.be/IzNfoO6FRUk)
 
-#### 🎬GWLB Design 4 - 중앙집중형 GWLB 디자인 기반 외부 서비스 제공 \(ALB,NAT Gateway 연동\)
+#### 🎬[GWLB Design 4 - 중앙집중형 GWLB 디자인 기반 외부 서비스 제공 \(ALB,NAT Gateway 연동\)](https://youtu.be/Es35y0mtT0w)
 
 
 
