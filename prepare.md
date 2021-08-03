@@ -28,6 +28,8 @@ AWS Cloud9은 브라우저만으로 코드를 작성, 실행 및 디버깅할 �
 
 {% embed url="https://youtu.be/Jdzj0fSA4YU" %}
 
+
+
 ### Cloud9 구성
 
 Cloud9을 실행하기 위해 아래와 같이 AWS 관리콘솔에서 **`"Cloud9"`** 을 입력합니다.
