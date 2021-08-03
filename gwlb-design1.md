@@ -14,9 +14,7 @@ description: 'update : 2021-03-31/ 1h'
 
 #### 🎬 아래 동영상 링크에서 구성방법을 확인 할 수 있습니다.
 
-{% embed url="https://youtu.be/J4mXEfsWZUs" %}
-
-
+[https://www.youtube.com/watch?v=J4mXEfsWZUs](https://www.youtube.com/watch?v=J4mXEfsWZUs)
 
 ![](.gitbook/assets/image.png)
 
