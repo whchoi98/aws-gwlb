@@ -30,6 +30,8 @@ description: 'update : 2021-08-01'
 
 {% embed url="https://github.com/whchoi98/gwlb" %}
 
+####  🙋♀ Slack Channel - [https://whchoi-hol.slack.com/archives/C01Q683FNDV](https://whchoi-hol.slack.com/archives/C01Q683FNDV)
+
 
 
 
