@@ -134,7 +134,15 @@ The key's randomart image is:
 이제 생성된 Public Key를 계정으로 업로드 합니다. **`"--region {AWS Region}"`** 리전 옵션에서 각 리전을 지정하게 되면 해당 리전으로 생성한 Public Key를 전송합니다. 아래에서는 도쿄리전으로 전송하는 예제입니다.
 
 ```text
+#Tokoy Region 전
 aws ec2 import-key-pair --key-name "gwlbkey" --public-key-material fileb://gwlbkey.pub --region ap-northeast-1
+#Seoul Region 전송
+aws ec2 import-key-pair --key-name "gwlbkey" --public-key-material fileb://gwlbkey.pub --region ap-northeast-2
+#버지니아 리전 전송
+aws ec2 import-key-pair --key-name "gwlbkey" --public-key-material fileb://gwlbkey.pub --region us-east-1
+#오레곤 리전 전송
+aws ec2 import-key-pair --key-name "gwlbkey" --public-key-material fileb://gwlbkey.pub --region us-west-2
+
 ```
 
 아래와 같이 업로드가 완료됩니다.
