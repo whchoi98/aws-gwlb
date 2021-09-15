@@ -14,7 +14,9 @@ description: 'update : 2021-03-31/ 1h'
 
 #### 🎬 아래 동영상 링크에서 구성방법을 확인 할 수 있습니다.
 
-[https://www.youtube.com/watch?v=J4mXEfsWZUs](https://www.youtube.com/watch?v=J4mXEfsWZUs)
+{% embed url="https://youtu.be/J4mXEfsWZUs" %}
+
+
 
 ![](.gitbook/assets/image.png)
 
@@ -160,38 +162,36 @@ AWS 관리콘솔 - Cloudformation - 스택을 선택하면, 앞서 배포했던 
 앞서 사전 준비에서 생성한 Cloud9에서 Appliance로 직접 접속해 봅니다.
 
 ```text
-export Appliance1={Appliance1ip address}
-export Appliance2={Appliance2ip address}
-export Appliance3={Appliance3ip address}
-export Appliance4={Appliance4ip address}
+export Appliance2_1={Appliance1ip address}
+export Appliance2_2={Appliance2ip address}
+export Appliance2_3={Appliance3ip address}
+export Appliance2_4={Appliance4ip address}
 ```
 
 아래와 같이 구성합니다.
 
 ```text
 #Appliance IP Export
-export Appliance1=3.36.108.211
-export Appliance2=52.79.219.13
-export Appliance3=13.125.201.96
-export Appliance4=15.164.176.82
+export Appliance2_1=3.36.108.211
+export Appliance2_2=52.79.219.13
+export Appliance2_3=13.125.201.96
+export Appliance2_4=15.164.176.82
 #bash profile에 등록
-echo "export Appliance1=$Appliance1" | tee -a ~/.bash_profile
-echo "export Appliance2=$Appliance2" | tee -a ~/.bash_profile
-echo "export Appliance3=$Appliance3" | tee -a ~/.bash_profile
-echo "export Appliance4=$Appliance4" | tee -a ~/.bash_profile
+echo "export Appliance2_1=$Appliance2_1" | tee -a ~/.bash_profile
+echo "export Appliance2_2=$Appliance2_2" | tee -a ~/.bash_profile
+echo "export Appliance2_3=$Appliance2_3" | tee -a ~/.bash_profile
+echo "export Appliance2_4=$Appliance2_4" | tee -a ~/.bash_profile
 source ~/.bash_profile
-mv ~/environment/gwlbkey ~/environment/gwlbkey.pem
-chmod 400 ./gwlbkey.pem
 
 ```
 
 각 Appliance에서 아래 명령을 통해 , GWLB IP와 어떻게 매핑되었는지 확인합니다. Cloud9에서 새로운 터미널 4개를 탭에서 추가해서 4개 Appliance를 모두 확인해 봅니다.
 
 ```text
-ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance1
-ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance2
-ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance3
-ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance4
+ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance2_1
+ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance2_2
+ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance2_3
+ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance2_4
 
 ```
 
@@ -309,7 +309,7 @@ VPC01,02,03 을 Cloudformation을 통해 배포할 때 해당 인스턴스들에
 
 ![](.gitbook/assets/image%20%286%29.png)
 
-먼저 Cloud9에 Session Manager 기반 접속을 위해 아래와 같이 설치합니다.
+먼저 Cloud9에 Session Manager 기반 접속을 위해 아래와 같이 설치합니다. \(이미 설치되어 있는 경우 생략합니다\)
 
 ```text
 #session manager plugin 설치

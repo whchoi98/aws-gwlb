@@ -14,7 +14,7 @@ description: 'Update : 2021-04-12 / 1h'
 
 #### 🎬 아래 동영상 링크에서 구성방법을 확인 할 수 있습니다.
 
-[https://www.youtube.com/watch?v=ZyxN2fOiw9A](https://www.youtube.com/watch?v=ZyxN2fOiw9A)
+{% embed url="https://youtu.be/ZyxN2fOiw9A" %}
 
 ![](.gitbook/assets/image%20%2899%29.png)
 
@@ -253,7 +253,7 @@ Appliance 구성 정보를 확인해 봅니다.
 앞서 사전 준비에서 생성한 Cloud9  터미널에서 Appliance로 직접 접속해 봅니다.
 
 ```text
-export Appliance1={Appliance1ip address}
+export Appliance2_1={Appliance1ip address}
 export Appliance2={Appliance2ip address}
 export Appliance3={Appliance3ip address}
 export Appliance4={Appliance4ip address}
