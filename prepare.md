@@ -131,6 +131,13 @@ The key's randomart image is:
 +----[SHA256]-----+
 ```
 
+Cloud9 Terminal 에서 생성되는 EC2들에 대한 접근을 할 수 있도록 아래와 같이 구성합니다.
+
+```text
+mv ~/environment/gwlbkey ~/environment/gwlbkey.pem
+chmod 400 ./gwlbkey.pem
+```
+
 이제 생성된 Public Key를 계정으로 업로드 합니다. **`"--region {AWS Region}"`** 리전 옵션에서 각 리전을 지정하게 되면 해당 리전으로 생성한 Public Key를 전송합니다. 아래에서는 도쿄리전으로 전송하는 예제입니다.
 
 ```text
@@ -154,6 +161,7 @@ whchoi:~/environment $ aws ec2 import-key-pair --key-name "gwlbkey" --public-key
     "KeyName": "gwlbkey",
     "KeyPairId": "key-xxxxxxxxx"
 }
+
 ```
 
 정상적으로 public key가 업로드되었는지 AWS 관리콘솔에서 확인합니다.
