@@ -43,6 +43,13 @@ AWS 관리콘솔에서 Cloudformation을 선택합니다.
 
 앞서 다운로드 해둔 yaml 파일 중에서, 아래 그림과 같이 GWLBVPC.yml 파일을 선택합니다.
 
+S3 URL은 다음과 같습니다.&#x20;
+
+```
+echo https://${bucket_name}.s3.ap-northeast-2.amazonaws.com/Case3/1.Case3-GWLBVPC.yml
+
+```
+
 ![](<.gitbook/assets/image (111).png>)
 
 스택 세부 정보 지정에서 , **`스택이름`**과 **`VPC Parameters`**를 지정합니다. 대부분 기본값을 사용하면 됩니다.
@@ -71,6 +78,14 @@ AWS 관리콘솔에서 Cloudformation을 선택합니다.
 ![](<.gitbook/assets/image (109).png>)
 
 VPC01,02 2개의 VPC를 Cloudformation에서 앞서 과정과 동일하게 생성합니다. 다운로드 받은 Yaml 파일들 중에 VPC01.yml, VPC02,yml을 차례로 선택해서 생성합니다.
+
+S3 URL은 다음과 같습니다.&#x20;
+
+```
+echo https://${bucket_name}.s3.ap-northeast-2.amazonaws.com/Case3/1.Case3-VPC01.yml
+echo https://${bucket_name}.s3.ap-northeast-2.amazonaws.com/Case3/1.Case3-VPC02.yml
+
+```
 
 ![](<.gitbook/assets/image (104).png>)
 
