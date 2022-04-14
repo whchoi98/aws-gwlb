@@ -35,6 +35,26 @@ Cloud9에서 로컬로 파일을 다운로드 받습니다.
 
 ![](<.gitbook/assets/image (91).png>)
 
+Cloud9에서 직접 file을 업로드하기 위해서는 아래와 같이 S3를 활용할 수도 있습니다.
+
+```
+##S3 Bucket 생성합니다. 
+##Bucket name은 고유해야 합니다.
+export bucket_name="usernameDate"
+echo "export bucket_name=${bucket_name}" | tee -a ~/.bash_profile
+aws s3 mb s3://${bucket_name}
+
+#생성한 S3 Bucket으로 파일을 모두 복사해 둡니다.
+cd ~/environment/gwlb
+
+# Cloud9에서 변경되는 파일을 S3와 동기화 합니다. 
+aws s3 sync ./ s3://${bucket_name}
+
+## option - copy를 통해 사용해도 가능합니다.
+aws s3 cp ./ s3://${bucket_name} --recursive
+
+```
+
 ### 2.AWS 관리콘솔에서 VPC 배포
 
 AWS 관리콘솔에서 Cloudformation을 선택합니다.
@@ -44,6 +64,15 @@ AWS 관리콘솔에서 Cloudformation을 선택합니다.
 앞서 다운로드 해둔 yaml 파일 중에서, 아래 그림과 같이 GWLBVPC.yml 파일을 선택합니다.
 
 ![](<.gitbook/assets/image (13).png>)
+
+S3 URL은 다음과 같이 확인이 가능합니다
+
+```
+echo https://${bucket_name}.s3.ap-northeast-2.amazonaws.com/Case1/1.Case1-GWLBVPC.yml
+
+```
+
+
 
 스택 세부 정보 지정에서 , 스택이름과 VPC Parameters를 지정합니다. 대부분 기본값을 사용하면 됩니다.
 
@@ -71,6 +100,13 @@ AWS 관리콘솔 - VPC - 가상 프라이빗 클라우드 - 엔드포인트 서�
 ![](<.gitbook/assets/image (87).png>)
 
 VPC01,02,03 3개의 VPC를 Cloudformation에서 앞서 과정과 동일하게 생성합니다. 다운로드 받은 Yaml 파일들 중에 VPC01.yml, VPC02,yml, VPC03.yml을 차례로 선택해서 생성합니다.
+
+```
+echo https://${bucket_name}.s3.ap-northeast-2.amazonaws.com/Case1/1.Case1-VPC01.yml
+echo https://${bucket_name}.s3.ap-northeast-2.amazonaws.com/Case1/1.Case1-VPC02.yml
+echo https://${bucket_name}.s3.ap-northeast-2.amazonaws.com/Case1/1.Case1-VPC03.yml
+
+```
 
 ![](<.gitbook/assets/image (17).png>)
 
