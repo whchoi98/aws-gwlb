@@ -44,6 +44,17 @@ AWS 관리콘솔에서 Cloudformation을 선택합니다.
 3. VPC01.yml, VPC02.yml
 4. GWLBTGW.yml
 
+S3 URL은 아래와 같습니다
+
+```
+echo https://${bucket_name}.s3.ap-northeast-2.amazonaws.com/Case2/1.Case2-GWLBVPC.yml
+echo https://${bucket_name}.s3.ap-northeast-2.amazonaws.com/Case2/1.Case2-N2SVPC.yml
+echo https://${bucket_name}.s3.ap-northeast-2.amazonaws.com/Case2/1.Case2-VPC01.yml
+echo https://${bucket_name}.s3.ap-northeast-2.amazonaws.com/Case2/1.Case2-VPC02.yml
+echo https://${bucket_name}.s3.ap-northeast-2.amazonaws.com/Case2/1.Case2-GWLBTGW.yml
+
+```
+
 {% hint style="danger" %}
 계정에서 VPC 기본 할당량은 Default VPC 포함 5개입니다. 이 랩에서는 VPC03 은 생성하지 않습니다.
 {% endhint %}
