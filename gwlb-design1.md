@@ -480,6 +480,13 @@ AWS 관리콘솔 - Cloudformation - 스택 을 선택하고 생성된 Stack을 ,
 
 VPC01,VPC02,VPC03-GWLBVPC 순으로 삭제합니다.(Cloud9은 계속 사용하기 위해 삭제 하지 않습니다.)  VPC01,02,03이 완전히 삭제된후, GWLBVPC를 삭제 합니다.
 
+```
+aws cloudformation delete-stack --stack-name VPC01
+aws cloudformation delete-stack --stack-name VPC02
+aws cloudformation delete-stack --stack-name VPC03
+
+```
+
 1. VPC01,02,03 선택 후 삭제 (3\~4분 소요 , 동시진행 가능)
 2. GWLBVPC 선택 후 삭제 (3\~4분 소요)
 
