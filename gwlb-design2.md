@@ -620,10 +620,9 @@ GWLBTGW,VPC01,VPC02,N2SVPC,GWLBVPC 순으로 삭제합니다.(Cloud9은 계속 �
 ```
 #GWLBTGW를 삭제합니다. (3~4분 소요됩니다.)
 aws cloudformation delete-stack --stack-name GWLBTGW
-#VPC01,VPC02를 삭제합니다. (3~4분 소요됩니다. 동시 진행합니다.)
+#VPC01,VPC02,N2SVPC를 삭제합니다. (3~4분 소요됩니다. 동시 진행합니다.)
 aws cloudformation delete-stack --stack-name VPC01
 aws cloudformation delete-stack --stack-name VPC02
-#N2SVPC를 삭제 합니다. (3~4분 소요됩니다.)
 aws cloudformation delete-stack --stack-name N2SVPC
 #GWLBVPC를 삭제 합니다. (3~4분 소요됩니다.)
 aws cloudformation delete-stack --stack-name GWLBVPC
