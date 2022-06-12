@@ -31,31 +31,9 @@ git clone https://github.com/whchoi98/gwlb.git
 
 ```
 
-Cloud9에서 로컬로 파일을 다운로드 받습니다.
-
-![](<.gitbook/assets/image (91).png>)
-
-Cloud9에서 직접 file을 업로드하기 위해서는 아래와 같이 S3를 활용할 수도 있습니다.
-
-```
-##S3 Bucket 생성합니다. 
-##Bucket name은 고유해야 합니다.
-export bucket_name="usernameDate"
-echo "export bucket_name=${bucket_name}" | tee -a ~/.bash_profile
-aws s3 mb s3://${bucket_name}
-
-#생성한 S3 Bucket으로 파일을 모두 복사해 둡니다.
-cd ~/environment/gwlb
-
-# Cloud9에서 변경되는 파일을 S3와 동기화 합니다. 
-aws s3 sync ./ s3://${bucket_name}
-
-## option - copy를 통해 사용해도 가능합니다.
-aws s3 cp ./ s3://${bucket_name} --recursive
-
-```
-
 ### 2.AWS 관리콘솔에서 VPC 배포
+
+아래
 
 AWS 관리콘솔에서 Cloudformation을 선택합니다.
 
