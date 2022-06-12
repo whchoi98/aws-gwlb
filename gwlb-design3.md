@@ -31,26 +31,9 @@ git clone https://github.com/whchoi98/gwlb.git
 
 ```
 
-Cloud9에서 로컬로 파일을 다운로드 받습니다.
-
-![](<.gitbook/assets/image (105).png>)
-
 ### 2.AWS 관리콘솔에서 VPC 배포
 
-AWS 관리콘솔에서 Cloudformation을 선택합니다.
-
-![](<.gitbook/assets/image (115).png>)
-
-앞서 다운로드 해둔 yaml 파일 중에서, 아래 그림과 같이 GWLBVPC.yml 파일을 선택합니다.
-
-S3 URL은 다음과 같습니다.&#x20;
-
-```
-echo https://${bucket_name}.s3.ap-northeast-2.amazonaws.com/Case3/1.Case3-GWLBVPC.yml
-
-```
-
-![](<.gitbook/assets/image (111).png>)
+아래와 같이 Cloud9에서 Cloudformation을 실행합니다.
 
 스택 세부 정보 지정에서 , **`스택이름`**과 **`VPC Parameters`**를 지정합니다. 대부분 기본값을 사용하면 됩니다.
 
@@ -63,33 +46,34 @@ echo https://${bucket_name}.s3.ap-northeast-2.amazonaws.com/Case3/1.Case3-GWLBVP
 * InstanceTyep: t3.small
 * KeyPair : 미리 만들어 둔 keyPair를 사용합니다.(예.gwlbkey)
 
-![](<.gitbook/assets/image (107).png>)
-
-다음 단계를 계속 진행하고, 아래와 같이 **`"AWS CloudFormation에서 IAM 리소스를 생성할 수 있음을 승인합니다."`**를 선택하고, **`스택을 생성`**합니다.
-
-![](<.gitbook/assets/image (116).png>)
+```
+aws cloudformation deploy \
+  --region ap-northeast-2 \
+  --stack-name "GWLBVPC" \
+  --template-file "/home/ec2-user/environment/gwlb/Case3/1.Case3-GWLBVPC.yml" \
+  --parameter-overrides "KeyPair=$KeyName" \
+  --capabilities CAPABILITY_NAMED_IAM
+  
+```
 
 3\~4분 후에 GWLBVPC가 완성됩니다.
 
 **`AWS 관리콘솔 - VPC - 가상 프라이빗 클라우드 - 엔드포인트 서비스`** 를 선택합니다. Cloudformation을 통해서 VPC Endpoint 서비스가 이미 생성되어 있습니다. 이것을 선택하고 **`세부 정보`**를 확인합니다.
 
-서비스 이름을 복사해 둡니다. 뒤에서 생성할 VPC들의 Cloudformation에서 사용할 것입니다.
+VPC Endpoint Service Name을 복사해 둡니다. 뒤에서 생성할 VPC들의 Cloudformation에서 사용할 것입니다.
 
 ![](<.gitbook/assets/image (109).png>)
 
-VPC01,02 2개의 VPC를 Cloudformation에서 앞서 과정과 동일하게 생성합니다. 다운로드 받은 Yaml 파일들 중에 VPC01.yml, VPC02,yml을 차례로 선택해서 생성합니다.
-
-S3 URL은 다음과 같습니다.&#x20;
+VPC Endpoint Service Name을 환경변수에 저장해 둡니다.&#x20;
 
 ```
-echo https://${bucket_name}.s3.ap-northeast-2.amazonaws.com/Case3/1.Case3-VPC01.yml
-echo https://${bucket_name}.s3.ap-northeast-2.amazonaws.com/Case3/1.Case3-VPC02.yml
+export VPCEndpointServiceName=com.amazonaws.vpce.ap-northeast-2.vpce-svc-0ff2b234e86a3e6db
 
 ```
 
-![](<.gitbook/assets/image (104).png>)
+스택 이름을 생성하고, 환경변수에 설정한 GWLBVPC의 VPC Endpoint 서비스 이름을 사용합니다 .
 
-스택 이름을 생성하고, GWLBVPC의 VPC Endpoint 서비스 이름을 "**`VPCEndpointServiceName"`** 에 입력합니다. 또한 나머지 파라미터들도 입력합니다. 대부분 기본값을 사용합니다.
+또한 나머지 파라미터들도 입력합니다. 대부분 기본값을 사용합니다.
 
 * 스택이름 : VPC01, VPC02
 * AvailabilityZone A : ap-northeast-2a
@@ -104,7 +88,29 @@ echo https://${bucket_name}.s3.ap-northeast-2.amazonaws.com/Case3/1.Case3-VPC02.
 * InstanceTyep: t3.small
 * KeyPair : 미리 만들어 둔 keyPair를 사용합니다. (예. gwlbkey)
 
-![](<.gitbook/assets/image (118).png>)
+```
+aws cloudformation deploy \
+  --region ap-northeast-2 \
+  --stack-name "VPC01" \
+  --template-file "/home/ec2-user/environment/gwlb/Case3/2.Case3-VPC01.yml" \
+  --parameter-overrides \
+    "KeyPair=$KeyName" \
+    "VPCEndpointServiceName=$VPCEndpointServiceName" \
+  --capabilities CAPABILITY_NAMED_IAM
+  
+```
+
+```
+aws cloudformation deploy \
+  --region ap-northeast-2 \
+  --stack-name "VPC02" \
+  --template-file "/home/ec2-user/environment/gwlb/Case3/2.Case3-VPC02.yml" \
+  --parameter-overrides \
+    "KeyPair=$KeyName" \
+    "VPCEndpointServiceName=$VPCEndpointServiceName" \
+  --capabilities CAPABILITY_NAMED_IAM
+  
+```
 
 아래와 같이 VPC가 모두 정상적으로 설정되었는지 확인해 봅니다.
 
@@ -449,7 +455,7 @@ PING aws.com (54.230.62.60) 56(84) bytes of data.
 
 ### 13. Appliance에서 ICMP 확인
 
-앞서 Session manager를 통해 [www.aws.com으로](http://www.aws.xn--com-ky7m580d) ping을 실행했습니다. 해당 터미널을 실행한 상태에서 Cloud9 터미널을 2개로 추가로 열어 봅니다.
+앞서 Session manager를 통해 [www.aws.com으로](http://www.aws.xn--com-ky7m580d/) ping을 실행했습니다. 해당 터미널을 실행한 상태에서 Cloud9 터미널을 2개로 추가로 열어 봅니다.
 
 아래와 같이 2개의 Appliance에 SSH로 연결해서 명령을 실행해 보고, Appliance로 Traffic이 들어오는지 확인해 봅니다.
 
