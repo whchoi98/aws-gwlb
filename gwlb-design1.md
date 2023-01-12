@@ -18,7 +18,7 @@ description: 'update : 2022-06-12/ 1h / "Cloudformation CLI 배포방식으로 �
 
 
 
-![](.gitbook/assets/image.png)
+![](<.gitbook/assets/image (8).png>)
 
 ## Cloudformation기반 VPC 배포
 
@@ -490,6 +490,6 @@ aws cloudformation delete-stack --stack-name VPC03
 1. VPC01,02,03 선택 후 삭제 (3\~4분 소요 , 동시진행 가능)
 2. GWLBVPC 선택 후 삭제 (3\~4분 소요)
 
-![](<.gitbook/assets/image (2).png>)
+![](<.gitbook/assets/image (2) (1).png>)
 
 랩을 완전히 종료하려면 **`AWS 관리콘솔 - Cloudformation - 스택`**  aws cloud9 콘솔 스택도 삭제합니다.

@@ -40,7 +40,9 @@ Cloud9을 실행하기 위해 아래와 같이 AWS 관리콘솔에서 **`"Cloud9
 
 * name : gwlb-console (고유의 이름을 입력 해야 합니. 예 : username-console)
 
-![](<.gitbook/assets/image (32).png>)
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
 
 모든 설정을 기본값으로 사용하고, 인스턴스타입은 t3.small ,Cost-Saving Setting Never로 변경합니다. 절전모드로 변경되는 것을 방지하게 됩니다. 다음 진행 버튼을 계속 누르고 Cloud9을 생성합니다.
 
@@ -48,9 +50,11 @@ Cloud9을 실행하기 위해 아래와 같이 AWS 관리콘솔에서 **`"Cloud9
 * Cost-saving setting : Never
 * 기타 옵션 : 기본
 
-![](<.gitbook/assets/image (88).png>)
+2\~3분 후에 Cloud9 이 동작하는 것을 확인 할 수 있습니다.&#x20;
 
-2\~3분 후에 Cloud9 이 동작하는 것을 확인 할 수 있습니다. Cloud9 창에서 "+" 버튼을 누르고 New Terminal을 띄워서 터미널을 생성합니다. 추가로 "+"를 계속 생성하게 되면 Terminal을 다중으로 사용할 수 있습니다.
+<figure><img src=".gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+
+Cloud9 창에서 "+" 버튼을 누르고 New Terminal을 띄워서 터미널을 생성합니다. 추가로 "+"를 계속 생성하게 되면 Terminal을 다중으로 사용할 수 있습니다.
 
 ![](<.gitbook/assets/image (29).png>)
 
@@ -71,17 +75,11 @@ sudo ./aws/install
 
 ```
 
-정상적으로 업그레이드 되었는지 확인합니다.
+정상적으로 업그레이드 되었는지 확인하고, aws cli 자동완성을 설치합니다.
 
 ```
 source ~/.bashrc
 aws --version
-
-```
-
-aws cli 자동완성을 설치 합니다.
-
-```
 # aws cli 자동완성 설치 
 which aws_completer
 export PATH=/usr/local/bin:$PATH
@@ -102,7 +100,7 @@ ssh-keygen
 key이름은 gwlbkey 로 설정합니다.
 
 ```
-gwlbkey
+mykey
 ```
 
 아래와 같이 ssh key가 구성됩니다.
@@ -110,7 +108,7 @@ gwlbkey
 ```
 ssh-keygen
 Generating public/private rsa key pair.
-Enter file in which to save the key (/home/ec2-user/.ssh/id_rsa): gwlbkey
+Enter file in which to save the key (/home/ec2-user/.ssh/id_rsa): mykey
 Enter passphrase (empty for no passphrase): 
 Enter same passphrase again: 
 Your identification has been saved in gwlbkey.
@@ -134,21 +132,21 @@ The key's randomart image is:
 Cloud9 Terminal 에서 생성되는 EC2들에 대한 접근을 할 수 있도록 아래와 같이 구성합니다.
 
 ```
-mv ~/environment/gwlbkey ~/environment/gwlbkey.pem
-chmod 400 ./gwlbkey.pem
+mv ~/environment/gwlbkey ~/environment/mykey.pem
+chmod 400 ./mykey.pem
 ```
 
 이제 생성된 Public Key를 계정으로 업로드 합니다. **`"--region {AWS Region}"`** 리전 옵션에서 각 리전을 지정하게 되면 해당 리전으로 생성한 Public Key를 전송합니다. 아래에서는 도쿄,서울, 버지니아, 오레곤 리전으로 전송하는 예제입니다.
 
 ```
 #Tokoy Region 전송 
-aws ec2 import-key-pair --key-name "gwlbkey" --public-key-material fileb://gwlbkey.pub --region ap-northeast-1
+aws ec2 import-key-pair --key-name "gwlbkey" --public-key-material fileb://mykey.pub --region ap-northeast-1
 #Seoul Region 전송
-aws ec2 import-key-pair --key-name "gwlbkey" --public-key-material fileb://gwlbkey.pub --region ap-northeast-2
+aws ec2 import-key-pair --key-name "gwlbkey" --public-key-material fileb://mykey.pub --region ap-northeast-2
 #버지니아 리전 전송
-aws ec2 import-key-pair --key-name "gwlbkey" --public-key-material fileb://gwlbkey.pub --region us-east-1
+aws ec2 import-key-pair --key-name "gwlbkey" --public-key-material fileb://mykey.pub --region us-east-1
 #오레곤 리전 전송
-aws ec2 import-key-pair --key-name "gwlbkey" --public-key-material fileb://gwlbkey.pub --region us-west-2
+aws ec2 import-key-pair --key-name "gwlbkey" --public-key-material fileb://mykey.pub --region us-west-2
 
 ```
 
@@ -171,3 +169,4 @@ whchoi:~/environment $ aws ec2 import-key-pair --key-name "gwlbkey" --public-key
 ![](<.gitbook/assets/image (3).png>)
 
 이제 사전 구성이 완료되었습니다.
+
