@@ -97,7 +97,7 @@ ssh-keygen
 
 ```
 
-key이름은 gwlbkey 로 설정합니다.
+key이름은 mykey 로 설정합니다.
 
 ```
 mykey
@@ -132,21 +132,21 @@ The key's randomart image is:
 Cloud9 Terminal 에서 생성되는 EC2들에 대한 접근을 할 수 있도록 아래와 같이 구성합니다.
 
 ```
-mv ~/environment/gwlbkey ~/environment/mykey.pem
-chmod 400 ./mykey.pem
+chmod 400 ~/environment/mykey.pem
+export KeyName=mykey
 ```
 
 이제 생성된 Public Key를 계정으로 업로드 합니다. **`"--region {AWS Region}"`** 리전 옵션에서 각 리전을 지정하게 되면 해당 리전으로 생성한 Public Key를 전송합니다. 아래에서는 도쿄,서울, 버지니아, 오레곤 리전으로 전송하는 예제입니다.
 
 ```
 #Tokoy Region 전송 
-aws ec2 import-key-pair --key-name "gwlbkey" --public-key-material fileb://mykey.pub --region ap-northeast-1
+aws ec2 import-key-pair --key-name "mykey" --public-key-material fileb://mykey.pub --region ap-northeast-1
 #Seoul Region 전송
-aws ec2 import-key-pair --key-name "gwlbkey" --public-key-material fileb://mykey.pub --region ap-northeast-2
+NextGWLB Design 1
 #버지니아 리전 전송
-aws ec2 import-key-pair --key-name "gwlbkey" --public-key-material fileb://mykey.pub --region us-east-1
+aws ec2 import-key-pair --key-name "mykey" --public-key-material fileb://mykey.pub --region us-east-1
 #오레곤 리전 전송
-aws ec2 import-key-pair --key-name "gwlbkey" --public-key-material fileb://mykey.pub --region us-west-2
+aws ec2 import-key-pair --key-name "mykey" --public-key-material fileb://mykey.pub --region us-west-2
 
 ```
 
@@ -166,7 +166,7 @@ whchoi:~/environment $ aws ec2 import-key-pair --key-name "gwlbkey" --public-key
 
 **`AWS 관리 콘솔 - EC2 - 네트워크 및 보안 - 키페어`**
 
-![](<.gitbook/assets/image (3).png>)
+
 
 이제 사전 구성이 완료되었습니다.
 
