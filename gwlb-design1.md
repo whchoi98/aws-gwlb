@@ -55,6 +55,7 @@ AWS 관리콘솔에서 Cloudformation을 선택해서, 실행 결과를 확인�
 * KeyPair : 미리 만들어 둔 keyPair를 사용합니다.
 
 ```
+cd ~/environment/
 aws cloudformation deploy \
   --region ap-northeast-2 \
   --stack-name "GWLBVPC" \
@@ -66,16 +67,17 @@ aws cloudformation deploy \
 
 3\~4분 후에 GWLBVPC가 완성됩니다.
 
-AWS 관리콘솔 - VPC - 가상 프라이빗 클라우드 - 엔드포인트 서비스 를 선택합니다. Cloudformation을 통해서 VPC Endpoint 서비스가 이미 생성되어 있습니다. 이것을 선택하고 세부 정보를 확인합니다.
+AWS 관리콘솔 - VPC - 가상 프라이빗 클라우드 - 엔드포인트 서비스 를 선택합니다.
 
-VPC Endpoint Service Name을 복사해 둡니다. 뒤에서 생성할 VPC들의 Cloudformation에서 사용할 것입니다.
+&#x20;Cloudformation을 통해서 VPC Endpoint 서비스가 이미 생성되어 있습니다. 이것을 선택하고 세부 정보를 확인합니다. VPC Endpoint Service Name을 복사해 둡니다. 뒤에서 생성할 VPC들의 Cloudformation에서 사용할 것입니다.
 
 ![](<.gitbook/assets/image (87).png>)
 
-VPC Endpoint Service Name을 환경변수에 저장해 둡니다
+아래에서 처럼 AWS CLI로 VPC Endpoint Service Name을 확인하고 변수에 저장할 수도 있습니다.
 
 ```
-export VPCEndpointServiceName=com.amazonaws.vpce.ap-northeast-2.vpce-svc-0aa6c7c10ec3efb2d
+export VPCEndpointServiceName=$(aws ec2 describe-vpc-endpoint-services --filter "Name=service-type,Values=GatewayLoadBalancer" | jq -r '.ServiceNames[]')
+echo $VPCEndpointServiceName
 
 ```
 
