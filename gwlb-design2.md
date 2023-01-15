@@ -68,7 +68,10 @@ VPC Endpoint Service Name을 복사해 둡니다. 뒤에서 생성할 VPC들의 
 VPCEndpointServiceName 값을 아래에서 처럼 환경변수에 저장해 둡니다. &#x20;
 
 ```
-export VPCEndpointServiceName=com.amazonaws.vpce.ap-northeast-2.vpce-svc-029bf2a4c0c3da25b
+export VPCEndpointServiceName2=$(aws ec2 describe-vpc-endpoint-services --filter "Name=service-type,Values=GatewayLoadBalancer" | jq -r '.ServiceNames[]')
+echo $VPCEndpointServiceName2
+echo "export VPCEndpointServiceName1=${VPCEndpointServiceName2}" | tee -a ~/.bash_profile
+source ~/.bash_profile
 
 ```
 
@@ -102,7 +105,7 @@ aws cloudformation deploy \
   --template-file "/home/ec2-user/environment/gwlb/Case2/2.Case2-N2SVPC.yml" \
   --parameter-overrides \
     "KeyPair=$KeyName" \
-    "VPCEndpointServiceName=$VPCEndpointServiceName" \
+    "VPCEndpointServiceName2=$VPCEndpointServiceName2" \
   --capabilities CAPABILITY_NAMED_IAM
   
 ```

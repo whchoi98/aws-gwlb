@@ -76,8 +76,10 @@ AWS 관리콘솔 - VPC - 가상 프라이빗 클라우드 - 엔드포인트 서�
 아래에서 처럼 AWS CLI로 VPC Endpoint Service Name을 확인하고 변수에 저장할 수도 있습니다.
 
 ```
-export VPCEndpointServiceName=$(aws ec2 describe-vpc-endpoint-services --filter "Name=service-type,Values=GatewayLoadBalancer" | jq -r '.ServiceNames[]')
-echo $VPCEndpointServiceName
+export VPCEndpointServiceName1=$(aws ec2 describe-vpc-endpoint-services --filter "Name=service-type,Values=GatewayLoadBalancer" | jq -r '.ServiceNames[]')
+echo $VPCEndpointServiceName1
+echo "export VPCEndpointServiceName1=${VPCEndpointServiceName1}" | tee -a ~/.bash_profile
+source ~/.bash_profile
 
 ```
 
@@ -99,37 +101,40 @@ VPC01,02,03 3개의 VPC를 Cloudformation에서 앞서 과정과 동일하게 �
 * KeyPair : 미 만들어 둔 keyPair를 사용합니다.&#x20;
 
 ```
+cd ~/environment/
 aws cloudformation deploy \
   --region ap-northeast-2 \
   --stack-name "VPC01" \
   --template-file "/home/ec2-user/environment/gwlb/Case1/2.Case1-VPC01.yml" \
   --parameter-overrides \
     "KeyPair=$KeyName" \
-    "VPCEndpointServiceName=$VPCEndpointServiceName" \
+    "VPCEndpointServiceName=$VPCEndpointServiceName1" \
   --capabilities CAPABILITY_NAMED_IAM
 
 ```
 
 ```
+cd ~/environment/
 aws cloudformation deploy \
   --region ap-northeast-2 \
   --stack-name "VPC02" \
   --template-file "/home/ec2-user/environment/gwlb/Case1/2.Case1-VPC02.yml" \
   --parameter-overrides \
     "KeyPair=$KeyName" \
-    "VPCEndpointServiceName=$VPCEndpointServiceName" \
+    "VPCEndpointServiceName=$VPCEndpointServiceName1" \
   --capabilities CAPABILITY_NAMED_IAM
   
 ```
 
 ```
+cd ~/environment/
 aws cloudformation deploy \
   --region ap-northeast-2 \
   --stack-name "VPC03" \
   --template-file "/home/ec2-user/environment/gwlb/Case1/2.Case1-VPC03.yml" \
   --parameter-overrides \
     "KeyPair=$KeyName" \
-    "VPCEndpointServiceName=$VPCEndpointServiceName" \
+    "VPCEndpointServiceName=$VPCEndpointServiceName1" \
   --capabilities CAPABILITY_NAMED_IAM
   
 ```
@@ -207,36 +212,18 @@ AWS 관리콘솔 - Cloudformation - 스택을 선택하면, 앞서 배포했던 
 앞서 사전 준비에서 생성한 Cloud9에서 Appliance로 직접 접속해 봅니다.
 
 ```
-export Appliance1_1={Appliance1ip address}
-export Appliance1_2={Appliance2ip address}
-export Appliance1_3={Appliance3ip address}
-export Appliance1_4={Appliance4ip address}
-```
-
-아래와 같이 구성합니다.
-
-```
-#Appliance IP Export
-export Appliance1_1=3.36.108.211
-export Appliance1_2=52.79.219.13
-export Appliance1_3=13.125.201.96
-export Appliance1_4=15.164.176.82
-#bash profile에 등록
-echo "export Appliance1_1=$Appliance1_1" | tee -a ~/.bash_profile
-echo "export Appliance1_2=$Appliance1_2" | tee -a ~/.bash_profile
-echo "export Appliance1_3=$Appliance1_3" | tee -a ~/.bash_profile
-echo "export Appliance1_4=$Appliance1_4" | tee -a ~/.bash_profile
-source ~/.bash_profile
+#SSM 연결을 위한 Shell 실행
+~/environment/gwlb/appliance_ssm.sh
 
 ```
 
 각 Appliance에서 아래 명령을 통해 , GWLB IP와 어떻게 매핑되었는지 확인합니다. Cloud9에서 새로운 터미널 4개를 탭에서 추가해서 4개 Appliance를 모두 확인해 봅니다.
 
 ```
-ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance2_1
-ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance2_2
-ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance2_3
-ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance2_4
+aws ssm start-session --target $Appliance_11_101
+aws ssm start-session --target $Appliance_11_102
+aws ssm start-session --target $Appliance_12_101
+aws ssm start-session --target $Appliance_12_102
 
 ```
 
@@ -402,7 +389,14 @@ whchoi:~/environment/useful-shell (master) $ ./aws_ec2_ext.sh
 session manager 명령을 통해 해당 인스턴스에 연결해 봅니다. (VPC01-Private-A-10.1.21.101)
 
 ```
-aws ssm start-session --target {VPC01-Private-A-10.1.21.101 Instance ID}
+# aws ssm start-session --target {VPC01-Private-A-10.1.21.101 Instance ID}
+aws ec2 describe-instances --filters 'Name=tag:Name,Values=VPC01-Private-A-10.1.21.101' 'Name=instance-state-name,Values=running' | jq -r '.Reservations[].Instances[].InstanceId'
+export VPC01_Private_A_10_1_21_101=$(aws ec2 describe-instances --filters 'Name=tag:Name,Values=VPC01-Private-A-10.1.21.101' 'Name=instance-state-name,Values=running' | jq -r '.Reservations[].Instances[].InstanceId')
+echo "export VPC01_Private_A_10_1_21_101=${VPC01_Private_A_10_1_21_101}"| tee -a ~/.bash_profile
+source ~/.bash_profile
+
+
+
 ```
 
 터미널에 접속한 후에 , 아래 명령을 통해 bash로 접근해서 외부로 트래픽을 전송해 봅니다.

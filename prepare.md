@@ -26,7 +26,7 @@ Event Engine을 사용하는 환경의 사용자는 신규 User ID와 Alias URL�
 
 IAM 사용자 콘솔에서 **`Users`** 를 선택하고, User를 생성합니다.
 
-<figure><img src=".gitbook/assets/image (7).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (7) (2).png" alt=""><figcaption></figcaption></figure>
 
 **`Add Users`** 를 선택하고, 신규 User를 생성합니다.
 
@@ -42,7 +42,7 @@ _**`User name`**_ 에 신규 User를 입력하고, 패스워드 설정을 합니
 
 Access Key ID와 Secret Access Key는 LAB에서 사용하지 않기 때문에 복사할 필요가 없습니다.
 
-<figure><img src=".gitbook/assets/image (77).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (77) (2).png" alt=""><figcaption></figcaption></figure>
 
 ### Alias URL 생성
 
@@ -71,13 +71,13 @@ Cloud9은 EC2 인스턴스에 IDE를 구현한 것입니다. 아래와 같이 Tr
 * _**`Trusted Entity Type`**_ : _**`AWS Service`**_
 * _**`Use Case`**_ : _**`EC2`**_
 
-<figure><img src=".gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (4) (2).png" alt=""><figcaption></figcaption></figure>
 
 생성하는 Role에 부여할 Permission을 선택합니다.
 
 * _**`Permissions Policies`**_ : _**`AdministratorAccess`**_&#x20;
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (7).png" alt=""><figcaption></figcaption></figure>
 
 신규 Role의 이름을 입력하고, Role 생성을 마칩니다. (Role Name은 사용자가 원하는 데로 입력해도 됩니다.)
 
@@ -119,7 +119,7 @@ Cloud9을 실행하기 위해 아래와 같이 AWS 관리콘솔에서 **`"Cloud9
 
 2\~3분 후에 Cloud9 이 동작하는 것을 확인 할 수 있습니다.&#x20;
 
-<figure><img src=".gitbook/assets/image (4) (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (4) (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 Cloud9 창에서 "+" 버튼을 누르고 New Terminal을 띄워서 터미널을 생성합니다. 추가로 "+"를 계속 생성하게 되면 Terminal을 다중으로 사용할 수 있습니다.
 
@@ -155,7 +155,7 @@ complete -C '/usr/local/bin/aws_completer' aws
 
 ```
 
-## keypair 만들기
+### keypair 만들기
 
 keypair를 Cloud9에서 생성합니다.
 
@@ -237,9 +237,27 @@ whchoi:~/environment $ aws ec2 import-key-pair --key-name "gwlbkey" --public-key
 
 **`AWS 관리 콘솔 - EC2 - 네트워크 및 보안 - 키페어`**
 
+### Cloud9 권한 변경
 
+Cloud9에 앞서 생성한 Role을 연결합니다.
 
-## Session Manager PlugIn 설치
+* _**`EC2 Dashboard - Instance - Cloud9 인스턴스 선택`**_
+* _**`Action - Security - Modify IAM Role 선택`**_
+
+<figure><img src=".gitbook/assets/image (77).png" alt=""><figcaption></figcaption></figure>
+
+IAM Role에서 앞서 생성한 Cloud9을 위한 Role을 선택합니다. (e.g cloud9admin)
+
+<figure><img src=".gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+
+이제 Cloud9 터미널에서 기존 Temporary credentials를 제거합니다.
+
+* Cloud9의 터미널 우측 상단의 톱니바퀴 모양의 Preference 메뉴를 선택합니다.
+* AWS Settings - Credentials 메뉴를 비활성합니다.
+
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+## 기타 유틸리티 설치
 
 Cloud9에서 EC2에 직접 Access 하기 위해서 Session Manager PlugIn을 설치합니다.
 
@@ -247,6 +265,13 @@ Cloud9에서 EC2에 직접 Access 하기 위해서 Session Manager PlugIn을 설
 ### Session Manager Plugin
 curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm"
 sudo sudo yum install -y session-manager-plugin.rpm
+
+```
+
+아래 기타 필요한 패키지를 설치 합니다.
+
+```
+sudo yum -y install jq gettext bash-completion moreutils
 
 ```
 
