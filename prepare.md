@@ -199,8 +199,11 @@ The key's randomart image is:
 Cloud9 Terminal 에서 생성되는 EC2들에 대한 접근을 할 수 있도록 아래와 같이 구성합니다.
 
 ```
+mv mykey ./mykey.pem
 chmod 400 ~/environment/mykey.pem
 export KeyName=mykey
+source ~/.bash_profile
+echo "export KeyName=${KeyName}" | tee -a ~/.bash_profile
 ```
 
 이제 생성된 Public Key를 계정으로 업로드 합니다. **`"--region {AWS Region}"`** 리전 옵션에서 각 리전을 지정하게 되면 해당 리전으로 생성한 Public Key를 전송합니다. 아래에서는 도쿄,서울, 버지니아, 오레곤 리전으로 전송하는 예제입니다.
