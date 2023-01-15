@@ -239,7 +239,7 @@ whchoi:~/environment $ aws ec2 import-key-pair --key-name "gwlbkey" --public-key
 
 
 
-## 기타 유틸리티 설치
+## Session Manager PlugIn 설치
 
 Cloud9에서 EC2에 직접 Access 하기 위해서 Session Manager PlugIn을 설치합니다.
 
@@ -247,13 +247,6 @@ Cloud9에서 EC2에 직접 Access 하기 위해서 Session Manager PlugIn을 설
 ### Session Manager Plugin
 curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm"
 sudo sudo yum install -y session-manager-plugin.rpm
-
-```
-
-아래 기타 필요한 패키지를 설치 합니다.
-
-```
-sudo yum -y install jq gettext bash-completion moreutils
 
 ```
 
