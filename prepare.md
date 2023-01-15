@@ -18,6 +18,73 @@ description: 'Update : 2023-01-13/ 20min'
 
 보안 어플라이언스는 상용 방화벽이나 기타 어플라이언스를 연동 가능합니다. 이 랩에서는 리눅스 기반 IPTABLE을 사용합니다.
 
+## IAM 환경 구성하기
+
+Event Engine을 사용하는 환경의 사용자는 신규 User ID와 Alias URL을 생성합니다.
+
+### IAM User ID 생성
+
+IAM 사용자 콘솔에서 **`Users`** 를 선택하고, User를 생성합니다.
+
+<figure><img src=".gitbook/assets/image (7).png" alt=""><figcaption></figcaption></figure>
+
+**`Add Users`** 를 선택하고, 신규 User를 생성합니다.
+
+<figure><img src=".gitbook/assets/image (209).png" alt=""><figcaption></figcaption></figure>
+
+_**`User name`**_ 에 신규 User를 입력하고, 패스워드 설정을 합니다.
+
+<figure><img src=".gitbook/assets/image (208).png" alt=""><figcaption></figcaption></figure>
+
+생성한 User에 _**`AdministratorAccess`**_ 정책 권한을 부여합니다.
+
+<figure><img src=".gitbook/assets/image (206).png" alt=""><figcaption></figcaption></figure>
+
+Access Key ID와 Secret Access Key는 LAB에서 사용하지 않기 때문에 복사할 필요가 없습니다.
+
+<figure><img src=".gitbook/assets/image (77).png" alt=""><figcaption></figcaption></figure>
+
+### Alias URL 생성
+
+아래와 같이 Account의 Alias를 생성합니다.
+
+<figure><img src=".gitbook/assets/image (164).png" alt=""><figcaption></figcaption></figure>
+
+생성한 Alias URL을 복사해 둡니다.
+
+<figure><img src=".gitbook/assets/image (205).png" alt=""><figcaption></figcaption></figure>
+
+### Cloud9 을 위한 Role 생성
+
+Cloud9에 새로운 Assume Role을 부여하기 위해, 사전에 Role을 생성해 둡니다.
+
+_**`IAM Dashboard - Access Management - Roles`**_ 를 선택합니다.
+
+<figure><img src=".gitbook/assets/image (203).png" alt=""><figcaption></figcaption></figure>
+
+_**`Create Role`**_ 을 선택합니다.
+
+<figure><img src=".gitbook/assets/image (204).png" alt=""><figcaption></figcaption></figure>
+
+Cloud9은 EC2 인스턴스에 IDE를 구현한 것입니다. 아래와 같이 Trusted Entity 를 선택합니다.
+
+* _**`Trusted Entity Type`**_ : _**`AWS Service`**_
+* _**`Use Case`**_ : _**`EC2`**_
+
+<figure><img src=".gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+
+생성하는 Role에 부여할 Permission을 선택합니다.
+
+* _**`Permissions Policies`**_ : _**`AdministratorAccess`**_&#x20;
+
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+신규 Role의 이름을 입력하고, Role 생성을 마칩니다. (Role Name은 사용자가 원하는 데로 입력해도 됩니다.)
+
+* _**`Role name`**_ : _**`cloud9name`**_
+
+<figure><img src=".gitbook/assets/image (210).png" alt=""><figcaption></figcaption></figure>
+
 ## Cloud9 구성
 
 ### Cloud9 소개&#x20;
@@ -40,7 +107,7 @@ Cloud9을 실행하기 위해 아래와 같이 AWS 관리콘솔에서 **`"Cloud9
 
 * name : gwlb-console (고유의 이름을 입력 해야 합니. 예 : username-console)
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (207).png" alt=""><figcaption></figcaption></figure>
 
 <figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
 
@@ -52,7 +119,7 @@ Cloud9을 실행하기 위해 아래와 같이 AWS 관리콘솔에서 **`"Cloud9
 
 2\~3분 후에 Cloud9 이 동작하는 것을 확인 할 수 있습니다.&#x20;
 
-<figure><img src=".gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (4) (2).png" alt=""><figcaption></figcaption></figure>
 
 Cloud9 창에서 "+" 버튼을 누르고 New Terminal을 띄워서 터미널을 생성합니다. 추가로 "+"를 계속 생성하게 되면 Terminal을 다중으로 사용할 수 있습니다.
 
