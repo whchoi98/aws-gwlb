@@ -212,7 +212,8 @@ echo "export KeyName=${KeyName}" | tee -a ~/.bash_profile
 #Tokoy Region 전송 
 aws ec2 import-key-pair --key-name "mykey" --public-key-material fileb://mykey.pub --region ap-northeast-1
 #Seoul Region 전송
-NextGWLB Design 1
+
+aws ec2 import-key-pair --key-name "mykey" --public-key-material fileb://mykey.pub --region ap-northeast-2
 #버지니아 리전 전송
 aws ec2 import-key-pair --key-name "mykey" --public-key-material fileb://mykey.pub --region us-east-1
 #오레곤 리전 전송
