@@ -395,7 +395,7 @@ export VPC01_Private_A_10_1_21_101=$(aws ec2 describe-instances --filters 'Name=
 echo "export VPC01_Private_A_10_1_21_101=${VPC01_Private_A_10_1_21_101}"| tee -a ~/.bash_profile
 source ~/.bash_profile
 
-
+aws ssm start-session --target $VPC01_Private_A_10_1_21_101
 
 ```
 
