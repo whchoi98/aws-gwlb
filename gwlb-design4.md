@@ -1,5 +1,5 @@
 ---
-description: 'Update : 2022-06-12/ 1h /Cloudformation CLI 배포로 변경'
+description: 'Update : 2023-01-16/ 1h /Cloudformation CLI 배포로 변경'
 ---
 
 # GWLB Desing 4
