@@ -430,17 +430,19 @@ PING aws.com (54.230.62.60) 56(84) bytes of data.
 Cloud9 터미널 1
 
 ```
-ssh -i ~/environment/JAN-2021-whchoi.pem ec2-user@$Appliance1
+aws ssm start-session --target $VPC01_Private_A_10_1_21_101
 sudo tcpdump -nvv 'port 6081'
 sudo tcpdump -nvv 'port 6081'| grep 'ICMP'
+
 ```
 
 Cloud9 터미널 2
 
 ```
-ssh -i ~/environment/JAN-2021-whchoi.pem ec2-user@$Appliance2
+aws ssm start-session --target $VPC01_Private_A_10_1_21_102
 sudo tcpdump -nvv 'port 6081'
 sudo tcpdump -nvv 'port 6081'| grep 'ICMP'
+
 ```
 
 다음과 같이 1개의 터미널에서 icmp가 처리되는 것을 확인 할 수 있습니다.
