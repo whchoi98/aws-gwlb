@@ -16,7 +16,7 @@ GWLB Design2와 다른 점은 ALB(Application Load Balancer)를 GWLB와 연계�
 
 {% embed url="https://youtu.be/Es35y0mtT0w" %}
 
-![](<.gitbook/assets/image (164) (1) (1).png>)
+![](<.gitbook/assets/image (219).png>)
 
 ## Cloudformation기반 VPC 배포
 
@@ -71,7 +71,7 @@ aws cloudformation deploy \
 
 서비스 이름을 복사해 둡니다. 뒤에서 생성할 VPC들의 Cloudformation에서 사용할 것입니다.
 
-![](<.gitbook/assets/image (147).png>)
+![](<.gitbook/assets/image (111).png>)
 
 VPCEndpointServiceName 값을 아래에서 처럼 환경변수에 저장해 둡니다. &#x20;
 
@@ -164,11 +164,11 @@ aws cloudformation deploy \
 
 **`AWS 관리 콘솔 - VPC 대시 보드 - VPC`**
 
-![](<.gitbook/assets/image (156).png>)
+![](<.gitbook/assets/image (52).png>)
 
 **`AWS 관리 콘솔 - VPC 대시 보드 - 서브넷`**
 
-![](<.gitbook/assets/image (195).png>)
+![](<.gitbook/assets/image (91).png>)
 
 ### 5. TransitGateway 배포
 
@@ -190,39 +190,39 @@ aws cloudformation deploy \
 
 TransitGateway 구성과 RouteTable을 아래에서 확인합니다. Egress(VPC에서 외부로 향하는) 에 대한 각 테이블을 확인하고 , 이후 Ingress (IGW에서 내부로 향하는)에 대한 테이블을 확인해 봅니다.
 
-![](<.gitbook/assets/image (148).png>)
+![](<.gitbook/assets/image (141).png>)
 
 **`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, **`"VPC01-Private-Subnet-A,B-RT"`**의 **`라우팅`**을 확인합니다.
 
-![](<.gitbook/assets/image (174).png>)
+![](<.gitbook/assets/image (143).png>)
 
 **`AWS 관리콘솔 - TransitGateway`** 를 선택하고, **`"GWLBTGW"`** 라는 이름으로 **`TransitGateway`**가 정상적으로 생성되었는지 확인합니다.
 
-![](<.gitbook/assets/image (201).png>)
+![](<.gitbook/assets/image (104).png>)
 
 **`AWS 관리콘솔 - TransitGateway - TransitGateway Attachment(연결)`** 을 선택하고, 각 VPC에 연결된 Attachment를 확인해 봅니다.
 
-![](<.gitbook/assets/image (169).png>)
+![](<.gitbook/assets/image (132).png>)
 
 **`AWS 관리콘솔 - TransitGateway - TransitGateway 라우팅테이블`**을 선택하고, **`"GWLBTGW-RT-VPC-OUT"`** 을 선택해서, TGW에서 트래픽이 외부로 가는 라우팅을 확인해 봅니다.
 
-![](<.gitbook/assets/image (160).png>)
+![](<.gitbook/assets/image (70).png>)
 
 **`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, **`"N2SVPC-Private-Subnet-A,B-RT"`**의 **`라우팅`**을 확인합니다.
 
-![](<.gitbook/assets/image (155).png>)
+![](<.gitbook/assets/image (24).png>)
 
 **`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, **`"N2SVPC-Public-Subnet-A,B-RT"`**의 **`라우팅`**을 확인합니다.
 
-![](<.gitbook/assets/image (198).png>)
+![](<.gitbook/assets/image (135).png>)
 
 **`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, **`"N2SVPC-GWLBe-Subnet-A,B-RT"`**의 **`라우팅`**을 확인합니다.
 
-![](<.gitbook/assets/image (183).png>)
+![](<.gitbook/assets/image (171).png>)
 
 **`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, **`"N2SVPC-IGW-Ingress-RT"`**의 **`라우팅`**을 확인합니다.
 
-![](<.gitbook/assets/image (192).png>)
+![](<.gitbook/assets/image (83).png>)
 
 ## GWLB 구성 확인
 
@@ -233,13 +233,13 @@ GWLBVPC 구성을 확인해 봅니다.
 3. VPC Endpoint 와 Service 확인
 4. Appliance 확인
 
-![](<.gitbook/assets/image (157).png>)
+![](<.gitbook/assets/image (122).png>)
 
 ### 7.GWLB 구성
 
 **`AWS 관리 콘솔 - EC2 - 로드밸런싱 - 로드밸런서`** 메뉴를 선택합니다. Gateway LoadBalancer 구성을 확인할 수 있습니다. ELB 유형이 **`"gateway"`**로 구성된 것을 확인 할 수 있습니다.
 
-![](<.gitbook/assets/image (150).png>)
+![](<.gitbook/assets/image (39).png>)
 
 ### 8.GWLB Target Group 구성
 
@@ -248,13 +248,13 @@ GWLBVPC 구성을 확인해 봅니다.
 * 프로토콜 : **`GENEVE 6081`** (포트 6081의 GENGEVE 프로토콜을 사용하여 모든 IP 패킷을 수신하고 리스너 규칙에 지정된 대상 그룹에 트래픽을 전달합니다.)
 * 등록된 대상 : GWLB가 로드밸런싱을 하고 있는 Target 장비를 확인합니다.
 
-![](<.gitbook/assets/image (184).png>)
+![](<.gitbook/assets/image (173).png>)
 
 **`AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹 - 상태검사`** 메뉴를 확인합니다.
 
 ELB와 동일하게 대상그룹(Target Group)에 상태를 검사할 수 있습니다. 이 랩에서는 HTTP Path / 를 통해서 **`Health Check`**를 하도록 구성했습니다.
 
-![](<.gitbook/assets/image (200).png>)
+![](<.gitbook/assets/image (94).png>)
 
 ### 9. VPC Endpoint Service 확인
 
@@ -268,25 +268,25 @@ N2SVPC Private link로 연결하기 위해, GWLB VPC에 Endpoint Service를 구�
 
 2개 영역에 걸쳐서 GWLB에 대해 VPC Endpoint Service를 구성하고 있습니다.
 
-![](<.gitbook/assets/image (196).png>)
+![](<.gitbook/assets/image (124).png>)
 
 **`AWS 관리 콘솔 - VPC - 엔드포인트 서비스-엔드포인트 연결`**를 선택합니다.
 
 N2SVPC의 각 가용영역들과 연결된 것을 확인 할 수 있습니다. VPC별 2개의 가용영역의 Private Subnet에 배치된 VPC Endpoint에 연결된 것을 확인 합니다.
 
-![](<.gitbook/assets/image (185).png>)
+![](<.gitbook/assets/image (35).png>)
 
 ### 10. Appliance 확인
 
 **`AWS 관리 콘솔 - EC2 - 인스턴스`** 메뉴를 선택하고, "appliance" 키워드로 필터링 해 봅니다. 4개의 리눅스 기반의 appliance가 설치되어 있습니다.
 
-![](<.gitbook/assets/image (149).png>)
+![](<.gitbook/assets/image (61).png>)
 
 Appliance 구성 정보를 확인해 봅니다.
 
 **`AWS 관리콘솔 - Cloudformation - 스택`**을 선택하면, 앞서 배포했던 Cloudformation 스택들을 확인 할 수 있습니다. **`"GWLBVPC"`**를 선택합니다. 그리고 출력을 선택합니다. 값을 확인해 보면 공인 IP 주소를 확인 할 수 있습니다.
 
-![](<.gitbook/assets/image (154).png>)
+![](<.gitbook/assets/image (77).png>)
 
 앞서 사전 준비에서 생성한 Cloud9 터미널에서 Appliance로 직접 접속해 봅니다.
 
@@ -380,7 +380,7 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101 이며, Appliance IP와 터�
 
 아래와 같은 트래픽 흐름으로 VPC 에서 외부로 트래픽을 처리하게 됩니다.&#x20;
 
-![](<.gitbook/assets/image (161).png>)
+![](<.gitbook/assets/image (199).png>)
 
 1. VPC01,02 Private Subnet Instance에서 TGW 로 트래픽 전송 (Private Subnet Routing Table 참조)
 2. TGW에서 VPC01의 Attachment 로 연결된 라우팅 테이블을 참조
@@ -455,11 +455,11 @@ VPC01,02 을 Cloudformation을 통해 배포할 때 해당 인스턴스들에 Se
 
 **`AWS 관리콘솔 - VPC 대시보드 - VPC - 앤드포인트`** 에서 SSM(Session Manager) 관련 VPC Endpoint 배포를 확인해 봅니다.
 
-![](<.gitbook/assets/image (152).png>)
+![](<.gitbook/assets/image (115).png>)
 
 **`AWS 관리콘솔 - EC2 대시보드 - 인스턴스`** 에서 VPC1,2 인스턴스를 선택하고 IAM Profile이 정상적으로 구성되었는지 확인합니다.
 
-![](<.gitbook/assets/image (162).png>)
+![](<.gitbook/assets/image (37).png>)
 
 먼저 Cloud9에 Session Manager 기반 접속을 위해 아래와 같이 설치합니다. **(GWLB Design1 에서 설치하였으면 생략합니다.)**
 
@@ -591,7 +591,7 @@ GWLB Design 4 랩에서는 외부에서 N2SVPC의 ALB의 공인 DNS A레코드�
 
 아래와 같은 도식으로 외부에서 내부로 웹서비스나 기타 퍼블릭 서비스를 제공할 수 있습니다.
 
-![](<.gitbook/assets/image (172).png>)
+![](<.gitbook/assets/image (22).png>)
 
 1. 외부에 노출된 ALB DNS A 레코드로 접근 합니다.
 2. IGW에서 Ingress Routing을 통해 N2SVPC GWLB VPC Endpoint로 접근합니다.\
@@ -612,13 +612,13 @@ AWS의 Resource Group 구성과 System Manager RunBook을 통해서 , Shell을 �
 
 **`AWS 관리콘솔 - Resource Group & Tag Editor`** 를 실행하고, **`리소스 그룹 생성`**을 선택합니다.
 
-![](<.gitbook/assets/image (159).png>)
+![](<.gitbook/assets/image (163).png>)
 
 아래와 같이 퀴리 기반 그룹을 생성합니다.
 
-![](<.gitbook/assets/image (151).png>)
+![](<.gitbook/assets/image (31).png>)
 
-![](<.gitbook/assets/image (173).png>)
+![](<.gitbook/assets/image (50).png>)
 
 * **`그룹 유형 : Cloudformation 스택기반`**
 * **`그룹화 기준 - Cloudformation 스택 : VPC01`**
@@ -636,17 +636,17 @@ AWS의 Resource Group 구성과 System Manager RunBook을 통해서 , Shell을 �
 
 생성된 Resource Group을 **`"저장된 리소스 그룹"`** 에서 확인해 봅니다.
 
-![](<.gitbook/assets/image (168).png>)
+![](<.gitbook/assets/image (44).png>)
 
 **`AWS 관리콘솔 - System Manager`** 를 실행하고, **`"Run Command"`** 를 빠른 설정 메뉴에서 선택합니다.
 
 **`명령 실행`**을 선택합니다.
 
-![](<.gitbook/assets/image (187).png>)
+![](<.gitbook/assets/image (29).png>)
 
 **`명령 실행`**에서 **`AWS-RunShellScript`** 를 선택합니다.
 
-![](<.gitbook/assets/image (202).png>)
+![](<.gitbook/assets/image (76).png>)
 
 명령 파라미터에서 아래 Shell 값을 입력합니다.
 
@@ -668,17 +668,17 @@ exit;
 
 ```
 
-![](<.gitbook/assets/image (180).png>)
+![](<.gitbook/assets/image (33).png>)
 
 대상에서 리소스그룹을 선택하고, 리소스 그룹은 앞서 생성한 "VPC01-Private-Instance", "VPC02-Private-Instance"를 선택합니다.
 
-![](<.gitbook/assets/image (165).png>)
+![](<.gitbook/assets/image (2) (1).png>)
 
 VPC01-Private-Instance, VPC02-Private-Instance를 각각 실행합니다.
 
 모두 실행하고 나면, 아래와 같이 명령기록에 Shell이 8개 인스턴스에 모두 실행된 것을 확인할 수 있습니다.
 
-![](<.gitbook/assets/image (177).png>)
+![](<.gitbook/assets/image (62).png>)
 
 ### 15. ALB 구성
 
@@ -689,27 +689,27 @@ VPC01-Private-Instance, VPC02-Private-Instance를 각각 실행합니다.
 * **`Load balancer name : "ALB-VPC01-TG"`** 와 같은 이름을 입력합니다.
 * **`scheme : "internet-facing"`** 를 선택합니다.
 
-<figure><img src=".gitbook/assets/image (212).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (231).png" alt=""><figcaption></figcaption></figure>
 
 * _**`VPC : N2SVPC`**_ 를 선택합니다.
 * _**`Mappings : N2SVPC-Public-Subnet-A, B`**_ 를 선택합니다.
 
-<figure><img src=".gitbook/assets/image (77).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (210).png" alt=""><figcaption></figcaption></figure>
 
 * _**`Security groups : ALBSecurityGroup`**_ 을 선택합니다.
 
-<figure><img src=".gitbook/assets/image (210).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (208).png" alt=""><figcaption></figcaption></figure>
 
 Target Group이 만들어지지 않았습니다. Create target group을 새로운 창에 실행시킵니다.
 
-<figure><img src=".gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (203).png" alt=""><figcaption></figcaption></figure>
 
 Target Group을 생성합니다.
 
 * IP addresses 선택
 * Target group name 생성 - VPC01-TG
 
-<figure><img src=".gitbook/assets/image (203).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (221).png" alt=""><figcaption></figcaption></figure>
 
 * _**`VPC 선택 - N2SVPC`**_
 * _**`Health check path`**_
@@ -718,7 +718,7 @@ Target Group을 생성합니다.
 /ec2meta-webpage/index.php
 ```
 
-<figure><img src=".gitbook/assets/image (211).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (217).png" alt=""><figcaption></figcaption></figure>
 
 Target Group에 등록될 IP Address 를 구성합니다.
 
@@ -726,31 +726,31 @@ Target Group에 등록될 IP Address 를 구성합니다.
 * IPv4 address : 10.1.21.101 , 10.1.21.102 , 10.1.22.101, 10.1.22.102
 * include as pending below 를 선택합니다.
 
-<figure><img src=".gitbook/assets/image (214).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (212).png" alt=""><figcaption></figcaption></figure>
 
 아래와 같이 IP 주소들이 입력되었는지 확인하고, _**`Create target group`**_ 을 선택합니다.
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (226).png" alt=""><figcaption></figcaption></figure>
 
 다시 Loadbalancer 생성 메뉴를 확인합니다.
 
 아래와 같이 _**`refresh`**_ 버튼을 누르고, _**`VPC01-TG`**_ 를 선택합니다.
 
-<figure><img src=".gitbook/assets/image (206).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (204).png" alt=""><figcaption></figcaption></figure>
 
 최종 구성을 확인하고, _**`create load balancer`**_ 를 생성합니다.
 
 
 
-<figure><img src=".gitbook/assets/image (215).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (223).png" alt=""><figcaption></figcaption></figure>
 
 정상적으로 ALB가 생성되었는 지 확인해 봅니다.
 
-<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (232).png" alt=""><figcaption></figcaption></figure>
 
 Target Group의 IP 들이 Health Check가 정상적인지 확인합니다.
 
-<figure><img src=".gitbook/assets/image (213).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (207).png" alt=""><figcaption></figcaption></figure>
 
 
 
@@ -760,7 +760,7 @@ Target Group의 IP 들이 Health Check가 정상적인지 확인합니다.
 
 **`AWS 관리콘솔 - EC2- 네트워크 및 보안 - 네트워크 인터페이스 - ALB-VPC01-TG`** 확인.
 
-![](<.gitbook/assets/image (182).png>)
+![](<.gitbook/assets/image (126).png>)
 
 이제 다시 Cloud9 콘솔에서 앞서 실행 해 둔 Applicance 터미널에서 아래를 실행합니다.
 
@@ -782,7 +782,7 @@ sudo tcpdump -nvv 'port 6081' | grep '10.11.11.99'
 http://{ALB-DNS-A-Record}/ec2meta-webpage/index.php
 ```
 
-![](<.gitbook/assets/image (158).png>)
+![](<.gitbook/assets/image (192).png>)
 
 &#x20;웹브라우저에서 ALB DNS A 레코드와 URL을 입력해서 실행시키면, GWLB에 연결해 둔 Appliance의 TCP Dump값에서 패킷을 통과하는 것을 확인 할 수 있습니다.
 
@@ -811,7 +811,7 @@ VPC02의 인스턴스들과 ALB 로드밸런스도 위와 같은 방법으로 �
 
 로드 밸런서를 삭제 합니다. (**ALB-VPC01-TG, ALB-VPC02-TG 만 삭제합니다.**)
 
-![](<.gitbook/assets/image (170).png>)
+![](<.gitbook/assets/image (69).png>)
 
 **`AWS 관리 콘솔 - 로드밸런싱 - 로드밸런서 - ALB-VPC01-TG, ALB-VPC02-TG 선택 - 작업 - 삭제`**&#x20;
 

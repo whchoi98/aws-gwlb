@@ -18,7 +18,7 @@ description: 'Update : 2022-06-12/ 1h /Cloudformation CLI 배포로 변경'
 
 아래 그림은 목표 구성도 입니다.
 
-![](<.gitbook/assets/image (100).png>)
+![](<.gitbook/assets/image (197).png>)
 
 ## Cloudformation기반 VPC 배포
 
@@ -62,7 +62,7 @@ aws cloudformation deploy \
 
 VPC Endpoint Service Name을 복사해 둡니다. 뒤에서 생성할 VPC들의 Cloudformation에서 사용할 것입니다.
 
-![](<.gitbook/assets/image (109).png>)
+![](<.gitbook/assets/image (68).png>)
 
 VPC Endpoint Service Name을 환경변수에 저장해 둡니다.&#x20;
 
@@ -116,7 +116,7 @@ aws cloudformation deploy \
 
 **`AWS 관리콘솔 - VPC`**
 
-![](<.gitbook/assets/image (114).png>)
+![](<.gitbook/assets/image (151).png>)
 
 ## GWLB 구성 확인
 
@@ -127,13 +127,13 @@ GWLBVPC 구성을 확인해 봅니다.
 3. VPC Endpoint 와 Service 확인
 4. Appliance 확인
 
-![](<.gitbook/assets/image (110).png>)
+![](<.gitbook/assets/image (176).png>)
 
 ### 3.GWLB 구성
 
 **`AWS 관리 콘솔 - EC2 - 로드밸런싱 - 로드밸런서`** 메뉴를 선택합니다. Gateway LoadBalancer 구성을 확인할 수 있습니다. ELB 유형이 **`"gateway"`**로 구성된 것을 확인 할 수 있습니다.
 
-![](<.gitbook/assets/image (113).png>)
+![](<.gitbook/assets/image (4).png>)
 
 
 
@@ -144,13 +144,13 @@ GWLBVPC 구성을 확인해 봅니다.
 * 프로토콜 : GENEVE 6081 (포트 6081의 GENGEVE 프로토콜을 사용하여 모든 IP 패킷을 수신하고 리스너 규칙에 지정된 대상 그룹에 트래픽을 전달합니다.)
 * 등록된 대상 : GWLB가 로드밸런싱을 하고 있는 Target 장비를 확인합니다.
 
-![](<.gitbook/assets/image (117).png>)
+![](<.gitbook/assets/image (1) (1).png>)
 
 **`AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹 - 상태검사`** 메뉴를 확인합니다.
 
 ELB와 동일하게 대상그룹(Target Group)에 상태를 검사할 수 있습니다. 이 랩에서는 HTTP Path / 를 통해서 Health Check를 하도록 구성했습니다.
 
-![](<.gitbook/assets/image (101).png>)
+![](<.gitbook/assets/image (113).png>)
 
 ### 5. VPC Endpoint Service 확인
 
@@ -164,25 +164,25 @@ Workload VPC(VPC01,02)들과 Private link로 연결하기 위해, GWLB VPC에 En
 
 2개 영역에 걸쳐서 GWLB에 대해 VPC Endpoint Service를 구성하고 있습니다.
 
-![](<.gitbook/assets/image (132).png>)
+![](<.gitbook/assets/image (183).png>)
 
 **`AWS 관리 콘솔 - VPC - 엔드포인트 서비스-엔드포인트 연결`**를 선택합니다.
 
 Workload VPC (VPC01,02)의 각 가용영역들과 연결된 것을 확인 할 수 있습니다. 각 VPC별 2개의 가용영역을 구성하였기 때문에 VPC별 2개의 Endpoint가 연결됩니다. (VPC 2개를 생성해서 VPC Endpoint를 각 리전별로 구성하기 때문에 이 랩에서는 4개가 보이게 됩니다.)
 
-![](<.gitbook/assets/image (128).png>)
+![](<.gitbook/assets/image (106).png>)
 
 ### 6. Appliance 확인
 
 **`AWS 관리 콘솔 - EC2 - 인스턴스`** 메뉴를 선택하고, **`"appliance"`** 키워드로 필터링 해 봅니다. 4개의 리눅스 기반의 appliance가 설치되어 있습니다.
 
-![](<.gitbook/assets/image (102).png>)
+![](<.gitbook/assets/image (5).png>)
 
 Appliance 구성 정보를 확인해 봅니다.
 
 **`AWS 관리콘솔 - Cloudformation - 스택`**을 선택하면, 앞서 배포했던 Cloudformation 스택들을 확인 할 수 있습니다. "GWLBVPC"를 선택합니다. 그리고 출력을 선택합니다. 값을 확인해 보면 공인 IP 주소를 확인 할 수 있습니다.
 
-![](<.gitbook/assets/image (108).png>)
+![](<.gitbook/assets/image (134).png>)
 
 앞서 사전 준비에서 생성한 Cloud9에서 Appliance로 직접 접속해 봅니다.
 
@@ -289,7 +289,7 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101 이며, Appliance IP와 터�
 5. Private Subnet Route Table 확인
 6. Ingress Routing Table 확인
 
-![](<.gitbook/assets/image (122).png>)
+![](<.gitbook/assets/image (72).png>)
 
 1. 외부 트래픽은 인터넷 게이트웨이로 접근
 2. Ingress Route Table에 의해 GWLB Endpoint로 트래픽 처리
@@ -309,13 +309,13 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101 이며, Appliance IP와 터�
 VPC01,02 NAT Gateway는 Private EC2 인스턴스들의 PAT로 동작하며, Private EC2 인스턴스들이 내부에서 외부로 Initiate 되는 트래픽들을 처리합니다. (Patch, 패키지 다운드로 등...)
 {% endhint %}
 
-![](<.gitbook/assets/image (125).png>)
+![](<.gitbook/assets/image (103).png>)
 
 ### 7. Ingress Route Table 확인
 
 **`AWS 관리콘솔 - VPC - 라우팅 테이블`**을 선택하고 VPC01,02-IGW-Ingress-RT 이름의 라우팅 테이블을 확인해 봅니다. Ingress Routing Table에 대한 구성을 확인 할 수 있습니다. GWLB Subnet,Public Subnet으로 인입 되는 트래픽을 특정 경로로 보내는 역할을 합니다. 여기에서는 GWLB VPC Endpoint로 구성하도록 되어 있습니다.
 
-![](<.gitbook/assets/image (120).png>)
+![](<.gitbook/assets/image (110).png>)
 
 {% hint style="info" %}
 Ingress Routing에서 Private Subnet에 대한 라우팅 설정은 왜 없을까요?
@@ -327,7 +327,7 @@ Ingress Routing에서 Private Subnet에 대한 라우팅 설정은 왜 없을까
 
 **`AWS 관리 콘솔 - VPC - Endpoint`**를 선택하여 실제 구성된 VPC Endpoint를 확인해 봅니다. 2개의 VPC에 2개씩 구성된 AZ를 위해 총 4개의 Endpoint가 구성되어 있습니다. (VPC Endpoint는 AZ Subnet당 연결됩니다.)
 
-![](<.gitbook/assets/image (123).png>)
+![](<.gitbook/assets/image (169).png>)
 
 ####
 
@@ -335,33 +335,33 @@ Ingress Routing에서 Private Subnet에 대한 라우팅 설정은 왜 없을까
 
 **`AWS 관리콘솔 - VPC - 라우팅 테이블`**을 선택하고 VPC01,02-GWLBe-A,B-RT 이름의 라우팅 테이블을 확인해 봅니다. Egress(외부로 향하는 트래픽) 트래픽은 모두 IGW(Internet Gateway)로 향하도록 구성되어 있습니다.
 
-![](<.gitbook/assets/image (121).png>)
+![](<.gitbook/assets/image (88).png>)
 
 ### 9. Public Subnet Route Table 확인
 
 **`AWS 관리콘솔 - VPC - 라우팅 테이블`**을 선택하고 VPC01,02-Public-A,B-RT 이름의 라우팅 테이블을 확인해 봅니다. Egress(외부로 향하는 트래픽) 트래픽은 모두 GWLB VPC Endpoint로 향하도록 구성되어 있습니다.
 
-![](<.gitbook/assets/image (141).png>)
+![](<.gitbook/assets/image (43).png>)
 
 ### 10. ALB 확인
 
 **`AWS 관리콘솔 - EC2 - 로드밸런싱 - 로드밸런서`** 를 선택하고,  VPC01,02-alb를 선택합니다. ALB의 외부 노출되어 있는 DNS A 레코드를 확인하고, 복사해 둡니다.
 
-![](<.gitbook/assets/image (138).png>)
+![](<.gitbook/assets/image (32).png>)
 
 **`AWS 관리콘솔 - EC2 - 로드밸런싱- 대상그룹`** 를 선택하고,  VPC01,02-ALB-tg 를 선택합니다. 하단의 세부 정보를 확인하면 Private Subnet에 속한 4개의 인스턴스가 정상적으로 Target Group에 선택된 것을 확인 할 수 있습니다.
 
-![](<.gitbook/assets/image (126).png>)
+![](<.gitbook/assets/image (142).png>)
 
 **`AWS 관리콘솔 - EC2 - 로드밸런싱- 대상그룹`** 를 선택하고,  VPC01,02-ALB-tg 를 선택합니다. 하단에서 상태검사를 선택합니다. Private Subnet에 속한 4개의 인스턴스의 **`"/ec2meta-webpage/index.php"`** 로 상태검사를 하고 있는 것을 확인 할 수 있습니다. 이 랩에서는 이후에 해당 URL로 외부에서 접속해서 로드밸런싱이 제대로 되는지 확인할 것입니다.
 
-![](<.gitbook/assets/image (130).png>)
+![](<.gitbook/assets/image (181).png>)
 
 ### 11. Private Subnet Route Table 확인
 
 **`AWS 관리콘솔 - VPC - 라우팅 테이블`**을 선택하고 VPC01,02-Private-A,B-RT 이름의 라우팅 테이블을 확인해 봅니다. Egress(외부로 향하는 트래픽) 트래픽은 모두 NAT Gateway로 향하도록 구성되어 있습니다.
 
-![](<.gitbook/assets/image (133).png>)
+![](<.gitbook/assets/image (178).png>)
 
 ## 트래픽 확인
 
@@ -375,9 +375,9 @@ VPC01,02 을 Cloudformation을 통해 배포할 때 해당 인스턴스들에 Se
 
 아래 그림에서 처럼 확인해 볼 수 있습니다.
 
-![](<.gitbook/assets/image (143).png>)
+![](<.gitbook/assets/image (188).png>)
 
-![](<.gitbook/assets/image (137).png>)
+![](<.gitbook/assets/image (118).png>)
 
 먼저 Cloud9 터미널에 Session Manager 기반 접속을 위해 아래와 같이 설치합니다. (앞서 랩에서 수행했다면, 생략합니다.)
 
@@ -500,7 +500,7 @@ tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 byt
 
 **`AWS 콘솔 - VPC - NAT Gateway`** 를 선택하고,  NAT Gateway 주소가 맞는 지 확인해 봅니다.
 
-![](<.gitbook/assets/image (136).png>)
+![](<.gitbook/assets/image (166).png>)
 
 이제 다른 VPC와 다른 서브넷의 EC2에서도 트래픽이 정상적으로 처리되는지 확인해 봅니다.
 
@@ -512,13 +512,13 @@ tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 byt
 
 AWS 콘솔 - Cloudformation - VPC01, VPC02 스택 을 선택하고, Output(출력) 을 선택하고, ALB DNS A Record와 서비스 URL을 확인합니다.
 
-![](<.gitbook/assets/image (139).png>)
+![](<.gitbook/assets/image (114).png>)
 
 VPC01,02 ALB URL로 브라우저에서 접속하고, 로드밸런싱이 정상적으로 되는지 확인합니다.&#x20;
 
-![](<.gitbook/assets/image (140).png>)
+![](<.gitbook/assets/image (137).png>)
 
-![](<.gitbook/assets/image (142).png>)
+![](<.gitbook/assets/image (51).png>)
 
 Cloud9 터미널 1 (Appliance 1)에서 아래와 같이 ALB의 내부 CIDR 주소를 필터해 봅니다.
 
@@ -530,11 +530,11 @@ sudo tcpdump -nvv 'port 6081' | grep '10.1.11.95'
 
 웹 브라우저에서 다시 ALB 주소로 접속합니다.
 
-![](<.gitbook/assets/image (145).png>)
+![](<.gitbook/assets/image (75).png>)
 
 이제 Cloud9의 Appliance 1 터미널에서 결과를 확인해 봅니다. 아래에서 처럼 ALB로 접속되는 모든 트래픽도 GWLB의 Appliance들을 통해서 검사한 이후에 통과되는 것을 확인 할 수 있습니다.
 
-![](<.gitbook/assets/image (146).png>)
+![](<.gitbook/assets/image (92).png>)
 
 ```
 [ec2-user@ip-10-254-11-101 ~]$ sudo tcpdump -nvv 'port 6081' | grep '10.1.11.95'
@@ -577,7 +577,7 @@ aws cloudformation delete-stack --stack-name GWLBVPC
 
 ```
 
-![](<.gitbook/assets/image (144).png>)
+![](<.gitbook/assets/image (2).png>)
 
 랩을 완전히 종료하려면 **`AWS 관리콘솔 - Cloudformation - 스택`** aws cloud9 콘솔 스택도 삭제합니다.
 
