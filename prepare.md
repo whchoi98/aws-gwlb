@@ -56,6 +56,37 @@ VSCode를 실행하기 위해 아래와 같이 AWS 관리콘솔에서 **`"Clouds
 `아래와 같이 iam user와 패스워드, user를 위한 Policy를 생성해서 연결합니다.`
 
 ```
+export user_name=user01
+export pass_word=1234Qwer
+aws iam create-user --user-name ${user_name}
+aws iam create-login-profile --user-name ${user_name} --password ${pass_word} --no-password-reset-required
+aws iam attach-user-policy --user-name ${user_name} --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
+
+```
+
+제공된 AWS 계정에 손쉽게 접근하기  위해서 Alisa를 생성합니다. Alias는 고유해야 하므로 , 중복되지 않도록 합니다.
+
+```
+aws iam create-account-alias --account-alias ${alias-name}
+```
+
+앞서 생성한 Alias로 접속하고, 새로운 User로 인증해서 로그인 합니다.
+
+정상적으로 접속하면, 다시 CloudShell을 사용해서 , VSCode Server를 구성합니다.
+
+```
+# 아래 git을 cloudshell에 복제합니다.
+git clone https://github.com/whchoi98/ec2_vscode.git
+
+```
+
+## 2.VSCode Server 구성 <a href="#id-2.vscode-server" id="id-2.vscode-server"></a>
+
+CloudShell에서 VSCode 서버를 구성하기 위한 환경 변수를 정의합니다. VSCode Server는 Default VPC, Public Subnet에 설치합니다.
+
+`아래와 같이 iam user와 패스워드, user를 위한 Policy를 생성해서 연결합니다.`
+
+```
 source ~/.bash_profile
 export AWS_REGION=ap-northeast-2
 ~/ec2_vscode/defaultvpcid.sh
