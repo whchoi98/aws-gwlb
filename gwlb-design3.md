@@ -10,7 +10,7 @@ description: 'Update : 2022-06-12/ 1h /Cloudformation CLI 배포로 변경'
 
 이러한 구성은 VPC Endpoint를 각 VPC에 분산하고, GWLB에 VPC Endpoint Service를 연결하는 분산형 구조입니다. 각 VPC01,02는 외부에 서비스를 제공하기 위해 ALB를 통해 웹 서비스를 제공하고 있으며, Private Subnet의 인스턴스는 타겟 그룹으로 연결되어 있습니다. 해당 인스턴스들을 패치 관리를 위해서 NAT Gateway를 통해 Source NAT 서비스를 받게 됩니다.
 
-이러한 구성은 VPC Endpoint를 각 VPC에 분산하고, GWLB에 VPC Endpoint Service를 연결하는 분산형 구조이지만, 앞선 [GWLB Design1](gwlb-design1.md) 구성보다는  외부 서비스에 더 중점을 둔 디자인입니다.
+이러한 구성은 VPC Endpoint를 각 VPC에 분산하고, GWLB에 VPC Endpoint Service를 연결하는 분산형 구조이지만, 앞선 [GWLB Design1](gwlb-design1.md) 구성보다는 외부 서비스에 더 중점을 둔 디자인입니다.
 
 #### :clapper: 아래 동영상 링크에서 구성방법을 확인 할 수 있습니다.
 
@@ -35,7 +35,7 @@ git clone https://github.com/whchoi98/gwlb.git
 
 아래와 같이 Cloud9에서 Cloudformation을 실행합니다.
 
-스택 세부 정보 지정에서 , **`스택이름`**과 **`VPC Parameters`**를 지정합니다. 대부분 기본값을 사용하면 됩니다.
+스택 세부 정보 지정에서 , \*\*`스택이름`\*\*과 \*\*`VPC Parameters`\*\*를 지정합니다. 대부분 기본값을 사용하면 됩니다.
 
 * 스택이름 : GWLBVPC
 * AvailabilityZone A : ap-northeast-2a
@@ -58,13 +58,13 @@ aws cloudformation deploy \
 
 3\~4분 후에 GWLBVPC가 완성됩니다.
 
-**`AWS 관리콘솔 - VPC - 가상 프라이빗 클라우드 - 엔드포인트 서비스`** 를 선택합니다. Cloudformation을 통해서 VPC Endpoint 서비스가 이미 생성되어 있습니다. 이것을 선택하고 **`세부 정보`**를 확인합니다.
+**`AWS 관리콘솔 - VPC - 가상 프라이빗 클라우드 - 엔드포인트 서비스`** 를 선택합니다. Cloudformation을 통해서 VPC Endpoint 서비스가 이미 생성되어 있습니다. 이것을 선택하고 \*\*`세부 정보`\*\*를 확인합니다.
 
 VPC Endpoint Service Name을 복사해 둡니다. 뒤에서 생성할 VPC들의 Cloudformation에서 사용할 것입니다.
 
 ![](<.gitbook/assets/image (68).png>)
 
-VPC Endpoint Service Name을 환경변수에 저장해 둡니다.&#x20;
+VPC Endpoint Service Name을 환경변수에 저장해 둡니다.
 
 ```
 export VPCEndpointServiceName=com.amazonaws.vpce.ap-northeast-2.vpce-svc-0ff2b234e86a3e6db
@@ -131,20 +131,18 @@ GWLBVPC 구성을 확인해 봅니다.
 
 ### 3.GWLB 구성
 
-**`AWS 관리 콘솔 - EC2 - 로드밸런싱 - 로드밸런서`** 메뉴를 선택합니다. Gateway LoadBalancer 구성을 확인할 수 있습니다. ELB 유형이 **`"gateway"`**로 구성된 것을 확인 할 수 있습니다.
+**`AWS 관리 콘솔 - EC2 - 로드밸런싱 - 로드밸런서`** 메뉴를 선택합니다. Gateway LoadBalancer 구성을 확인할 수 있습니다. ELB 유형이 \*\*`"gateway"`\*\*로 구성된 것을 확인 할 수 있습니다.
 
 ![](<.gitbook/assets/image (4).png>)
 
-
-
 ### 4.GWLB Target Group 구성
 
-**`AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹`**을 선택합니다. GWLB가 로드밸런싱을 하게 되는 대상그룹(Target Group)을 확인 할 수 있습니다.
+\*\*`AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹`\*\*을 선택합니다. GWLB가 로드밸런싱을 하게 되는 대상그룹(Target Group)을 확인 할 수 있습니다.
 
 * 프로토콜 : GENEVE 6081 (포트 6081의 GENGEVE 프로토콜을 사용하여 모든 IP 패킷을 수신하고 리스너 규칙에 지정된 대상 그룹에 트래픽을 전달합니다.)
 * 등록된 대상 : GWLB가 로드밸런싱을 하고 있는 Target 장비를 확인합니다.
 
-![](<.gitbook/assets/image (1) (1).png>)
+![](<.gitbook/assets/image (1) (2).png>)
 
 **`AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹 - 상태검사`** 메뉴를 확인합니다.
 
@@ -156,7 +154,7 @@ ELB와 동일하게 대상그룹(Target Group)에 상태를 검사할 수 있습
 
 Workload VPC(VPC01,02)들과 Private link로 연결하기 위해, GWLB VPC에 Endpoint Service를 구성하였습니다. 이를 확인해 봅니다.
 
-**`AWS 관리 콘솔 - VPC - 엔드포인트 서비스`**를 선택합니다. 생성된 VPC Endpoint Service를 확인할 수 있습니다.
+\*\*`AWS 관리 콘솔 - VPC - 엔드포인트 서비스`\*\*를 선택합니다. 생성된 VPC Endpoint Service를 확인할 수 있습니다.
 
 * 서비스 이름 - 예 com.amazonaws.vpce.ap-northeast-2.vpce-svc-03f01aa9fbb85beb4
 * 유형 : GatewayLoadBalancer
@@ -166,7 +164,7 @@ Workload VPC(VPC01,02)들과 Private link로 연결하기 위해, GWLB VPC에 En
 
 ![](<.gitbook/assets/image (183).png>)
 
-**`AWS 관리 콘솔 - VPC - 엔드포인트 서비스-엔드포인트 연결`**를 선택합니다.
+\*\*`AWS 관리 콘솔 - VPC - 엔드포인트 서비스-엔드포인트 연결`\*\*를 선택합니다.
 
 Workload VPC (VPC01,02)의 각 가용영역들과 연결된 것을 확인 할 수 있습니다. 각 VPC별 2개의 가용영역을 구성하였기 때문에 VPC별 2개의 Endpoint가 연결됩니다. (VPC 2개를 생성해서 VPC Endpoint를 각 리전별로 구성하기 때문에 이 랩에서는 4개가 보이게 됩니다.)
 
@@ -180,7 +178,7 @@ Workload VPC (VPC01,02)의 각 가용영역들과 연결된 것을 확인 할 �
 
 Appliance 구성 정보를 확인해 봅니다.
 
-**`AWS 관리콘솔 - Cloudformation - 스택`**을 선택하면, 앞서 배포했던 Cloudformation 스택들을 확인 할 수 있습니다. "GWLBVPC"를 선택합니다. 그리고 출력을 선택합니다. 값을 확인해 보면 공인 IP 주소를 확인 할 수 있습니다.
+\*\*`AWS 관리콘솔 - Cloudformation - 스택`\*\*을 선택하면, 앞서 배포했던 Cloudformation 스택들을 확인 할 수 있습니다. "GWLBVPC"를 선택합니다. 그리고 출력을 선택합니다. 값을 확인해 보면 공인 IP 주소를 확인 할 수 있습니다.
 
 ![](<.gitbook/assets/image (134).png>)
 
@@ -313,7 +311,7 @@ VPC01,02 NAT Gateway는 Private EC2 인스턴스들의 PAT로 동작하며, Priv
 
 ### 7. Ingress Route Table 확인
 
-**`AWS 관리콘솔 - VPC - 라우팅 테이블`**을 선택하고 VPC01,02-IGW-Ingress-RT 이름의 라우팅 테이블을 확인해 봅니다. Ingress Routing Table에 대한 구성을 확인 할 수 있습니다. GWLB Subnet,Public Subnet으로 인입 되는 트래픽을 특정 경로로 보내는 역할을 합니다. 여기에서는 GWLB VPC Endpoint로 구성하도록 되어 있습니다.
+\*\*`AWS 관리콘솔 - VPC - 라우팅 테이블`\*\*을 선택하고 VPC01,02-IGW-Ingress-RT 이름의 라우팅 테이블을 확인해 봅니다. Ingress Routing Table에 대한 구성을 확인 할 수 있습니다. GWLB Subnet,Public Subnet으로 인입 되는 트래픽을 특정 경로로 보내는 역할을 합니다. 여기에서는 GWLB VPC Endpoint로 구성하도록 되어 있습니다.
 
 ![](<.gitbook/assets/image (110).png>)
 
@@ -325,7 +323,7 @@ Ingress Routing에서 Private Subnet에 대한 라우팅 설정은 왜 없을까
 
 ### 7.VPC Endpoint 확인
 
-**`AWS 관리 콘솔 - VPC - Endpoint`**를 선택하여 실제 구성된 VPC Endpoint를 확인해 봅니다. 2개의 VPC에 2개씩 구성된 AZ를 위해 총 4개의 Endpoint가 구성되어 있습니다. (VPC Endpoint는 AZ Subnet당 연결됩니다.)
+\*\*`AWS 관리 콘솔 - VPC - Endpoint`\*\*를 선택하여 실제 구성된 VPC Endpoint를 확인해 봅니다. 2개의 VPC에 2개씩 구성된 AZ를 위해 총 4개의 Endpoint가 구성되어 있습니다. (VPC Endpoint는 AZ Subnet당 연결됩니다.)
 
 ![](<.gitbook/assets/image (169).png>)
 
@@ -333,33 +331,33 @@ Ingress Routing에서 Private Subnet에 대한 라우팅 설정은 왜 없을까
 
 ### 8. GWLB Subnet Route Table 확인
 
-**`AWS 관리콘솔 - VPC - 라우팅 테이블`**을 선택하고 VPC01,02-GWLBe-A,B-RT 이름의 라우팅 테이블을 확인해 봅니다. Egress(외부로 향하는 트래픽) 트래픽은 모두 IGW(Internet Gateway)로 향하도록 구성되어 있습니다.
+\*\*`AWS 관리콘솔 - VPC - 라우팅 테이블`\*\*을 선택하고 VPC01,02-GWLBe-A,B-RT 이름의 라우팅 테이블을 확인해 봅니다. Egress(외부로 향하는 트래픽) 트래픽은 모두 IGW(Internet Gateway)로 향하도록 구성되어 있습니다.
 
 ![](<.gitbook/assets/image (88).png>)
 
 ### 9. Public Subnet Route Table 확인
 
-**`AWS 관리콘솔 - VPC - 라우팅 테이블`**을 선택하고 VPC01,02-Public-A,B-RT 이름의 라우팅 테이블을 확인해 봅니다. Egress(외부로 향하는 트래픽) 트래픽은 모두 GWLB VPC Endpoint로 향하도록 구성되어 있습니다.
+\*\*`AWS 관리콘솔 - VPC - 라우팅 테이블`\*\*을 선택하고 VPC01,02-Public-A,B-RT 이름의 라우팅 테이블을 확인해 봅니다. Egress(외부로 향하는 트래픽) 트래픽은 모두 GWLB VPC Endpoint로 향하도록 구성되어 있습니다.
 
 ![](<.gitbook/assets/image (43).png>)
 
 ### 10. ALB 확인
 
-**`AWS 관리콘솔 - EC2 - 로드밸런싱 - 로드밸런서`** 를 선택하고,  VPC01,02-alb를 선택합니다. ALB의 외부 노출되어 있는 DNS A 레코드를 확인하고, 복사해 둡니다.
+**`AWS 관리콘솔 - EC2 - 로드밸런싱 - 로드밸런서`** 를 선택하고, VPC01,02-alb를 선택합니다. ALB의 외부 노출되어 있는 DNS A 레코드를 확인하고, 복사해 둡니다.
 
 ![](<.gitbook/assets/image (32).png>)
 
-**`AWS 관리콘솔 - EC2 - 로드밸런싱- 대상그룹`** 를 선택하고,  VPC01,02-ALB-tg 를 선택합니다. 하단의 세부 정보를 확인하면 Private Subnet에 속한 4개의 인스턴스가 정상적으로 Target Group에 선택된 것을 확인 할 수 있습니다.
+**`AWS 관리콘솔 - EC2 - 로드밸런싱- 대상그룹`** 를 선택하고, VPC01,02-ALB-tg 를 선택합니다. 하단의 세부 정보를 확인하면 Private Subnet에 속한 4개의 인스턴스가 정상적으로 Target Group에 선택된 것을 확인 할 수 있습니다.
 
 ![](<.gitbook/assets/image (142).png>)
 
-**`AWS 관리콘솔 - EC2 - 로드밸런싱- 대상그룹`** 를 선택하고,  VPC01,02-ALB-tg 를 선택합니다. 하단에서 상태검사를 선택합니다. Private Subnet에 속한 4개의 인스턴스의 **`"/ec2meta-webpage/index.php"`** 로 상태검사를 하고 있는 것을 확인 할 수 있습니다. 이 랩에서는 이후에 해당 URL로 외부에서 접속해서 로드밸런싱이 제대로 되는지 확인할 것입니다.
+**`AWS 관리콘솔 - EC2 - 로드밸런싱- 대상그룹`** 를 선택하고, VPC01,02-ALB-tg 를 선택합니다. 하단에서 상태검사를 선택합니다. Private Subnet에 속한 4개의 인스턴스의 **`"/ec2meta-webpage/index.php"`** 로 상태검사를 하고 있는 것을 확인 할 수 있습니다. 이 랩에서는 이후에 해당 URL로 외부에서 접속해서 로드밸런싱이 제대로 되는지 확인할 것입니다.
 
 ![](<.gitbook/assets/image (181).png>)
 
 ### 11. Private Subnet Route Table 확인
 
-**`AWS 관리콘솔 - VPC - 라우팅 테이블`**을 선택하고 VPC01,02-Private-A,B-RT 이름의 라우팅 테이블을 확인해 봅니다. Egress(외부로 향하는 트래픽) 트래픽은 모두 NAT Gateway로 향하도록 구성되어 있습니다.
+\*\*`AWS 관리콘솔 - VPC - 라우팅 테이블`\*\*을 선택하고 VPC01,02-Private-A,B-RT 이름의 라우팅 테이블을 확인해 봅니다. Egress(외부로 향하는 트래픽) 트래픽은 모두 NAT Gateway로 향하도록 구성되어 있습니다.
 
 ![](<.gitbook/assets/image (178).png>)
 
@@ -498,7 +496,7 @@ tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 byt
 
 [GWLB Design1](gwlb-design1.md)의 결과와 다르게 인스턴스 IP 주소가 보이지 않습니다. 인스턴스가 Private Subnet에 속해 있고, 외부에 IP가 노출되지 않고 NAT Gateway를 통해서 통신하기 때문입니다.
 
-**`AWS 콘솔 - VPC - NAT Gateway`** 를 선택하고,  NAT Gateway 주소가 맞는 지 확인해 봅니다.
+**`AWS 콘솔 - VPC - NAT Gateway`** 를 선택하고, NAT Gateway 주소가 맞는 지 확인해 봅니다.
 
 ![](<.gitbook/assets/image (166).png>)
 
@@ -514,7 +512,7 @@ AWS 콘솔 - Cloudformation - VPC01, VPC02 스택 을 선택하고, Output(출�
 
 ![](<.gitbook/assets/image (114).png>)
 
-VPC01,02 ALB URL로 브라우저에서 접속하고, 로드밸런싱이 정상적으로 되는지 확인합니다.&#x20;
+VPC01,02 ALB URL로 브라우저에서 접속하고, 로드밸런싱이 정상적으로 되는지 확인합니다.
 
 ![](<.gitbook/assets/image (137).png>)
 
@@ -580,4 +578,3 @@ aws cloudformation delete-stack --stack-name GWLBVPC
 ![](<.gitbook/assets/image (2).png>)
 
 랩을 완전히 종료하려면 **`AWS 관리콘솔 - Cloudformation - 스택`** aws cloud9 콘솔 스택도 삭제합니다.
-

@@ -73,7 +73,7 @@ aws cloudformation deploy \
 
 ![](<.gitbook/assets/image (111).png>)
 
-VPCEndpointServiceName 값을 아래에서 처럼 환경변수에 저장해 둡니다. &#x20;
+VPCEndpointServiceName 값을 아래에서 처럼 환경변수에 저장해 둡니다.
 
 ```
 export VPCEndpointServiceName4=$(aws ec2 describe-vpc-endpoint-services --filter "Name=service-type,Values=GatewayLoadBalancer" | jq -r '.ServiceNames[]')
@@ -192,11 +192,11 @@ TransitGateway 구성과 RouteTable을 아래에서 확인합니다. Egress(VPC�
 
 ![](<.gitbook/assets/image (141).png>)
 
-**`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, **`"VPC01-Private-Subnet-A,B-RT"`**의 **`라우팅`**을 확인합니다.
+**`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, \*\*`"VPC01-Private-Subnet-A,B-RT"`\*\*의 \*\*`라우팅`\*\*을 확인합니다.
 
 ![](<.gitbook/assets/image (143).png>)
 
-**`AWS 관리콘솔 - TransitGateway`** 를 선택하고, **`"GWLBTGW"`** 라는 이름으로 **`TransitGateway`**가 정상적으로 생성되었는지 확인합니다.
+**`AWS 관리콘솔 - TransitGateway`** 를 선택하고, **`"GWLBTGW"`** 라는 이름으로 \*\*`TransitGateway`\*\*가 정상적으로 생성되었는지 확인합니다.
 
 ![](<.gitbook/assets/image (104).png>)
 
@@ -204,23 +204,23 @@ TransitGateway 구성과 RouteTable을 아래에서 확인합니다. Egress(VPC�
 
 ![](<.gitbook/assets/image (132).png>)
 
-**`AWS 관리콘솔 - TransitGateway - TransitGateway 라우팅테이블`**을 선택하고, **`"GWLBTGW-RT-VPC-OUT"`** 을 선택해서, TGW에서 트래픽이 외부로 가는 라우팅을 확인해 봅니다.
+\*\*`AWS 관리콘솔 - TransitGateway - TransitGateway 라우팅테이블`\*\*을 선택하고, **`"GWLBTGW-RT-VPC-OUT"`** 을 선택해서, TGW에서 트래픽이 외부로 가는 라우팅을 확인해 봅니다.
 
 ![](<.gitbook/assets/image (70).png>)
 
-**`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, **`"N2SVPC-Private-Subnet-A,B-RT"`**의 **`라우팅`**을 확인합니다.
+**`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, \*\*`"N2SVPC-Private-Subnet-A,B-RT"`\*\*의 \*\*`라우팅`\*\*을 확인합니다.
 
 ![](<.gitbook/assets/image (24).png>)
 
-**`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, **`"N2SVPC-Public-Subnet-A,B-RT"`**의 **`라우팅`**을 확인합니다.
+**`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, \*\*`"N2SVPC-Public-Subnet-A,B-RT"`\*\*의 \*\*`라우팅`\*\*을 확인합니다.
 
 ![](<.gitbook/assets/image (135).png>)
 
-**`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, **`"N2SVPC-GWLBe-Subnet-A,B-RT"`**의 **`라우팅`**을 확인합니다.
+**`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, \*\*`"N2SVPC-GWLBe-Subnet-A,B-RT"`\*\*의 \*\*`라우팅`\*\*을 확인합니다.
 
 ![](<.gitbook/assets/image (171).png>)
 
-**`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, **`"N2SVPC-IGW-Ingress-RT"`**의 **`라우팅`**을 확인합니다.
+**`AWS 관리콘솔 - VPC - 라우팅 테이블`** 을 선택하고, \*\*`"N2SVPC-IGW-Ingress-RT"`\*\*의 \*\*`라우팅`\*\*을 확인합니다.
 
 ![](<.gitbook/assets/image (83).png>)
 
@@ -237,13 +237,13 @@ GWLBVPC 구성을 확인해 봅니다.
 
 ### 7.GWLB 구성
 
-**`AWS 관리 콘솔 - EC2 - 로드밸런싱 - 로드밸런서`** 메뉴를 선택합니다. Gateway LoadBalancer 구성을 확인할 수 있습니다. ELB 유형이 **`"gateway"`**로 구성된 것을 확인 할 수 있습니다.
+**`AWS 관리 콘솔 - EC2 - 로드밸런싱 - 로드밸런서`** 메뉴를 선택합니다. Gateway LoadBalancer 구성을 확인할 수 있습니다. ELB 유형이 \*\*`"gateway"`\*\*로 구성된 것을 확인 할 수 있습니다.
 
 ![](<.gitbook/assets/image (39).png>)
 
 ### 8.GWLB Target Group 구성
 
-**`AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹`**을 선택합니다. GWLB가 로드밸런싱을 하게 되는 대상그룹(Target Group)을 확인 할 수 있습니다.
+\*\*`AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹`\*\*을 선택합니다. GWLB가 로드밸런싱을 하게 되는 대상그룹(Target Group)을 확인 할 수 있습니다.
 
 * 프로토콜 : **`GENEVE 6081`** (포트 6081의 GENGEVE 프로토콜을 사용하여 모든 IP 패킷을 수신하고 리스너 규칙에 지정된 대상 그룹에 트래픽을 전달합니다.)
 * 등록된 대상 : GWLB가 로드밸런싱을 하고 있는 Target 장비를 확인합니다.
@@ -252,7 +252,7 @@ GWLBVPC 구성을 확인해 봅니다.
 
 **`AWS 관리 콘솔 - EC2 - 로드밸런싱 - 대상 그룹 - 상태검사`** 메뉴를 확인합니다.
 
-ELB와 동일하게 대상그룹(Target Group)에 상태를 검사할 수 있습니다. 이 랩에서는 HTTP Path / 를 통해서 **`Health Check`**를 하도록 구성했습니다.
+ELB와 동일하게 대상그룹(Target Group)에 상태를 검사할 수 있습니다. 이 랩에서는 HTTP Path / 를 통해서 \*\*`Health Check`\*\*를 하도록 구성했습니다.
 
 ![](<.gitbook/assets/image (94).png>)
 
@@ -260,7 +260,7 @@ ELB와 동일하게 대상그룹(Target Group)에 상태를 검사할 수 있습
 
 N2SVPC Private link로 연결하기 위해, GWLB VPC에 Endpoint Service를 구성하였습니다. 이를 확인해 봅니다.
 
-**`AWS 관리 콘솔 - VPC - 엔드포인트 서비스`**를 선택합니다. 생성된 VPC Endpoint Service를 확인할 수 있습니다.
+\*\*`AWS 관리 콘솔 - VPC - 엔드포인트 서비스`\*\*를 선택합니다. 생성된 VPC Endpoint Service를 확인할 수 있습니다.
 
 * 서비스 이름 - 예 com.amazonaws.vpce.ap-northeast-2.vpce-svc-082d152b9180f8ad0
 * 유형 : GatewayLoadBalancer
@@ -270,7 +270,7 @@ N2SVPC Private link로 연결하기 위해, GWLB VPC에 Endpoint Service를 구�
 
 ![](<.gitbook/assets/image (124).png>)
 
-**`AWS 관리 콘솔 - VPC - 엔드포인트 서비스-엔드포인트 연결`**를 선택합니다.
+\*\*`AWS 관리 콘솔 - VPC - 엔드포인트 서비스-엔드포인트 연결`\*\*를 선택합니다.
 
 N2SVPC의 각 가용영역들과 연결된 것을 확인 할 수 있습니다. VPC별 2개의 가용영역의 Private Subnet에 배치된 VPC Endpoint에 연결된 것을 확인 합니다.
 
@@ -284,7 +284,7 @@ N2SVPC의 각 가용영역들과 연결된 것을 확인 할 수 있습니다. V
 
 Appliance 구성 정보를 확인해 봅니다.
 
-**`AWS 관리콘솔 - Cloudformation - 스택`**을 선택하면, 앞서 배포했던 Cloudformation 스택들을 확인 할 수 있습니다. **`"GWLBVPC"`**를 선택합니다. 그리고 출력을 선택합니다. 값을 확인해 보면 공인 IP 주소를 확인 할 수 있습니다.
+\*\*`AWS 관리콘솔 - Cloudformation - 스택`\*\*을 선택하면, 앞서 배포했던 Cloudformation 스택들을 확인 할 수 있습니다. \*\*`"GWLBVPC"`\*\*를 선택합니다. 그리고 출력을 선택합니다. 값을 확인해 보면 공인 IP 주소를 확인 할 수 있습니다.
 
 ![](<.gitbook/assets/image (77).png>)
 
@@ -374,11 +374,11 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101 이며, Appliance IP와 터�
 
 이렇게 GWLB 에서 생성된 IP주소와 각 Appliance의 IP간에 UDP 6081 포트로 터널링되어 , 외부의 IP 주소와 내부의 IP 주소를 그대로 유지할 수 있습니다. 또한 터널링으로 인입시 5Tuple (출발지 IP, Port, 목적지 IP, Port, 프로토콜)의 정보를 TLV로 Encapsulation하여 분산처리할 때 사용합니다.
 
-## 트래픽 확인&#x20;
+## 트래픽 확인
 
-### 11. 트래픽 확인&#x20;
+### 11. 트래픽 확인
 
-아래와 같은 트래픽 흐름으로 VPC 에서 외부로 트래픽을 처리하게 됩니다.&#x20;
+아래와 같은 트래픽 흐름으로 VPC 에서 외부로 트래픽을 처리하게 됩니다.
 
 ![](<.gitbook/assets/image (199).png>)
 
@@ -395,7 +395,7 @@ GENEVE 터널링의 GWLB IP주소는 10.254.12.101 이며, Appliance IP와 터�
 11. N2SVPC GWLBe Subnet에서 라우팅을 통해 IGW전달
 12. IGW에서 인터넷으로 트래픽 처리
 
-### 12. Egress 트래픽 확인&#x20;
+### 12. Egress 트래픽 확인
 
 VPC01,02의 EC2에서 외부로 정상적으로 트래픽이 처리되는 지 확인 해 봅니다.
 
@@ -600,17 +600,17 @@ GWLB Design 4 랩에서는 외부에서 N2SVPC의 ALB의 공인 DNS A레코드�
 4. GWLB에서 AZ A 또는 AZ B Target Group으로 LB 처리 - UDP 6081 GENEVE로 Encapsulation (TLV Header - 5Tuple)
 5. Appliance에서 트래픽 처리 후 Return
 6. GWLB에서 Decap후 VPC Endpoint Service 전달
-7. VPC Endpoint Service 를 통해서 GWLBe  Subnet으로 전달
+7. VPC Endpoint Service 를 통해서 GWLBe Subnet으로 전달
 8. GWLB Subnet에서 ALB로 전달
 9. ALB에서 VPC01,02 Target Group으로 전달.
 
-### 14. 인스턴스 패키지 설치&#x20;
+### 14. 인스턴스 패키지 설치
 
 VPC01,02의 EC2 인스턴스는 GWLB TGW(TransitGateway)가 생성된 이후 부터 인터넷이 가능했습니다. 아직까지 어떠한 패치나 패키지 설치가 이루어 지지 않았습니다.
 
 AWS의 Resource Group 구성과 System Manager RunBook을 통해서 , Shell을 동시에 8개를 수행합니다.
 
-**`AWS 관리콘솔 - Resource Group & Tag Editor`** 를 실행하고, **`리소스 그룹 생성`**을 선택합니다.
+**`AWS 관리콘솔 - Resource Group & Tag Editor`** 를 실행하고, \*\*`리소스 그룹 생성`\*\*을 선택합니다.
 
 ![](<.gitbook/assets/image (163).png>)
 
@@ -623,7 +623,7 @@ AWS의 Resource Group 구성과 System Manager RunBook을 통해서 , Shell을 �
 * **`그룹 유형 : Cloudformation 스택기반`**
 * **`그룹화 기준 - Cloudformation 스택 : VPC01`**
 * **`그룹화 기준 - Cloudformation 스택의 리소스 유형 : AWS::EC2::Instance`**
-* **`그룹리소스 미리보기 선택`**&#x20;
+* **`그룹리소스 미리보기 선택`**
 * **`그룹 세부 정보 : VPC01-Private-Instance`**
 
 반복해서 VPC02 도 구성합니다.
@@ -631,7 +631,7 @@ AWS의 Resource Group 구성과 System Manager RunBook을 통해서 , Shell을 �
 * **`그룹 유형 : Cloudformation 스택기반`**
 * **`그룹화 기준 - Cloudformation 스택 : VPC02`**
 * **`그룹화 기준 - Cloudformation 스택의 리소스 유형 : AWS::EC2::Instance`**
-* **`그룹리소스 미리보기 선택`**&#x20;
+* **`그룹리소스 미리보기 선택`**
 * **`그룹 세부 정보 : VPC02-Private-Instance`**
 
 생성된 Resource Group을 **`"저장된 리소스 그룹"`** 에서 확인해 봅니다.
@@ -640,11 +640,11 @@ AWS의 Resource Group 구성과 System Manager RunBook을 통해서 , Shell을 �
 
 **`AWS 관리콘솔 - System Manager`** 를 실행하고, **`"Run Command"`** 를 빠른 설정 메뉴에서 선택합니다.
 
-**`명령 실행`**을 선택합니다.
+\*\*`명령 실행`\*\*을 선택합니다.
 
 ![](<.gitbook/assets/image (29).png>)
 
-**`명령 실행`**에서 **`AWS-RunShellScript`** 를 선택합니다.
+\*\*`명령 실행`\*\*에서 **`AWS-RunShellScript`** 를 선택합니다.
 
 ![](<.gitbook/assets/image (76).png>)
 
@@ -672,7 +672,7 @@ exit;
 
 대상에서 리소스그룹을 선택하고, 리소스 그룹은 앞서 생성한 "VPC01-Private-Instance", "VPC02-Private-Instance"를 선택합니다.
 
-![](<.gitbook/assets/image (2) (1).png>)
+![](<.gitbook/assets/image (2) (2).png>)
 
 VPC01-Private-Instance, VPC02-Private-Instance를 각각 실행합니다.
 
@@ -684,7 +684,7 @@ VPC01-Private-Instance, VPC02-Private-Instance를 각각 실행합니다.
 
 이제 N2SVPC에서 VPC01,VPC02의 인스턴스 로드밸런서를 위한 ALB 구성을 하고, Target Group을 각각 VPC01,02로 지정합니다.
 
-**`EC2 Dashboard - Loadbalancer - Application Load Balancer`**를 선택합니다.
+\*\*`EC2 Dashboard - Loadbalancer - Application Load Balancer`\*\*를 선택합니다.
 
 * **`Load balancer name : "ALB-VPC01-TG"`** 와 같은 이름을 입력합니다.
 * **`scheme : "internet-facing"`** 를 선택합니다.
@@ -740,8 +740,6 @@ Target Group에 등록될 IP Address 를 구성합니다.
 
 최종 구성을 확인하고, _**`create load balancer`**_ 를 생성합니다.
 
-
-
 <figure><img src=".gitbook/assets/image (223).png" alt=""><figcaption></figcaption></figure>
 
 정상적으로 ALB가 생성되었는 지 확인해 봅니다.
@@ -751,8 +749,6 @@ Target Group에 등록될 IP Address 를 구성합니다.
 Target Group의 IP 들이 Health Check가 정상적인지 확인합니다.
 
 <figure><img src=".gitbook/assets/image (207).png" alt=""><figcaption></figcaption></figure>
-
-
 
 ### 16. ALB 트래픽 확인
 
@@ -784,7 +780,7 @@ http://{ALB-DNS-A-Record}/ec2meta-webpage/index.php
 
 ![](<.gitbook/assets/image (192).png>)
 
-&#x20;웹브라우저에서 ALB DNS A 레코드와 URL을 입력해서 실행시키면, GWLB에 연결해 둔 Appliance의 TCP Dump값에서 패킷을 통과하는 것을 확인 할 수 있습니다.
+웹브라우저에서 ALB DNS A 레코드와 URL을 입력해서 실행시키면, GWLB에 연결해 둔 Appliance의 TCP Dump값에서 패킷을 통과하는 것을 확인 할 수 있습니다.
 
 ```
 [ec2-user@ip-10-254-11-102 ~]$ sudo tcpdump -nvv 'port 6081' | grep '10.11.11.99'
@@ -813,7 +809,7 @@ VPC02의 인스턴스들과 ALB 로드밸런스도 위와 같은 방법으로 �
 
 ![](<.gitbook/assets/image (69).png>)
 
-**`AWS 관리 콘솔 - 로드밸런싱 - 로드밸런서 - ALB-VPC01-TG, ALB-VPC02-TG 선택 - 작업 - 삭제`**&#x20;
+**`AWS 관리 콘솔 - 로드밸런싱 - 로드밸런서 - ALB-VPC01-TG, ALB-VPC02-TG 선택 - 작업 - 삭제`**
 
 ALB와 대상 그룹을 삭제합니다. (**VPC01-TG,VPC02-TG 만 삭제 합니다.**)
 
