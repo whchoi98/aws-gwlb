@@ -12,10 +12,6 @@ description: 'update : 2024-08-04/ 1h'
 
 아래 그림은 목표 구성도 입니다.
 
-#### :clapper: 아래 동영상 링크에서 구성방법을 확인 할 수 있습니다.
-
-{% embed url="https://youtu.be/J4mXEfsWZUs" %}
-
 ![](<.gitbook/assets/image (154).png>)
 
 ## Cloudformation기반 VPC 배포
@@ -48,13 +44,15 @@ AWS 관리콘솔에서 Cloudformation을 선택해서, 실행 결과를 확인�
 * PublicSubnetABlock: 10.254.11.0/24
 * PublicSubnetBBlock: 10.254.12.0/24
 * InstanceTyep: t3.small
+* KeyPair : 미리 만들어 둔 keyPair를 사용합니다.
 
 ```
-cd ~/gwlb
+cd ~/environment/
 aws cloudformation deploy \
   --region ap-northeast-2 \
   --stack-name "GWLBVPC" \
-  --template-file "~/gwlb/Case1/1.Case1-GWLBVPC.yml" \
+  --template-file "/home/ec2-user/environment/gwlb/Case1/1.Case1-GWLBVPC.yml" \
+  --parameter-overrides "KeyPair=$KeyName" \
   --capabilities CAPABILITY_NAMED_IAM
   
 ```
@@ -92,6 +90,7 @@ VPC01,02,03 3개의 VPC를 Cloudformation에서 앞서 과정과 동일하게 �
 * VPCEndpointServiceName : 앞서 복사해둔 GWLBVPC의 VPC endpoint service name을 입력합니다.
 * PrivateToGWLB : 0.0.0.0/0 (Private Subnet이 외부로 가는 목적지에 대한 라우팅 경로 설정입니다.)
 * InstanceTyep: t3.small
+* KeyPair : 미 만들어 둔 keyPair를 사용합니다.
 
 ```
 cd ~/gwlb/
@@ -101,7 +100,7 @@ aws cloudformation deploy \
   --stack-name "VPC01" \
   --template-file "~/gwlb/Case1/2.Case1-VPC01.yml" \
   --parameter-overrides \
-    "VPCEndpointServiceName=$VPCEndpointServiceName1" \
+    "VPCEndpointServiceName1=$VPCEndpointServiceName1" \
   --capabilities CAPABILITY_NAMED_IAM &
 
 aws cloudformation deploy \
@@ -109,7 +108,7 @@ aws cloudformation deploy \
   --stack-name "VPC02" \
   --template-file "~/gwlb/Case1/2.Case1-VPC02.yml" \
   --parameter-overrides \
-    "VPCEndpointServiceName=$VPCEndpointServiceName1" \
+    "VPCEndpointServiceName1=$VPCEndpointServiceName1" \
   --capabilities CAPABILITY_NAMED_IAM &
 
 aws cloudformation deploy \
@@ -117,9 +116,48 @@ aws cloudformation deploy \
   --stack-name "VPC03" \
   --template-file "~/gwlb/Case1/2.Case1-VPC03.yml" \
   --parameter-overrides \
-    "VPCEndpointServiceName=$VPCEndpointServiceName1" \
+    "VPCEndpointServiceName1=$VPCEndpointServiceName1" \
   --capabilities CAPABILITY_NAMED_IAM &
 
+```
+
+```
+cd ~/environment/
+aws cloudformation deploy \
+  --region ap-northeast-2 \
+  --stack-name "VPC01" \
+  --template-file "/home/ec2-user/environment/gwlb/Case1/2.Case1-VPC01.yml" \
+  --parameter-overrides \
+    "KeyPair=$KeyName" \
+    "VPCEndpointServiceName=$VPCEndpointServiceName1" \
+  --capabilities CAPABILITY_NAMED_IAM
+
+```
+
+```
+cd ~/environment/
+aws cloudformation deploy \
+  --region ap-northeast-2 \
+  --stack-name "VPC02" \
+  --template-file "/home/ec2-user/environment/gwlb/Case1/2.Case1-VPC02.yml" \
+  --parameter-overrides \
+    "KeyPair=$KeyName" \
+    "VPCEndpointServiceName=$VPCEndpointServiceName1" \
+  --capabilities CAPABILITY_NAMED_IAM
+  
+```
+
+```
+cd ~/environment/
+aws cloudformation deploy \
+  --region ap-northeast-2 \
+  --stack-name "VPC03" \
+  --template-file "/home/ec2-user/environment/gwlb/Case1/2.Case1-VPC03.yml" \
+  --parameter-overrides \
+    "KeyPair=$KeyName" \
+    "VPCEndpointServiceName=$VPCEndpointServiceName1" \
+  --capabilities CAPABILITY_NAMED_IAM
+  
 ```
 
 아래와 같이 VPC가 모두 정상적으로 설정되었는지 확인해 봅니다.
@@ -172,21 +210,17 @@ AWS 관리 콘솔 - VPC - 엔드포인트 서비스를 선택합니다. 생성�
 
 2개 영역에 걸쳐서 GWLB에 대해 VPC Endpoint Service를 구성하고 있습니다.
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+![](<.gitbook/assets/image (190).png>)
 
 AWS 관리 콘솔 - VPC - 엔드포인트 서비스-엔드포인트 연결를 선택합니다.
 
 Workload VPC (VPC01,02,03)의 각 가용영역들과 연결된 것을 확인 할 수 있습니다. 각 VPC별 2개의 가용영역을 구성하였기 때문에 VPC별 2개의 Endpoint가 연결됩니다.
 
-<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+![](<.gitbook/assets/image (164).png>)
 
 ### 6. Appliance 확인
 
 AWS 관리 콘솔 - EC2 - 인스턴스 메뉴를 선택하고, "appliance" 키워드로 필터링 해 봅니다. 4개의 리눅스 기반의 appliance가 설치되어 있습니다.
-
-```
-appliance
-```
 
 ![](<.gitbook/assets/image (109).png>)
 
@@ -196,19 +230,17 @@ AWS 관리콘솔 - Cloudformation - 스택을 선택하면, 앞서 배포했던 
 
 ![](<.gitbook/assets/image (107).png>)
 
-Code-Server Terminal에서 Appliance로 직접 접속해 봅니다.
+앞서 사전 준비에서 생성한 Cloud9에서 Appliance로 직접 접속해 봅니다.
 
 ```
 #SSM 연결을 위한 Shell 실행
-source ~/.bash_profile
-~/gwlb/appliance_ssm.sh
+~/environment/gwlb/appliance_ssm.sh
 
 ```
 
 각 Appliance에서 아래 명령을 통해 , GWLB IP와 어떻게 매핑되었는지 확인합니다. Cloud9에서 새로운 터미널 4개를 탭에서 추가해서 4개 Appliance를 모두 확인해 봅니다.
 
 ```
-source ~/.bash_profile
 aws ssm start-session --target $Appliance_11_101
 aws ssm start-session --target $Appliance_11_102
 aws ssm start-session --target $Appliance_12_101
@@ -330,12 +362,20 @@ VPC01,02,03 을 Cloudformation을 통해 배포할 때 해당 인스턴스들에
 
 ![](<.gitbook/assets/image (101).png>)
 
+먼저 Cloud9에 Session Manager 기반 접속을 위해 아래와 같이 설치합니다. (이미 설치되어 있는 경우 생략합니다)
+
+```
+#session manager plugin 설치
+curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm"
+sudo yum install -y session-manager-plugin.rpm
+git clone https://github.com/whchoi98/useful-shell.git
+
+```
+
 session manager 기반으로 접속하기 위해, 아래 명령을 실행하여 ec2 인스턴스의 id값을 확인합니다.
 
 ```
-cd ~
-git clone https://github.com/whchoi98/useful-shell.git
-cd ~/useful-shell/
+cd ~/environment/useful-shell/
 ./aws_ec2_ext.sh
 
 ```
@@ -408,7 +448,7 @@ PING aws.com (54.230.62.60) 56(84) bytes of data.
 
 아래와 같이 2개의 Appliance에 SSH로 연결해서 명령을 실행해 보고, Appliance로 Traffic이 들어오는지 확인해 봅니다.
 
-터미널 1
+Cloud9 터미널 1
 
 ```
 aws ssm start-session --target $VPC01_Private_A_10_1_21_101
@@ -417,7 +457,7 @@ sudo tcpdump -nvv 'port 6081'| grep 'ICMP'
 
 ```
 
-터미널 2
+Cloud9 터미널 2
 
 ```
 aws ssm start-session --target $VPC01_Private_A_10_1_21_102
@@ -459,10 +499,6 @@ AWS 관리콘솔 - Cloudformation - 스택 을 선택하고 생성된 Stack을 ,
 
 VPC01,VPC02,VPC03-GWLBVPC 순으로 삭제합니다.(Cloud9은 계속 사용하기 위해 삭제 하지 않습니다.) VPC01,02,03이 완전히 삭제된후, GWLBVPC를 삭제 합니다.
 
-
-
-1. VPC01,02,03 선택 후 삭제 (3\~4분 소요 , 동시진행 가능)
-
 ```
 aws cloudformation delete-stack --stack-name VPC01
 aws cloudformation delete-stack --stack-name VPC02
@@ -470,12 +506,8 @@ aws cloudformation delete-stack --stack-name VPC03
 
 ```
 
+1. VPC01,02,03 선택 후 삭제 (3\~4분 소요 , 동시진행 가능)
 2. GWLBVPC 선택 후 삭제 (3\~4분 소요)
-
-```
-aws cloudformation delete-stack --stack-name GWLBVPC
-
-```
 
 ![](<.gitbook/assets/image (149).png>)
 

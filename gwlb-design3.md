@@ -1,5 +1,5 @@
 ---
-description: 'Update : 2022-06-12/ 1h /Cloudformation CLI 배포로 변경'
+description: 'Update : 2024-08-04'
 ---
 
 # GWLB Design 3
@@ -12,10 +12,6 @@ description: 'Update : 2022-06-12/ 1h /Cloudformation CLI 배포로 변경'
 
 이러한 구성은 VPC Endpoint를 각 VPC에 분산하고, GWLB에 VPC Endpoint Service를 연결하는 분산형 구조이지만, 앞선 [GWLB Design1](gwlb-design1.md) 구성보다는 외부 서비스에 더 중점을 둔 디자인입니다.
 
-#### :clapper: 아래 동영상 링크에서 구성방법을 확인 할 수 있습니다.
-
-{% embed url="https://youtu.be/IzNfoO6FRUk" %}
-
 아래 그림은 목표 구성도 입니다.
 
 ![](<.gitbook/assets/image (197).png>)
@@ -24,7 +20,7 @@ description: 'Update : 2022-06-12/ 1h /Cloudformation CLI 배포로 변경'
 
 ### 1.VPC yaml 파일 다운로드
 
-Cloud9 콘솔에서 아래 github로 부터 VPC yaml 파일을 다운로드 합니다. (앞선 LAB에서 다운로드 받은 경우에는 실행하지 않습니다.)
+Code-Server Terminal에서 아래 github로 부터 VPC yaml 파일을 다운로드 합니다. (앞선 LAB에서 다운로드 받은 경우에는 실행하지 않습니다.)
 
 ```
 git clone https://github.com/whchoi98/gwlb.git
@@ -33,7 +29,7 @@ git clone https://github.com/whchoi98/gwlb.git
 
 ### 2.AWS 관리콘솔에서 VPC 배포
 
-아래와 같이 Cloud9에서 Cloudformation을 실행합니다.
+아래와 같이 Code-Server Terminal에서 Cloudformation을 실행합니다.
 
 스택 세부 정보 지정에서 , \*\*`스택이름`\*\*과 \*\*`VPC Parameters`\*\*를 지정합니다. 대부분 기본값을 사용하면 됩니다.
 
@@ -44,14 +40,12 @@ git clone https://github.com/whchoi98/gwlb.git
 * PublicSubnetABlock: 10.254.11.0/24
 * PublicSubnetBBlock: 10.254.12.0/24
 * InstanceTyep: t3.small
-* KeyPair : 미리 만들어 둔 keyPair를 사용합니다.(예.gwlbkey)
 
 ```
 aws cloudformation deploy \
   --region ap-northeast-2 \
   --stack-name "GWLBVPC" \
-  --template-file "/home/ec2-user/environment/gwlb/Case3/1.Case3-GWLBVPC.yml" \
-  --parameter-overrides "KeyPair=$KeyName" \
+  --template-file "~/gwlb/Case3/1.Case3-GWLBVPC.yml" \
   --capabilities CAPABILITY_NAMED_IAM
   
 ```
@@ -67,7 +61,10 @@ VPC Endpoint Service Name을 복사해 둡니다. 뒤에서 생성할 VPC들의 
 VPC Endpoint Service Name을 환경변수에 저장해 둡니다.
 
 ```
-export VPCEndpointServiceName=com.amazonaws.vpce.ap-northeast-2.vpce-svc-0ff2b234e86a3e6db
+export VPCEndpointServiceName3=$(aws ec2 describe-vpc-endpoint-services --filter "Name=service-type,Values=GatewayLoadBalancer" | jq -r '.ServiceNames[]')
+echo $VPCEndpointServiceName3
+echo "export VPCEndpointServiceName3=${VPCEndpointServiceName3}" | tee -a ~/.bash_profile
+source ~/.bash_profile
 
 ```
 
@@ -86,29 +83,22 @@ export VPCEndpointServiceName=com.amazonaws.vpce.ap-northeast-2.vpce-svc-0ff2b23
 * VPCEndpointServiceName : 앞서 복사해둔 GWLBVPC의 VPC endpoint service name을 입력합니다.
 * PrivateToGWLB : 0.0.0.0/0 (Private Subnet이 외부로 가는 목적지에 대한 라우팅 경로 설정입니다.)
 * InstanceTyep: t3.small
-* KeyPair : 미리 만들어 둔 keyPair를 사용합니다. (예. gwlbkey)
 
 ```
 aws cloudformation deploy \
   --region ap-northeast-2 \
   --stack-name "VPC01" \
-  --template-file "/home/ec2-user/environment/gwlb/Case3/2.Case3-VPC01.yml" \
+  --template-file "~/gwlb/Case3/2.Case3-VPC01.yml" \
   --parameter-overrides \
-    "KeyPair=$KeyName" \
-    "VPCEndpointServiceName=$VPCEndpointServiceName" \
-  --capabilities CAPABILITY_NAMED_IAM
-  
-```
-
-```
+    "VPCEndpointServiceName3=$VPCEndpointServiceName3" \
+  --capabilities CAPABILITY_NAMED_IAM &
 aws cloudformation deploy \
   --region ap-northeast-2 \
   --stack-name "VPC02" \
-  --template-file "/home/ec2-user/environment/gwlb/Case3/2.Case3-VPC02.yml" \
+  --template-file "~/gwlb/Case3/2.Case3-VPC02.yml" \
   --parameter-overrides \
-    "KeyPair=$KeyName" \
-    "VPCEndpointServiceName=$VPCEndpointServiceName" \
-  --capabilities CAPABILITY_NAMED_IAM
+    "VPCEndpointServiceName3=$VPCEndpointServiceName3" \
+  --capabilities CAPABILITY_NAMED_IAM &
   
 ```
 
@@ -182,45 +172,22 @@ Appliance 구성 정보를 확인해 봅니다.
 
 ![](<.gitbook/assets/image (134).png>)
 
-앞서 사전 준비에서 생성한 Cloud9에서 Appliance로 직접 접속해 봅니다.
+앞서 사전 준비에서 생성한 Code-Server 터미널에서 Appliance로 직접 접속해 봅니다.
 
 ```
-export Appliance3_1={Appliance1ip address}
-export Appliance3_2={Appliance2ip address}
-export Appliance3_3={Appliance3ip address}
-export Appliance3_4={Appliance4ip address}
-```
-
-아래와 같이 구성합니다.
-
-```
-#기존 Appliance 정보를 삭제
-sudo sed '/Appliance/d' ~/.bash_profile
-#Appliance IP Export
-export Appliance3_1=3.36.108.211
-export Appliance3_2=52.79.219.13
-export Appliance3_3=13.125.201.96
-export Appliance3_4=15.164.176.82
-#bash profile에 등록
-echo "export Appliance3_1=$Appliance3_1" | tee -a ~/.bash_profile
-echo "export Appliance3_2=$Appliance3_2" | tee -a ~/.bash_profile
-echo "export Appliance3_3=$Appliance3_3" | tee -a ~/.bash_profile
-echo "export Appliance3_4=$Appliance3_4" | tee -a ~/.bash_profile
-source ~/.bash_profile
-## 앞서 변경했으면 적용하지 않습니다.
-mv ~/environment/gwlbkey ~/environment/gwlbkey.pem
-chmod 400 ./gwlbkey.pem
+#SSM 연결을 위한 Shell 실행
+~/gwlb/appliance_ssm.sh
 
 ```
 
-각 Appliance에서 아래 명령을 통해 , GWLB IP와 어떻게 매핑되었는지 확인합니다. Cloud9에서 새로운 터미널 4개를 탭에서 추가해서 4개 Appliance를 모두 확인해 봅니다.
+각 Appliance에서 아래 명령을 통해 , GWLB IP와 어떻게 매핑되었는지 확인합니다. Code-Server Terminal에서 새로운 터미널 4개를 탭에서 추가해서 4개 Appliance를 모두 확인해 봅니다.
 
 ```
 #Appliance 접속 
-ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance1
-ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance2
-ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance3
-ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance4
+aws ssm start-session --target $Appliance_11_101
+aws ssm start-session --target $Appliance_11_102
+aws ssm start-session --target $Appliance_12_101
+aws ssm start-session --target $Appliance_12_102
 
 ```
 
@@ -343,9 +310,18 @@ Ingress Routing에서 Private Subnet에 대한 라우팅 설정은 왜 없을까
 
 ### 10. ALB 확인
 
-**`AWS 관리콘솔 - EC2 - 로드밸런싱 - 로드밸런서`** 를 선택하고, VPC01,02-alb를 선택합니다. ALB의 외부 노출되어 있는 DNS A 레코드를 확인하고, 복사해 둡니다.
+**`AWS 관리콘솔 - EC2 - 로드밸런싱 - 로드밸런서`** 를 선택하고, VPC01,02-alb를 선택합니다. ALB의 외부 노출되어 있는 DNS A 레코드를 확인합니다.
 
 ![](<.gitbook/assets/image (32).png>)
+
+**`아래 Shell을 실행시켜, VPC01-alb, VPC02-alb 의 FQDN을 저장해 둡니다.`**
+
+```
+#VPC01,02 ALB FQDN 변수에 저장
+~/.bash_profile
+~/gwlb/Case3/alb_fqdn.sh
+
+```
 
 **`AWS 관리콘솔 - EC2 - 로드밸런싱- 대상그룹`** 를 선택하고, VPC01,02-ALB-tg 를 선택합니다. 하단의 세부 정보를 확인하면 Private Subnet에 속한 4개의 인스턴스가 정상적으로 Target Group에 선택된 것을 확인 할 수 있습니다.
 
@@ -367,7 +343,7 @@ Ingress Routing에서 Private Subnet에 대한 라우팅 설정은 왜 없을까
 
 VPC 01,02의 EC2에서 외부로 정상적으로 트래픽이 처리되는 지 확인 해 봅니다.
 
-Cloud9 터미널을 다시 접속해서 , VPC 01,02의 Private Subnet 에 배치된 EC2 인스턴스에 접속해 봅니다. Private Subnet은 직접 연결이 불가능하기 때문에 Session Manager를 통해 접속합니다.
+Code-Server Terminal을 다시 접속해서 , VPC 01,02의 Private Subnet 에 배치된 EC2 인스턴스에 접속해 봅니다. Private Subnet은 직접 연결이 불가능하기 때문에 Session Manager를 통해 접속합니다.
 
 VPC01,02 을 Cloudformation을 통해 배포할 때 해당 인스턴스들에 Session Manager 접속을 위한 Role과 Session Manager 연결을 위한 Endpoint가 이미 구성되어 있습니다.
 
@@ -376,16 +352,6 @@ VPC01,02 을 Cloudformation을 통해 배포할 때 해당 인스턴스들에 Se
 ![](<.gitbook/assets/image (188).png>)
 
 ![](<.gitbook/assets/image (118).png>)
-
-먼저 Cloud9 터미널에 Session Manager 기반 접속을 위해 아래와 같이 설치합니다. (앞서 랩에서 수행했다면, 생략합니다.)
-
-```
-#session manager plugin 설치
-curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm"
-sudo yum install -y session-manager-plugin.rpm
-git clone https://github.com/whchoi98/useful-shell.git
-
-```
 
 session manager 기반으로 접속하기 위해, 아래 명령을 실행하여 ec2 인스턴스의 id값을 확인합니다.
 
@@ -425,7 +391,13 @@ whchoi:~/environment/useful-shell (master) $ ./aws_ec2_ext.sh
 session manager 명령을 통해 해당 인스턴스에 연결해 봅니다. (VPC01-Private-A-10.1.21.101)
 
 ```
-aws ssm start-session --target {VPC01-Private-A-10.1.21.101 Instance ID}
+# aws ssm start-session --target {VPC01-Private-A-10.1.21.101 Instance ID}
+aws ec2 describe-instances --filters 'Name=tag:Name,Values=VPC01-Private-A-10.1.21.101' 'Name=instance-state-name,Values=running' | jq -r '.Reservations[].Instances[].InstanceId'
+export VPC01_Private_A_10_1_21_101=$(aws ec2 describe-instances --filters 'Name=tag:Name,Values=VPC01-Private-A-10.1.21.101' 'Name=instance-state-name,Values=running' | jq -r '.Reservations[].Instances[].InstanceId')
+echo "export VPC01_Private_A_10_1_21_101=${VPC01_Private_A_10_1_21_101}"| tee -a ~/.bash_profile
+source ~/.bash_profile
+
+aws ssm start-session --target $VPC01_Private_A_10_1_21_101
 
 ```
 
@@ -453,23 +425,23 @@ PING aws.com (54.230.62.60) 56(84) bytes of data.
 
 ### 13. Appliance에서 ICMP 확인
 
-앞서 Session manager를 통해 [www.aws.com으로](http://www.aws.xn--com-ky7m580d/) ping을 실행했습니다. 해당 터미널을 실행한 상태에서 Cloud9 터미널을 2개로 추가로 열어 봅니다.
+앞서 Session manager를 통해 [www.aws.com으로](http://www.aws.xn--com-ky7m580d/) ping을 실행했습니다. 해당 터미널을 실행한 상태에서 Code-Server Terminal을 2개로 추가로 열어 봅니다.
 
 아래와 같이 2개의 Appliance에 SSH로 연결해서 명령을 실행해 보고, Appliance로 Traffic이 들어오는지 확인해 봅니다.
 
-Cloud9 터미널 1
+Code-Server Terminal 1
 
 ```
-ssh -i ~/environment/JAN-2021-whchoi.pem ec2-user@$Appliance1
+aws ssm start-session --target $Appliance_11_101
 sudo tcpdump -nvv 'port 6081'
 sudo tcpdump -nvv 'port 6081'| grep 'ICMP'
 
 ```
 
-Cloud9 터미널 2
+Code-Server Terminal 2
 
 ```
-ssh -i ~/environment/JAN-2021-whchoi.pem ec2-user@$Appliance2
+aws ssm start-session --target $Appliance_11_102
 sudo tcpdump -nvv 'port 6081'
 sudo tcpdump -nvv 'port 6081'| grep 'ICMP'
 
@@ -500,6 +472,14 @@ tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 byt
 
 ![](<.gitbook/assets/image (166).png>)
 
+아래 Shell로 확인이 가능합니다.
+
+```
+#NATGW IP 확인
+~/gwlb/Case3/natgateway.sh
+
+```
+
 이제 다른 VPC와 다른 서브넷의 EC2에서도 트래픽이 정상적으로 처리되는지 확인해 봅니다.
 
 ### 14. 외부에서 웹 서비스 접속 확인
@@ -512,13 +492,28 @@ AWS 콘솔 - Cloudformation - VPC01, VPC02 스택 을 선택하고, Output(출�
 
 ![](<.gitbook/assets/image (114).png>)
 
+아래 명령을 통해 URL 출력값으로 브라우저에서 접속해 봅니다.
+
+```
+echo "VPC01ALB_FQDN is set to ${VPC01ALB_FQDN}/ec2meta-webpage/index.php"
+echo "VPC02ALB_FQDN is set to ${VPC02ALB_FQDN}/ec2meta-webpage/index.php"
+
+```
+
 VPC01,02 ALB URL로 브라우저에서 접속하고, 로드밸런싱이 정상적으로 되는지 확인합니다.
 
 ![](<.gitbook/assets/image (137).png>)
 
 ![](<.gitbook/assets/image (51).png>)
 
-Cloud9 터미널 1 (Appliance 1)에서 아래와 같이 ALB의 내부 CIDR 주소를 필터해 봅니다.
+Code-Server Terminal1 (Appliance 1)에서 아래와 같이 ALB의 내부 CIDR 주소를 필터해 봅니다.
+
+아래 Shell에서 ALB 내부 CIDR 주소를 확인 할 수 있습니다.
+
+```
+~/gwlb/Case3/alb_eni_ip.sh
+
+```
 
 ```
 # IP 주소는 앞서 확인한 VPC01,02-ALB의 내부 주소입니다.
@@ -530,7 +525,7 @@ sudo tcpdump -nvv 'port 6081' | grep '10.1.11.95'
 
 ![](<.gitbook/assets/image (75).png>)
 
-이제 Cloud9의 Appliance 1 터미널에서 결과를 확인해 봅니다. 아래에서 처럼 ALB로 접속되는 모든 트래픽도 GWLB의 Appliance들을 통해서 검사한 이후에 통과되는 것을 확인 할 수 있습니다.
+이제 Code-Server Terminal의 Appliance 1 터미널에서 결과를 확인해 봅니다. 아래에서 처럼 ALB로 접속되는 모든 트래픽도 GWLB의 Appliance들을 통해서 검사한 이후에 통과되는 것을 확인 할 수 있습니다.
 
 ![](<.gitbook/assets/image (92).png>)
 
@@ -557,7 +552,7 @@ VPC02의 ALB에서도 동일하게 확인해 봅니다.
 
 **`AWS 관리콘솔 - Cloudformation - 스택`** 을 선택하고 생성된 Stack을 , 생성된 역순으로 삭제합니다.
 
-VPC01,VPC02,GWLBVPC 순으로 삭제합니다.(Cloud9은 계속 사용하기 위해 삭제 하지 않습니다.) VPC01,02이 완전히 삭제된후, GWLBVPC를 삭제 합니다.
+VPC01,VPC02,GWLBVPC 순으로 삭제합니다.(Code-Server Terminal은 계속 사용하기 위해 삭제 하지 않습니다.) VPC01,02이 완전히 삭제된후, GWLBVPC를 삭제 합니다.
 
 1. VPC01,02 선택 후 삭제 (3\~4분 소요 , 동시진행 가능)
 2. GWLBVPC 선택 후 삭제 (3\~4분 소요)
@@ -575,6 +570,6 @@ aws cloudformation delete-stack --stack-name GWLBVPC
 
 ```
 
-![](<.gitbook/assets/image (2).png>)
+![](.gitbook/assets/image.png)
 
-랩을 완전히 종료하려면 **`AWS 관리콘솔 - Cloudformation - 스택`** aws cloud9 콘솔 스택도 삭제합니다.
+랩을 완전히 종료하려면 **`AWS 관리콘솔 - Cloudformation - 스택`** aws Code-Server Terminal 콘솔 스택도 삭제합니다.
