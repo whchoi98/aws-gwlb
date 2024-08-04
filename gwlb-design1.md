@@ -1,5 +1,5 @@
 ---
-description: 'update : 2023-01-16/ 1h / "Cloudformation CLI 배포방식으로 변경"'
+description: 'update : 2024-08-04/ 1h'
 ---
 
 # GWLB Design 1
@@ -12,10 +12,6 @@ description: 'update : 2023-01-16/ 1h / "Cloudformation CLI 배포방식으로 �
 
 아래 그림은 목표 구성도 입니다.
 
-#### :clapper: 아래 동영상 링크에서 구성방법을 확인 할 수 있습니다.
-
-{% embed url="https://youtu.be/J4mXEfsWZUs" %}
-
 
 
 ![](<.gitbook/assets/image (154).png>)
@@ -24,7 +20,7 @@ description: 'update : 2023-01-16/ 1h / "Cloudformation CLI 배포방식으로 �
 
 ### 1.VPC yaml 파일 다운로드&#x20;
 
-Cloud9 콘솔에서 아래 github로 부터 VPC yaml 파일을 다운로드 합니다.&#x20;
+Code-Server 터미널 콘솔에서 아래 github로 부터 VPC yaml 파일을 다운로드 합니다.&#x20;
 
 ```
 git clone https://github.com/whchoi98/gwlb.git
