@@ -396,7 +396,7 @@ Code-Server 터미널을 다시 접속해서 , VPC 01,02의 Private Subnet 에 �
 VPC01,02 을 Cloudformation을 통해 배포할 때 해당 인스턴스들에 Session Manager 접속을 위한 Role과 Session Manager 연결을 위한 Endpoint가 이미 구성되어 있습니다.
 
 ```
-cd ~/environment/useful-shell/
+cd ~/useful-shell/
 ./aws_ec2_ext.sh
 
 ```
@@ -469,6 +469,7 @@ Code-Server 터미널 1
 ```
 source ~/.bash_profile
 aws ssm start-session --target $Appliance_11_101
+sudo -s
 sudo tcpdump -nvv 'port 6081' | grep 'ICMP'
 
 ```
@@ -478,6 +479,7 @@ Code-Server 터미널 2
 ```
 source ~/.bash_profile
 aws ssm start-session --target $Appliance_11_102
+sudo -s
 sudo tcpdump -nvv 'port 6081' | grep 'ICMP'
 
 ```
