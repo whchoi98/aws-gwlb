@@ -519,17 +519,24 @@ Source IP와 Destination IP가 모두 유지된 채로 통신하는 것을 확�
 GWLBTGW,VPC01,VPC02,N2SVPC,GWLBVPC 순으로 삭제합니다.(Cloud9은 계속 사용하기 위해 삭제 하지 않습니다.)&#x20;
 
 1. GWLBTGW를 삭제합니다. (3\~4분 소요됩니다.)
-2. VPC01,VPC02를 삭제합니다. (3\~4분 소요됩니다. 동시 진행합니다.)
-3. N2SVPC를 삭제 합니다. (3\~4분 소요됩니다.)
-4. GWLBVPC를 삭제 합니다. (3\~4분 소요됩니다.)
 
 ```
 #GWLBTGW를 삭제합니다. (3~4분 소요됩니다.)
 aws cloudformation delete-stack --stack-name GWLBTGW
+```
+
+2. VPC01,VPC02,N2SVPC를 삭제합니다. (3\~4분 소요됩니다. 동시 진행합니다.)
+
+```
 #VPC01,VPC02,N2SVPC를 삭제합니다. (3~4분 소요됩니다. 동시 진행합니다.)
-aws cloudformation delete-stack --stack-name VPC01
-aws cloudformation delete-stack --stack-name VPC02
-aws cloudformation delete-stack --stack-name N2SVPC
+aws cloudformation delete-stack --stack-name VPC01 &
+aws cloudformation delete-stack --stack-name VPC02 &
+aws cloudformation delete-stack --stack-name N2SVPC &
+```
+
+3. GWLBVPC를 삭제 합니다. (3\~4분 소요됩니다.)
+
+```
 #GWLBVPC를 삭제 합니다. (3~4분 소요됩니다.)
 aws cloudformation delete-stack --stack-name GWLBVPC
 ```
