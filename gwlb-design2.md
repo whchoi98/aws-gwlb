@@ -91,26 +91,12 @@ N2SVPC를 Cloudformation에서 앞서 과정과 동일하게 생성합니다. �
 * VPC2CIDRBlock: 10.2.0.0/16 (VPC2의 CIDR Block 주소를 선언합니다.)
 * VPCEndpointServiceName : 앞서 복사해둔 GWLBVPC의 VPC endpoint service name을 입력합니다.
 * InstanceTyep: t3.small
-* KeyPair : 사전에 만들어 둔 keyPair를 사용합니다.(예. gwlbkey)
 
 ```
 aws cloudformation deploy \
   --region ap-northeast-2 \
   --stack-name "N2SVPC" \
   --template-file "/home/ec2-user/environment/gwlb/Case2/2.Case2-N2SVPC.yml" \
-  --parameter-overrides \
-    "KeyPair=$KeyName" \
-    "VPCEndpointServiceName2=$VPCEndpointServiceName2" \
-  --capabilities CAPABILITY_NAMED_IAM
-  
-```
-
-```
-source ~/.bash_profile
-aws cloudformation deploy \
-  --region ap-northeast-2 \
-  --stack-name "N2SVPC" \
-  --template-file "~/gwlb/Case2/2.Case2-N2SVPC.yml" \
   --parameter-overrides \
     "VPCEndpointServiceName2=$VPCEndpointServiceName2" \
   --capabilities CAPABILITY_NAMED_IAM
@@ -138,20 +124,12 @@ VPC는 계정당 기본 5개가 할당되어 있습니다. 1개는 Default VPC�
 aws cloudformation deploy \
   --region ap-northeast-2 \
   --stack-name "VPC01" \
-  --template-file "/home/ec2-user/environment/gwlb/Case2/3.Case2-VPC01.yml" \
-  --parameter-overrides \
-    "KeyPair=$KeyName" \
-  --capabilities CAPABILITY_NAMED_IAM
-  
-```
-
-```
+  --template-file "~/gwlb/Case2/3.Case2-VPC01.yml" \
+  --capabilities CAPABILITY_NAMED_IAM &
 aws cloudformation deploy \
   --region ap-northeast-2 \
   --stack-name "VPC02" \
-  --template-file "/home/ec2-user/environment/gwlb/Case2/3.Case2-VPC02.yml" \
-  --parameter-overrides \
-    "KeyPair=$KeyName" \
+  --template-file "~/gwlb/Case2/3.Case2-VPC02.yml" \
   --capabilities CAPABILITY_NAMED_IAM
   
 ```
@@ -308,7 +286,7 @@ aws ssm start-session --target $Appliance_12_102
 각 Appliance에서 아래 명령을 통해 , GWLB IP와 어떻게 매핑되었는지 확인합니다.
 
 ```
-ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance1
+aws ssm start-session --target $Appliance_11_101
 sudo iptables -L -n -v -t nat
 ```
 
