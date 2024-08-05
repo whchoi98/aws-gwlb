@@ -635,4 +635,3 @@ aws cloudformation delete-stack --stack-name GWLBVPC
 
 ![](<.gitbook/assets/image (155).png>)
 
-랩을 완전히 종료하려면 **`AWS 관리콘솔 - Cloudformation - 스택`** aws cloud9 콘솔 스택도 삭제합니다.

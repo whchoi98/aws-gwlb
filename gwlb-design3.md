@@ -559,8 +559,8 @@ VPC01,VPC02,GWLBVPC 순으로 삭제합니다.(Code-Server Terminal은 계속 �
 
 ```
 ### VPC01,02 선택 후 삭제 (3~4분 소요 , 동시진행 가능)
-aws cloudformation delete-stack --stack-name VPC01
-aws cloudformation delete-stack --stack-name VPC02
+aws cloudformation delete-stack --stack-name VPC01 &
+aws cloudformation delete-stack --stack-name VPC02 &
 
 ```
 
@@ -572,4 +572,3 @@ aws cloudformation delete-stack --stack-name GWLBVPC
 
 ![](.gitbook/assets/image.png)
 
-랩을 완전히 종료하려면 **`AWS 관리콘솔 - Cloudformation - 스택`** aws Code-Server Terminal 콘솔 스택도 삭제합니다.

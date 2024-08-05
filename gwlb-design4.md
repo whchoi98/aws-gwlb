@@ -14,8 +14,6 @@ GWLB Design2와 다른 점은 ALB(Application Load Balancer)를 GWLB와 연계�
 
 아래 그림은 목표 구성도 입니다.
 
-{% embed url="https://youtu.be/Es35y0mtT0w" %}
-
 ![](<.gitbook/assets/image (219).png>)
 
 ## Cloudformation기반 VPC 배포
