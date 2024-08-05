@@ -394,76 +394,6 @@ VPC01,02의 EC2에서 외부로 정상적으로 트래픽이 처리되는 지 �
 
 Code-Serve터미널을 다시 접속해서 , VPC 01,02의 Private Subnet 에 배치된 EC2 인스턴스에 접속해 봅니다. Private Subnet은 직접 연결이 불가능하기 때문에 Session Manager를 통해 접속합니다.
 
-VPC01,02 을 Cloudformation을 통해 배포할 때 해당 인스턴스들에 Session Manager 접속을 위한 Role과 Session Manager 연결을 위한 Endpoint가 이미 구성되어 있습니다.
-
-```
-##############################################
-# Create-Private-EC2: VPC Private EC2 Create #
-##############################################
-
-  PrivateAInstanace1:
-    Type: AWS::EC2::Instance
-    DependsOn: PrivateSubnetA
-    Properties:
-      SubnetId: !Ref PrivateSubnetA
-      ImageId: !Ref LatestAmiId
-      PrivateIpAddress: 10.1.21.101
-      InstanceType: !Ref InstanceType
-      SecurityGroupIds: 
-        - Ref: PrivateEC2SG
-      KeyName: !Ref KeyPair
-      IamInstanceProfile: !Ref InstanceProfileSSM
-#생략 
-###############################################
-# Create-SSM: Create PrivateServer ServerRole #
-###############################################
-
-  ServerRoleSSM:
-    Type: AWS::IAM::Role
-    Properties:
-      RoleName: !Sub '${AWS::StackName}-SSMRole'
-      Path: "/"
-      ManagedPolicyArns:
-        - "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
-      AssumeRolePolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - ec2.amazonaws.com
-            Action:
-              - sts:AssumeRole
-
-  InstanceProfileSSM:
-    Type: AWS::IAM::InstanceProfile
-    Properties:
-      Path: "/"
-      Roles: 
-        - Ref: ServerRoleSSM
-  #이하 생략 
-```
-
-아래 그림에서 처럼 확인해 볼 수 있습니다.
-
-**`AWS 관리콘솔 - VPC 대시보드 - VPC - 앤드포인트`** 에서 SSM(Session Manager) 관련 VPC Endpoint 배포를 확인해 봅니다.
-
-![](<.gitbook/assets/image (125).png>)
-
-**`AWS 관리콘솔 - EC2 대시보드 - 인스턴스`** 에서 VPC1,2 인스턴스를 선택하고 IAM Profile이 정상적으로 구성되었는지 확인합니다.
-
-![](<.gitbook/assets/image (127).png>)
-
-먼저 Code-Server 터미널에 Session Manager 기반 접속을 위해 아래와 같이 설치합니다. **(GWLB Design1 에서 설치하였으면 생략합니다.)**
-
-```
-#session manager plugin 설치.
-curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm"
-sudo yum install -y session-manager-plugin.rpm
-git clone https://github.com/whchoi98/useful-shell.git
-
-```
-
 session manager 기반으로 접속하기 위해, 아래 명령을 실행하여 ec2 인스턴스의 id값을 확인합니다.
 
 ```
@@ -498,7 +428,13 @@ whchoi:~/environment/useful-shell (master) $ ./aws_ec2_ext.sh
 session manager 명령을 통해 해당 인스턴스에 연결해 봅니다. (예. VPC01-Private-A-10.1.21.101)
 
 ```
-aws ssm start-session --target {VPC01-Private-A-10.1.21.101 Instance ID}
+# aws ssm start-session --target {VPC01-Private-A-10.1.21.101 Instance ID}
+aws ec2 describe-instances --filters 'Name=tag:Name,Values=VPC01-Private-A-10.1.21.101' 'Name=instance-state-name,Values=running' | jq -r '.Reservations[].Instances[].InstanceId'
+export VPC01_Private_A_10_1_21_101=$(aws ec2 describe-instances --filters 'Name=tag:Name,Values=VPC01-Private-A-10.1.21.101' 'Name=instance-state-name,Values=running' | jq -r '.Reservations[].Instances[].InstanceId')
+echo "export VPC01_Private_A_10_1_21_101=${VPC01_Private_A_10_1_21_101}"| tee -a ~/.bash_profile
+source ~/.bash_profile
+
+aws ssm start-session --target $VPC01_Private_A_10_1_21_101
 
 ```
 
