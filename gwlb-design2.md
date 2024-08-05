@@ -38,7 +38,7 @@ git clone https://github.com/whchoi98/gwlb.git
 
 ### 2.GWLB VPC 배포
 
-Cloud9 터미널에서 GWLBVPC를 배포합니다
+Code-Server 터미널에서 GWLBVPC를 배포합니다
 
 스택 세부 정보 지정에서 , 스택이름과 VPC Parameters를 지정합니다. 대부분 기본값을 사용하면 됩니다.
 
