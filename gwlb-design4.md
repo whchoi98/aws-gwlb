@@ -51,14 +51,12 @@ Cloud9 터미널에서 GWLBVPC를 배포합니다
 * PublicSubnetABlock: 10.254.11.0/24
 * PublicSubnetBBlock: 10.254.12.0/24
 * InstanceTyep: t3.small
-* KeyPair : 사전에 만들어 둔 keyPair를 사용합니다. (예. mykey)
 
 ```
 aws cloudformation deploy \
   --region ap-northeast-2 \
   --stack-name "GWLBVPC" \
-  --template-file "/home/ec2-user/environment/gwlb/Case4/1.Case4-GWLBVPC.yml" \
-  --parameter-overrides "KeyPair=$KeyName" \
+  --template-file "~/gwlb/Case4/1.Case4-GWLBVPC.yml" \
   --capabilities CAPABILITY_NAMED_IAM
   
 ```
@@ -104,16 +102,14 @@ N2SVPC를 Cloudformation에서 앞서 과정과 동일하게 생성합니다. �
 * VPC2CIDRBlock: 10.2.0.0/16 (VPC2의 CIDR Block 주소를 선언합니다.)
 * VPCEndpointServiceName : 앞서 복사해둔 GWLBVPC의 VPC endpoint service name을 입력합니다.
 * InstanceTyep: t3.small
-* KeyPair : 사전에 만들어 둔 keyPair를 사용합니다.(예.mykey)
 
 ```
 aws cloudformation deploy \
   --region ap-northeast-2 \
   --stack-name "N2SVPC" \
-  --template-file "/home/ec2-user/environment/gwlb/Case4/2.Case4-N2SVPC.yml" \
+  --template-file "~/gwlb/Case4/2.Case4-N2SVPC.yml" \
   --parameter-overrides \
-    "KeyPair=$KeyName" \
-    "VPCEndpointServiceName=$VPCEndpointServiceName4" \
+    "VPCEndpointServiceName4=$VPCEndpointServiceName4" \
   --capabilities CAPABILITY_NAMED_IAM
 ```
 
@@ -134,27 +130,20 @@ VPC는 계정당 기본 5개가 할당되어 있습니다. 1개는 Default VPC�
 * TGWSubnetABlock:10.1.251.0/24 (VPC01), 10.2.251.0/24 (VPC02)
 * TGWSubnetBBlock:10.1.252.0/24 (VPC01), 10.2.252.0/24 (VPC02)
 * InstanceTyep: t3.small
-* KeyPair : 사전에 만들어 둔 keyPair를 사용합니다.(예. gwlbkey)
 
 ```
 aws cloudformation deploy \
   --region ap-northeast-2 \
   --stack-name "VPC01" \
-  --template-file "/home/ec2-user/environment/gwlb/Case4/3.Case4-VPC01.yml" \
+  --template-file "~/gwlb/Case4/3.Case4-VPC01.yml" \
   --parameter-overrides \
-    "KeyPair=$KeyName" \
-  --capabilities CAPABILITY_NAMED_IAM
-  
-```
-
-```
+  --capabilities CAPABILITY_NAMED_IAM &
 aws cloudformation deploy \
   --region ap-northeast-2 \
   --stack-name "VPC02" \
-  --template-file "/home/ec2-user/environment/gwlb/Case4/4.Case4-VPC02.yml" \
+  --template-file "~/gwlb/Case4/4.Case4-VPC02.yml" \
   --parameter-overrides \
-    "KeyPair=$KeyName" \
-  --capabilities CAPABILITY_NAMED_IAM
+  --capabilities CAPABILITY_NAMED_IAM &
   
 ```
 
@@ -181,7 +170,7 @@ N2SVPC, VPC01,VPC02을 연결하기 위한 TransitGateway를 배포합니다. �
 aws cloudformation deploy \
   --region ap-northeast-2 \
   --stack-name "GWLBTGW" \
-  --template-file "/home/ec2-user/environment/gwlb/Case4/5.Case4-GWLBTGW.yml" 
+  --template-file "~/gwlb/Case4/5.Case4-GWLBTGW.yml" 
 ```
 
 ### 6. 라우팅 테이블 확인

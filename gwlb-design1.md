@@ -18,7 +18,7 @@ description: 'update : 2024-08-04/ 1h'
 
 ### 1.VPC yaml 파일 다운로드
 
-Cloud9 콘솔에서 아래 github로 부터 VPC yaml 파일을 다운로드 합니다.
+Code-Server 콘솔에서 아래 github로 부터 VPC yaml 파일을 다운로드 합니다.
 
 ```
 git clone https://github.com/whchoi98/gwlb.git
@@ -27,11 +27,7 @@ git clone https://github.com/whchoi98/gwlb.git
 
 ### 2.AWS 관리콘솔에서 VPC 배포
 
-아래와 같이 Cloud9에서 Cloudformation을 실행합니다
-
-AWS 관리콘솔에서 Cloudformation을 선택해서, 실행 결과를 확인해 봅니다
-
-![](<.gitbook/assets/image (136).png>)
+아래와 같이 Code-Server에서 Cloudformation을 실행합니다
 
 먼저 GWLBVPC를 실행합니다
 
@@ -44,7 +40,6 @@ AWS 관리콘솔에서 Cloudformation을 선택해서, 실행 결과를 확인�
 * PublicSubnetABlock: 10.254.11.0/24
 * PublicSubnetBBlock: 10.254.12.0/24
 * InstanceTyep: t3.small
-* KeyPair : 미리 만들어 둔 keyPair를 사용합니다.
 
 ```
 cd ~/environment/
@@ -230,7 +225,7 @@ AWS 관리콘솔 - Cloudformation - 스택을 선택하면, 앞서 배포했던 
 
 ![](<.gitbook/assets/image (107).png>)
 
-앞서 사전 준비에서 생성한 Cloud9에서 Appliance로 직접 접속해 봅니다.
+앞서 사전 준비에서 생성한 Code-Server에서 Appliance로 직접 접속해 봅니다.
 
 ```
 #SSM 연결을 위한 Shell 실행
@@ -238,7 +233,7 @@ AWS 관리콘솔 - Cloudformation - 스택을 선택하면, 앞서 배포했던 
 
 ```
 
-각 Appliance에서 아래 명령을 통해 , GWLB IP와 어떻게 매핑되었는지 확인합니다. Cloud9에서 새로운 터미널 4개를 탭에서 추가해서 4개 Appliance를 모두 확인해 봅니다.
+각 Appliance에서 아래 명령을 통해 , GWLB IP와 어떻게 매핑되었는지 확인합니다. Code-Server에서 새로운 터미널 4개를 탭에서 추가해서 4개 Appliance를 모두 확인해 봅니다.
 
 ```
 aws ssm start-session --target $Appliance_11_101
@@ -352,7 +347,7 @@ AWS 관리콘솔 - VPC - 라우팅 테이블을 선택하고 VPC01,02,03-IGW-Ing
 
 VPC 01,02,03의 EC2에서 외부로 정상적으로 트래픽이 처리되는 지 확인 해 봅니다.
 
-Cloud9 터미널을 다시 접속해서 , VPC 01,02,03의 Private Subnet 에 배치된 EC2 인스턴스에 접속해 봅니다. Private Subnet은 직접 연결이 불가능하기 때문에 Session Manager를 통해 접속합니다.
+Code-Server 터미널을 다시 접속해서 , VPC 01,02,03의 Private Subnet 에 배치된 EC2 인스턴스에 접속해 봅니다. Private Subnet은 직접 연결이 불가능하기 때문에 Session Manager를 통해 접속합니다.
 
 VPC01,02,03 을 Cloudformation을 통해 배포할 때 해당 인스턴스들에 Session Manager 접속을 위한 Role과 Session Manager 연결을 위한 Endpoint가 이미 구성되어 있습니다.
 
@@ -362,7 +357,7 @@ VPC01,02,03 을 Cloudformation을 통해 배포할 때 해당 인스턴스들에
 
 ![](<.gitbook/assets/image (101).png>)
 
-먼저 Cloud9에 Session Manager 기반 접속을 위해 아래와 같이 설치합니다. (이미 설치되어 있는 경우 생략합니다)
+먼저 Code-Server에 Session Manager 기반 접속을 위해 아래와 같이 설치합니다. (이미 설치되어 있는 경우 생략합니다)
 
 ```
 #session manager plugin 설치
@@ -444,11 +439,11 @@ PING aws.com (54.230.62.60) 56(84) bytes of data.
 
 ### 11. Appliance에서 확인
 
-앞서 Session manager를 통해 www.aws.com으로 ping을 실행했습니다. 해당 터미널을 실행한 상태에서 Cloud9 터미널을 2개로 추가로 열어 봅니다.
+앞서 Session manager를 통해 www.aws.com으로 ping을 실행했습니다. 해당 터미널을 실행한 상태에서 Code-Server 터미널을 2개로 추가로 열어 봅니다.
 
 아래와 같이 2개의 Appliance에 SSH로 연결해서 명령을 실행해 보고, Appliance로 Traffic이 들어오는지 확인해 봅니다.
 
-Cloud9 터미널 1
+Code-Server 터미널 1
 
 ```
 aws ssm start-session --target $VPC01_Private_A_10_1_21_101
@@ -457,7 +452,7 @@ sudo tcpdump -nvv 'port 6081'| grep 'ICMP'
 
 ```
 
-Cloud9 터미널 2
+Code-Server 터미널 2
 
 ```
 aws ssm start-session --target $VPC01_Private_A_10_1_21_102
@@ -497,7 +492,7 @@ Source IP와 Destination IP가 모두 유지된 채로 통신하는 것을 확�
 
 AWS 관리콘솔 - Cloudformation - 스택 을 선택하고 생성된 Stack을 , 생성된 역순으로 삭제합니다.
 
-VPC01,VPC02,VPC03-GWLBVPC 순으로 삭제합니다.(Cloud9은 계속 사용하기 위해 삭제 하지 않습니다.) VPC01,02,03이 완전히 삭제된후, GWLBVPC를 삭제 합니다.
+VPC01,VPC02,VPC03-GWLBVPC 순으로 삭제합니다.(Code-Server은 계속 사용하기 위해 삭제 하지 않습니다.) VPC01,02,03이 완전히 삭제된후, GWLBVPC를 삭제 합니다.
 
 ```
 aws cloudformation delete-stack --stack-name VPC01

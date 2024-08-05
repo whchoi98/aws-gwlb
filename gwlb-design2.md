@@ -18,7 +18,7 @@ description: 'Update : 2024-08-04/ 1h'
 
 ### 1.VPC yaml 파일 다운로드
 
-Cloud9 콘솔에서 아래 github로 부터 VPC yaml 파일을 다운로드 합니다. (앞서 다운로드 하였으면 생략합니다.)
+Code-Server 터미널에서 아래 github로 부터 VPC yaml 파일을 다운로드 합니다. (앞서 다운로드 하였으면 생략합니다.)
 
 ```
 git clone https://github.com/whchoi98/gwlb.git
@@ -49,7 +49,8 @@ Cloud9 터미널에서 GWLBVPC를 배포합니다
 * PublicSubnetABlock: 10.254.11.0/24
 * PublicSubnetBBlock: 10.254.12.0/24
 * InstanceTyep: t3.small
-* KeyPair : 사전에 만들어 둔 keyPair를 사용합니다. (예. gwlbkey)
+
+
 
 3\~4분 후에 GWLBVPC가 완성됩니다.
 
@@ -281,14 +282,7 @@ Appliance 구성 정보를 확인해 봅니다.
 
 ![](<.gitbook/assets/image (21).png>)
 
-앞서 사전 준비에서 생성한 Cloud9 터미널에서 Appliance로 직접 접속해 봅니다.
-
-```
-export Appliance2_1={Appliance1ip address}
-export Appliance2_2={Appliance2ip address}
-export Appliance2_3={Appliance3ip address}
-export Appliance2_4={Appliance4ip address}
-```
+앞서 사전 준비에서 생성한 Code-Server 터미널에서 Appliance로 직접 접속해 봅니다.
 
 아래와 같이 구성합니다.
 
@@ -296,28 +290,18 @@ export Appliance2_4={Appliance4ip address}
 #기존 Appliance 정보를 삭제
 sudo sed '/Appliance/d' ~/.bash_profile
 
-#Appliance IP Export
-export Appliance2_1=3.36.108.211
-export Appliance2_2=52.79.219.13
-export Appliance2_3=13.125.201.96
-export Appliance2_4=15.164.176.82
-
-#bash profile에 등록
-echo "export Appliance2_1=$Appliance2_1" | tee -a ~/.bash_profile
-echo "export Appliance2_2=$Appliance2_2" | tee -a ~/.bash_profile
-echo "export Appliance2_3=$Appliance2_3" | tee -a ~/.bash_profile
-echo "export Appliance2_4=$Appliance2_4" | tee -a ~/.bash_profile
-source ~/.bash_profile
+#SSM 연결을 위한 Shell 실행
+~/environment/gwlb/appliance_ssm.sh
 
 ```
 
-각 Appliance에서 아래 명령을 통해 , GWLB IP와 어떻게 매핑되었는지 확인합니다. Cloud9에서 새로운 터미널 4개를 탭에서 추가해서 4개 Appliance를 모두 확인해 봅니다.
+각 Appliance에서 아래 명령을 통해 , GWLB IP와 어떻게 매핑되었는지 확인합니다. Code-Server에서 새로운 터미널 4개를 탭에서 추가해서 4개 Appliance를 모두 확인해 봅니다.
 
 ```
-ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance1
-ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance2
-ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance3
-ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance4
+aws ssm start-session --target $Appliance_11_101
+aws ssm start-session --target $Appliance_11_102
+aws ssm start-session --target $Appliance_12_101
+aws ssm start-session --target $Appliance_12_102
 
 ```
 
@@ -430,7 +414,7 @@ AWS 관리콘솔 - VPC - 라우팅 테이블을 선택하고 각 라우팅 테�
 
 VPC01,02의 EC2에서 외부로 정상적으로 트래픽이 처리되는 지 확인 해 봅니다.
 
-Cloud9 터미널을 다시 접속해서 , VPC 01,02의 Private Subnet 에 배치된 EC2 인스턴스에 접속해 봅니다. Private Subnet은 직접 연결이 불가능하기 때문에 Session Manager를 통해 접속합니다.
+Code-Serve터미널을 다시 접속해서 , VPC 01,02의 Private Subnet 에 배치된 EC2 인스턴스에 접속해 봅니다. Private Subnet은 직접 연결이 불가능하기 때문에 Session Manager를 통해 접속합니다.
 
 VPC01,02 을 Cloudformation을 통해 배포할 때 해당 인스턴스들에 Session Manager 접속을 위한 Role과 Session Manager 연결을 위한 Endpoint가 이미 구성되어 있습니다.
 
@@ -492,7 +476,7 @@ VPC01,02 을 Cloudformation을 통해 배포할 때 해당 인스턴스들에 Se
 
 ![](<.gitbook/assets/image (127).png>)
 
-먼저 Cloud9에 Session Manager 기반 접속을 위해 아래와 같이 설치합니다. **(GWLB Design1 에서 설치하였으면 생략합니다.)**
+먼저 Code-Server 터미널에 Session Manager 기반 접속을 위해 아래와 같이 설치합니다. **(GWLB Design1 에서 설치하였으면 생략합니다.)**
 
 ```
 #session manager plugin 설치.
@@ -563,11 +547,11 @@ PING aws.com (99.86.206.123) 56(84) bytes of data.
 
 ```
 
-앞서 Session manager를 통해 [www.aws.com으로](http://www.aws.xn--com-ky7m580d/) ping을 실행했습니다. 해당 터미널을 실행한 상태에서 Cloud9 터미널을 2개로 추가로 열어 봅니다.
+앞서 Session manager를 통해 [www.aws.com으로](http://www.aws.xn--com-ky7m580d/) ping을 실행했습니다. 해당 터미널을 실행한 상태에서 Code-Server 터미널을 2개로 추가로 열어 봅니다.
 
 아래와 같이 2개의 Appliance에 SSH로 연결해서 명령을 실행해 보고, Appliance로 Traffic이 들어오는지 확인해 봅니다.
 
-Cloud9 터미널 1
+Code-Server 터미널 1
 
 ```
 ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance1
@@ -575,7 +559,7 @@ sudo tcpdump -nvv 'port 6081' | grep 'ICMP'
 
 ```
 
-Cloud9 터미널 2
+Code-Server 터미널 2
 
 ```
 ssh -i ~/environment/gwlbkey.pem ec2-user@$Appliance2
@@ -615,7 +599,7 @@ Source IP와 Destination IP가 모두 유지된 채로 통신하는 것을 확�
 
 **`AWS 관리콘솔 - Cloudformation - 스택`** 을 선택하고 생성된 Stack을 삭제합니다.
 
-GWLBTGW,VPC01,VPC02,N2SVPC,GWLBVPC 순으로 삭제합니다.(Cloud9은 계속 사용하기 위해 삭제 하지 않습니다.)
+GWLBTGW,VPC01,VPC02,N2SVPC,GWLBVPC 순으로 삭제합니다.(Code-Server은 계속 사용하기 위해 삭제 하지 않습니다.)
 
 1. GWLBTGW를 삭제합니다. (3\~4분 소요됩니다.)
 2. VPC01,VPC02를 삭제합니다. (3\~4분 소요됩니다. 동시 진행합니다.)

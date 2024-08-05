@@ -175,6 +175,9 @@ Appliance 구성 정보를 확인해 봅니다.
 앞서 사전 준비에서 생성한 Code-Server 터미널에서 Appliance로 직접 접속해 봅니다.
 
 ```
+#기존 Appliance 정보를 삭제
+sudo sed '/Appliance/d' ~/.bash_profile
+
 #SSM 연결을 위한 Shell 실행
 ~/gwlb/appliance_ssm.sh
 
