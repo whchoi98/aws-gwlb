@@ -49,7 +49,7 @@ VS Code Server는 개발자들이 원격 환경에서 편리하게 코딩하고 
 
 VSCode를 실행하기 위해 아래와 같이 AWS 관리콘솔에서 **`"Cloudshell"`** 을 사용해서 구성합니다.
 
-
+<figure><img src=".gitbook/assets/image (234).png" alt=""><figcaption></figcaption></figure>
 
 `아래와 같이 iam user와 패스워드, user를 위한 Policy를 생성해서 연결합니다.`
 
