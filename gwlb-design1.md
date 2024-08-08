@@ -42,7 +42,6 @@ git clone https://github.com/whchoi98/gwlb.git
 * InstanceTyep: t3.small
 
 ```
-cd ~/environment/
 aws cloudformation deploy \
   --region ap-northeast-2 \
   --stack-name "GWLBVPC" \
