@@ -47,7 +47,6 @@ aws cloudformation deploy \
   --region ap-northeast-2 \
   --stack-name "GWLBVPC" \
   --template-file "~/gwlb/Case1/1.Case1-GWLBVPC.yml" \
-  --parameter-overrides "KeyPair=$KeyName" \
   --capabilities CAPABILITY_NAMED_IAM
   
 ```
