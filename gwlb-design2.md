@@ -50,7 +50,13 @@ Code-Server 터미널에서 GWLBVPC를 배포합니다
 * PublicSubnetBBlock: 10.254.12.0/24
 * InstanceTyep: t3.small
 
-
+```
+aws cloudformation deploy \
+  --region ap-northeast-2 \
+  --stack-name "GWLBVPC" \
+  --template-file "~/gwlb/Case2/1.Case2-GWLBVPC.yml" \
+  --capabilities CAPABILITY_NAMED_IAM
+```
 
 3\~4분 후에 GWLBVPC가 완성됩니다.
 
@@ -96,7 +102,7 @@ N2SVPC를 Cloudformation에서 앞서 과정과 동일하게 생성합니다. �
 aws cloudformation deploy \
   --region ap-northeast-2 \
   --stack-name "N2SVPC" \
-  --template-file "/home/ec2-user/environment/gwlb/Case2/2.Case2-N2SVPC.yml" \
+  --template-file "~/gwlb/Case2/2.Case2-N2SVPC.yml" \
   --parameter-overrides \
     "VPCEndpointServiceName2=$VPCEndpointServiceName2" \
   --capabilities CAPABILITY_NAMED_IAM
